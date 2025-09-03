@@ -10,7 +10,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 
 @Module({
-  imports: [UserModule, AuthModule],
+  imports: [
+    UserModule,
+    AuthModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [typeOrmConfig],
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) =>
+        configService.get('typeorm')!,
+    }),
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
