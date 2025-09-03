@@ -9,7 +9,7 @@ export class User {
   apellido_nombre: string;
   @Column({ type: 'varchar', nullable: false, length: 20 })
   password: string;
-  @Column({ type: 'number', nullable: false })
+  @Column({ type: 'int', nullable: false })
   telefono: number;
   @Column({ type: 'varchar', nullable: false })
   fecha_nacimiento: Date;
