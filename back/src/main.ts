@@ -1,9 +1,27 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  //Configuracion de Swagger
+  const config = new DocumentBuilder()
+    .setTitle('Sistema de Gestion de Gimnasio API')
+    .setDescription(
+      'API para gestionar usuarios, clases y reservas del gimnasio',
+    )
+    .setVersion('0.1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true, // 👈 Esto mantiene el token entre sesiones
+    },
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({

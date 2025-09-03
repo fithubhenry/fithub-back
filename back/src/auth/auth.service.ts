@@ -23,6 +23,11 @@ export class AuthService {
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) throw new UnauthorizedException('Credenciales invalidas');
 
+    const isPasswordValid = await bcrypt.compare(pass, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Crendenciales invalidas');
+    }
+
     return user;
   }
 
