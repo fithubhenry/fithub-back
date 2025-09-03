@@ -10,7 +10,6 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { EEstado } from 'src/common/statusEnum';
 import { JwtService } from '@nestjs/jwt';
-import { access } from 'fs';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +29,12 @@ export class AuthService {
   async login(email: string, pass: string) {
     const user = await this.validateUser(email, pass);
 
-    const payload = { sub: user.id, email: user.email, esAdmin: user.esAdmin };
+    const payload = {
+      userId: user.id,
+      email: user.email,
+      esAdmin: user.esAdmin,
+      estado: user.estado,
+    };
 
     return {
       access_token: this.jwtService.sign(payload),
@@ -62,7 +66,7 @@ export class AuthService {
       fecha_nacimiento: dto.fecha_nacimiento,
       direccion: dto.direccion,
       ciudad: dto.ciudad,
-      estado: EEstado.Activo, //por defecto lo activamos
+      estado: EEstado.Invitado, //por defecto es invitado
       esAdmin: false, //nadie se registra como admin
     });
 
