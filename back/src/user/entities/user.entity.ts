@@ -11,7 +11,7 @@ export class User {
   password: string;
   @Column({ type: 'int', nullable: false })
   telefono: number;
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'date', nullable: false })
   fecha_nacimiento: Date;
   @Column({ type: 'varchar', nullable: false, unique: true })
   email: string;
