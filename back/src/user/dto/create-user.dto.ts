@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsDate,
   IsEmail,
@@ -17,7 +18,10 @@ import { MatchPassword } from 'src/decorators/matchPassword.decorator';
 
 export class CreateUserDto {
   id: string;
-
+  @ApiProperty({
+    example: 'Pérez, Juan',
+    description: 'Apellido y nombre del usuario',
+  })
   @IsNotEmpty({ message: 'El apellido y nombre es requerido' })
   @IsString()
   @MinLength(3, {
@@ -28,6 +32,7 @@ export class CreateUserDto {
   })
   apellido_nombre: string;
 
+  @ApiProperty({ example: 'Test123!', description: 'Contraseña segura' })
   @IsNotEmpty({ message: 'El password es requerido' })
   @IsString()
   @MinLength(8, { message: 'El password debe tener al menos 8 caracteres' })
@@ -44,14 +49,23 @@ export class CreateUserDto {
   })
   password: string;
 
+  @ApiProperty({
+    example: 'Test123!',
+    description: 'Confirmación de la contraseña',
+  })
   @IsNotEmpty()
   @Validate(MatchPassword, ['password'])
   confirmPassword: string;
 
+  @ApiProperty({ example: 5491112345678, description: 'Número de teléfono' })
   @IsNotEmpty()
   @IsNumber()
   telefono: number;
 
+  @ApiProperty({
+    example: '1990-01-01',
+    description: 'Fecha de nacimiento (YYYY-MM-DD)',
+  })
   @IsNotEmpty()
   @IsDate()
   @Validate(EsAdulto, { message: 'Debe ser mayor de edad' })
@@ -60,17 +74,26 @@ export class CreateUserDto {
   })
   fecha_nacimiento: Date;
 
+  @ApiProperty({
+    example: 'usuario@ejemplo.com',
+    description: 'Email único del usuario',
+  })
   @IsNotEmpty()
   @MaxLength(50, { message: 'El email debe tener máximo 50 caracteres' })
   @IsEmail()
   email: string;
 
+  @ApiProperty({
+    example: 'Calle Falsa 123',
+    description: 'Dirección del usuario',
+  })
   @IsNotEmpty()
   @IsString()
   @MinLength(3, { message: 'La dirección debe tener al menos 3 caracteres' })
   @MaxLength(50, { message: 'La dirección debe tener máximo 50 caracteres' })
   direccion: string;
 
+  @ApiProperty({ example: 'Buenos Aires', description: 'Ciudad de residencia' })
   @IsNotEmpty()
   @IsString()
   @MinLength(3, { message: 'La ciudad debe tener al menos 3 caracteres' })
