@@ -17,11 +17,13 @@ import { EsAdulto } from 'src/decorators/ageValidator';
 import { MatchPassword } from 'src/decorators/matchPassword.decorator';
 
 export class CreateUserDto {
-  id: string;
+  
   @ApiProperty({
     example: 'Pérez, Juan',
     description: 'Apellido y nombre del usuario',
   })
+
+
   @IsNotEmpty({ message: 'El apellido y nombre es requerido' })
   @IsString()
   @MinLength(3, {
