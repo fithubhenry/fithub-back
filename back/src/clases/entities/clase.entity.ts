@@ -1,10 +1,8 @@
-// clases/entities/clase.entity.ts
 import {
   Column,
   Entity,
   JoinTable,
   ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Turno } from 'src/turno/entities/turno.entity'; // Ajusta la ruta
