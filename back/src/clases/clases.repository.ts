@@ -18,97 +18,91 @@ export class ClasesRepository {
     private readonly turnoRepository: Repository<Turno>,
   ) {}
 
-  async crearClase(clase: CrearClaseDto): Promise<Clase> {
-    // 1. Verificar si ya existe una clase con el mismo nombre en la misma sede
+  async crearClase(crearClaseDto: CrearClaseDto): Promise<Clase> {
+    // 1. Verificar si la clase ya existe
     const claseExistente = await this.claseRepository.findOne({
       where: {
-        nombre: clase.nombre,
-        sede: clase.sede,
+        nombre: crearClaseDto.nombre,
+        sede: crearClaseDto.sede,
       },
     });
 
     if (claseExistente) {
-      throw new ConflictException(
-        `Ya existe una clase con el nombre "${clase.nombre}" en la sede ${clase.sede}`,
-      );
+      throw new ConflictException('Clase ya existe en esta sede');
     }
 
-    // 2. Crear la clase (sin horarios primero)
-    const newClase = this.claseRepository.create({
-      nombre: clase.nombre,
-      descripcion: clase.descripcion,
-      intensidad: clase.intensidad,
-      instructor: clase.instructor,
-      duracion: clase.duracion,
-      capacidad: clase.capacidad,
-      participantes: 0, // Inicia con 0 participantes
-      tipo: clase.tipo,
-      grupo_musculo: clase.grupo_musculo,
-      sub_musculo: clase.sub_musculo,
-      sede: clase.sede,
-      imageUrl: clase.imageUrl,
+    // 2. Crear la clase sin horarios primero
+    const clase = this.claseRepository.create({
+      nombre: crearClaseDto.nombre,
+      descripcion: crearClaseDto.descripcion,
+      intensidad: crearClaseDto.intensidad,
+      instructor: crearClaseDto.instructor,
+      duracion: crearClaseDto.duracion,
+      capacidad: crearClaseDto.capacidad,
+      participantes: 0,
+      tipo: crearClaseDto.tipo,
+      grupo_musculo: crearClaseDto.grupo_musculo,
+      sub_musculo: crearClaseDto.sub_musculo,
+      sede: crearClaseDto.sede,
+      imageUrl: crearClaseDto.imageUrl,
     });
 
-    // 3. Guardar la clase en la base de datos
+    // 3. Guardar la clase primero para obtener el ID
     const claseGuardada = await this.claseRepository.save(clase);
 
-    // 4. Crear los horarios/turnos si se proporcionaron
-    if (clase.horarios && clase.horarios.length > 0) {
-      await this.crearHorariosParaClase(claseGuardada.id, clase.horarios);
+    // 4. Manejar horarios si existen
+    if (crearClaseDto.horarios && crearClaseDto.horarios.length > 0) {
+      const turnos = await this.manejarHorarios(crearClaseDto.horarios);
+
+      // Asignar los turnos a la clase
+      claseGuardada.horarios = turnos;
+
+      // Guardar la relación
+      await this.claseRepository.save(claseGuardada);
     }
 
-    // 5. Retornar la clase completa con sus horarios
+    // 5. Retornar la clase completa con relaciones
     const foundClase = await this.claseRepository.findOne({
       where: { id: claseGuardada.id },
       relations: ['horarios'],
     });
     if (!foundClase)
       throw new NotFoundException(
-        'Error al recuperar la clase de la base de datos',
+        'No se pudo recuperar la clase de la base de datos',
       );
     return foundClase;
   }
 
-  private async crearHorariosParaClase(
-    claseId: string,
-    horarios: HorarioDto[],
-  ): Promise<Turno[]> {
-    const clase = await this.claseRepository.findOneBy({ id: claseId });
-    if (!clase) {
-      throw new NotFoundException('Clase no encontrada');
-    }
-
+  private async manejarHorarios(horariosDto: HorarioDto[]): Promise<Turno[]> {
     const turnos: Turno[] = [];
 
-    for (const horario of horarios) {
-      // Verificar si ya existe un turno en la misma fecha y hora
-      const turnoExistente = await this.turnoRepository.findOne({
+    for (const horarioDto of horariosDto) {
+      // Buscar si ya existe un turno con esta fecha y hora
+      let turno = await this.turnoRepository.findOne({
         where: {
-          date: horario.fecha,
-          hora: horario.hora,
-          clase: { id: claseId },
+          fecha: horarioDto.fecha,
+          horaInicio: horarioDto.horaInicio,
+          horaFin: horarioDto.horaFin,
         },
       });
 
-      if (turnoExistente) {
-        throw new ConflictException(
-          `Ya existe un turno para la fecha ${horario.fecha} a las ${horario.hora}`,
-        );
+      // Si no existe, crear nuevo turno
+      if (!turno) {
+        turno = this.turnoRepository.create({
+          fecha: horarioDto.fecha,
+          horaInicio: horarioDto.horaInicio,
+          horaFin: horarioDto.horaFin,
+          diaSemana: this.obtenerDiaSemana(horarioDto.fecha),
+          cuposDisponibles: 50, // Capacidad por defecto
+          activo: true,
+        });
+        await this.turnoRepository.save(turno);
       }
-
-      const turno = this.turnoRepository.create({
-        date: horario.fecha,
-        hora: horario.hora,
-        diaSemana: this.obtenerDiaSemana(horario.fecha),
-        clase: clase,
-        inscriptos: 0,
-        disponible: true,
-      });
 
       turnos.push(turno);
     }
 
-    return await this.turnoRepository.save(turnos);
+    return turnos;
   }
 
   private obtenerDiaSemana(fecha: Date): string {
@@ -122,5 +116,27 @@ export class ClasesRepository {
       'SABADO',
     ];
     return dias[new Date(fecha).getDay()];
+  }
+
+  // Método adicional para agregar horarios a una clase existente
+  async agregarHorariosAClase(
+    claseId: string,
+    horariosDto: HorarioDto[],
+  ): Promise<Clase> {
+    const clase = await this.claseRepository.findOne({
+      where: { id: claseId },
+      relations: ['horarios'],
+    });
+
+    if (!clase) {
+      throw new NotFoundException('Clase no encontrada');
+    }
+
+    const nuevosTurnos = await this.manejarHorarios(horariosDto);
+
+    // Combinar horarios existentes con nuevos
+    clase.horarios = [...clase.horarios, ...nuevosTurnos];
+
+    return await this.claseRepository.save(clase);
   }
 }
