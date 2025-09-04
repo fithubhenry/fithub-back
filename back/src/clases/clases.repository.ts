@@ -93,7 +93,6 @@ export class ClasesRepository {
           horaInicio: horarioDto.horaInicio,
           horaFin: horarioDto.horaFin,
           diaSemana: this.obtenerDiaSemana(horarioDto.fecha),
-          cuposDisponibles: 50, // Capacidad por defecto
           activo: true,
         });
         await this.turnoRepository.save(turno);

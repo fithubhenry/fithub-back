@@ -57,10 +57,10 @@ export class CrearClaseDto {
   tipo: ETipos;
 
   @IsNotEmpty()
-  grupo_musculo: EGrupoMuscular;
+  grupo_musculo: [EGrupoMuscular];
 
   @IsNotEmpty()
-  sub_musculo: ESubMusculo;
+  sub_musculo: [ESubMusculo];
 
   @IsNotEmpty()
   @IsString()
