@@ -1,5 +1,12 @@
 // clases/entities/clase.entity.ts
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Turno } from 'src/turno/entities/turno.entity'; // Ajusta la ruta
 import {
   EGrupoMuscular,
@@ -19,37 +26,37 @@ export class Clase {
   @Column()
   descripcion: string;
 
-  @Column({ type: 'enum', enum: EIntensidad, default: EIntensidad.Otros })
+  @Column({ type: 'enum', enum: EIntensidad })
   intensidad: EIntensidad;
 
   @Column()
   instructor: string;
 
-  // Relación: Una Clase tiene muchos Turnos (horarios)
-  @OneToMany(() => Turno, (turno) => turno.clase)
+  @ManyToMany(() => Turno, (turno) => turno.clases, { cascade: true })
+  @JoinTable()
   horarios: Turno[];
 
   @Column()
-  duracion: string; // Ej: "01:00"
+  duracion: string;
 
-  @Column('int')
+  @Column()
   capacidad: number;
 
-  @Column('int', { default: 0 })
+  @Column({ default: 0 })
   participantes: number;
 
-  @Column({ type: 'enum', enum: ETipos, default: ETipos.Otros })
+  @Column({ type: 'enum', enum: ETipos })
   tipo: ETipos;
 
-  @Column({ type: 'enum', enum: EGrupoMuscular, default: EGrupoMuscular.Otros })
+  @Column({ type: 'enum', enum: EGrupoMuscular })
   grupo_musculo: EGrupoMuscular;
 
-  @Column({ type: 'enum', enum: ESubMusculo, default: ESubMusculo.Otros })
+  @Column({ type: 'enum', enum: ESubMusculo })
   sub_musculo: ESubMusculo;
 
   @Column()
   sede: string;
 
-  @Column({ nullable: true })
+  @Column()
   imageUrl: string;
 }
