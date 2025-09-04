@@ -4,17 +4,6 @@ import {
   ESubMusculo,
   ETipos,
 } from 'src/common/clasesEnums';
-
-export class HorarioDto {
-  @IsNotEmpty()
-  @IsDateString()
-  fecha: Date;
-
-  @IsNotEmpty()
-  @IsString()
-  hora: string;
-}
-
 import {
   IsArray,
   IsNotEmpty,
@@ -25,6 +14,16 @@ import {
   IsDateString,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+
+export class HorarioDto {
+  @IsNotEmpty()
+  @IsDateString()
+  fecha: Date;
+
+  @IsNotEmpty()
+  @IsString()
+  hora: string;
+}
 
 export class CrearClaseDto {
   @IsNotEmpty()
