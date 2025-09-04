@@ -12,18 +12,15 @@ import {
   MinLength,
   Validate,
 } from 'class-validator';
-import { EEstado } from 'src/common/statusEnum';
+import { EEstado } from 'src/common/usersEnum';
 import { EsAdulto } from 'src/decorators/ageValidator';
 import { MatchPassword } from 'src/decorators/matchPassword.decorator';
 
 export class CreateUserDto {
-  
   @ApiProperty({
     example: 'Pérez, Juan',
     description: 'Apellido y nombre del usuario',
   })
-
-
   @IsNotEmpty({ message: 'El apellido y nombre es requerido' })
   @IsString()
   @MinLength(3, {

@@ -2,12 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Clase } from './entities/clase.entity';
+import { CrearClaseDto } from './dto/create-clase.dto';
+import { ClasesRepository } from './clases.repository';
 
 @Injectable()
 export class ClasesService {
   constructor(
     @InjectRepository(Clase)
     private readonly claseRepository: Repository<Clase>,
+    private readonly clasesRepository: ClasesRepository,
   ) {}
 
   // Método para encontrar todas las clases con sus horarios
@@ -17,5 +20,9 @@ export class ClasesService {
       relations: ['horarios'], // Esto carga los turnos asociados a cada clase
       // where: {} // Aquí luego podrás agregar filtros
     });
+  }
+
+  async newClase(clase: CrearClaseDto) {
+    return this.clasesRepository.crearClase(clase);
   }
 }

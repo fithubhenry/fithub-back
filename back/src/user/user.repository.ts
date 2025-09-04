@@ -4,7 +4,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { EEstado } from 'src/common/statusEnum';
+import { EEstado } from 'src/common/usersEnum';
 
 @Injectable()
 export class UserRepository {
