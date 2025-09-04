@@ -1,4 +1,3 @@
-// clases/entities/clase.entity.ts
 import {
   Column,
   Entity,
@@ -28,4 +27,35 @@ export class Clase {
 
   @Column({ type: 'enum', enum: EIntensidad })
   intensidad: EIntensidad;
+
+  @Column()
+  instructor: string;
+
+  @ManyToMany(() => Turno, (turno) => turno.clases, { cascade: true })
+  @JoinTable()
+  horarios: Turno[];
+
+  @Column()
+  duracion: string;
+
+  @Column()
+  capacidad: number;
+
+  @Column({ default: 0 })
+  participantes: number;
+
+  @Column({ type: 'enum', enum: ETipos })
+  tipo: ETipos;
+
+  @Column({ type: 'enum', enum: EGrupoMuscular })
+  grupo_musculo: EGrupoMuscular;
+
+  @Column({ type: 'enum', enum: ESubMusculo })
+  sub_musculo: ESubMusculo;
+
+  @Column()
+  sede: string;
+
+  @Column()
+  imageUrl: string;
 }
