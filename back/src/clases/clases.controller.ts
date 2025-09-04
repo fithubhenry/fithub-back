@@ -5,7 +5,7 @@ import { Clase } from './entities/clase.entity';
 import { CrearClaseDto } from './dto/create-clase.dto';
 
 @Controller('clases')
-@UseGuards(JwtStrategy)
+// @UseGuards(JwtStrategy)
 export class ClasesController {
   constructor(private readonly clasesService: ClasesService) {}
 

@@ -46,11 +46,11 @@ export class Clase {
   @Column({ type: 'enum', enum: ETipos })
   tipo: ETipos;
 
-  @Column({ type: 'enum', enum: EGrupoMuscular })
-  grupo_musculo: EGrupoMuscular;
+  @Column({ type: 'jsonb', default: [EGrupoMuscular.Otros] })
+  grupo_musculo: [EGrupoMuscular];
 
-  @Column({ type: 'enum', enum: ESubMusculo })
-  sub_musculo: ESubMusculo;
+  @Column({ type: 'jsonb', default: [ESubMusculo.Otros] })
+  sub_musculo: [ESubMusculo];
 
   @Column()
   sede: string;

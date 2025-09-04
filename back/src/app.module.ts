@@ -8,10 +8,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmConfig } from './config/typeOrmConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
+import { ClasesModule } from './clases/clases.module';
 
 @Module({
   imports: [
     UserModule,
+    ClasesModule,
     AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,

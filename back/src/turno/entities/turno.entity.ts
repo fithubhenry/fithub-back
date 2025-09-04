@@ -21,8 +21,8 @@ export class Turno {
   @ManyToMany(() => Clase, (clase) => clase.horarios)
   clases: Clase[];
 
-  @Column({ default: 0 })
-  cuposDisponibles: number;
+  @Column({ type: 'int', default: '0' })
+  inscriptos: number;
 
   @Column({ default: true })
   activo: boolean;
