@@ -8,7 +8,7 @@ import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import { User } from 'src/user/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { EEstado } from 'src/common/statusEnum';
+import { EEstado } from 'src/common/usersEnum';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { EEstado } from 'src/common/statusEnum';
+import { EEstado } from 'src/common/usersEnum';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
@@ -21,6 +21,6 @@ export class User {
   ciudad: string;
   @Column({ type: 'boolean', default: false })
   esAdmin: boolean;
-  @Column({ default: EEstado.Invitado })
+  @Column({ type: 'enum', enum: EEstado, default: EEstado.Invitado })
   estado: EEstado;
 }

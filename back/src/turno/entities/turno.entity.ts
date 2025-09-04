@@ -6,8 +6,20 @@ export class Turno {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'timestamp' }) // Tipo más adecuado para fecha+hora
+  @Column('date') // Almacena solo la fecha (YYYY-MM-DD)
   date: Date;
+
+  @Column('time') // Almacena solo la hora (HH:MM:SS)
+  hora: string;
+
+  @Column()
+  diaSemana: string; // Ej: "LUNES", "MARTES"
+
+  @Column({ default: 0 })
+  inscriptos: number;
+
+  @Column({ default: true })
+  disponible: boolean;
 
   // Relación: Muchos Turnos pertenecen a una Clase
   @ManyToOne(() => Clase, (clase) => clase.horarios, { onDelete: 'CASCADE' })
