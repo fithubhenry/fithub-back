@@ -3,7 +3,6 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Turno } from 'src/turno/entities/turno.entity'; // Ajusta la ruta
