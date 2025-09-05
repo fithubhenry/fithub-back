@@ -1,8 +1,8 @@
 import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto } from '../user/dto/create-user.dto';
+import { CreateUserDto } from '../user/dto/createUser.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-import { LoginUserDto } from '../user/dto/login-user.dto';
+import { LoginUserDto } from '../user/dto/loginUser.dto';
 
 @ApiTags('auth') // 👈 Agrupa los endpoints bajo 'auth' en Swagger
 @Controller('auth')

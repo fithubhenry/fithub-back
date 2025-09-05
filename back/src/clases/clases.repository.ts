@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Clase } from './entities/clase.entity';
 import { Turno } from '../turno/entities/turno.entity';
-import { CrearClaseDto, HorarioDto } from './dto/create-clase.dto';
+import { CrearClaseDto, HorarioDto } from './dto/createClase.dto';
 
 @Injectable()
 export class ClasesRepository {

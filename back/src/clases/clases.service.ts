@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Clase } from './entities/clase.entity';
-import { CrearClaseDto } from './dto/create-clase.dto';
+import { CrearClaseDto } from './dto/createClase.dto';
 import { ClasesRepository } from './clases.repository';
 import { FiltroClasesDto, OpcionesFiltro } from './dto/filtros.dto';
 import { FiltrosRepository } from './filtros.repository';
