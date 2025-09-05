@@ -46,10 +46,10 @@ export class Clase {
   @Column({ type: 'enum', enum: ETipos })
   tipo: ETipos;
 
-  @Column({ type: 'jsonb', default: [EGrupoMuscular.Otros] })
+  @Column({ type: 'json', default: [EGrupoMuscular.Otros] })
   grupo_musculo: [EGrupoMuscular];
 
-  @Column({ type: 'jsonb', default: [ESubMusculo.Otros] })
+  @Column({ type: 'json', default: [ESubMusculo.Otros] })
   sub_musculo: [ESubMusculo];
 
   @Column()

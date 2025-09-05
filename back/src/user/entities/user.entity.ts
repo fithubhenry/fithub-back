@@ -7,9 +7,9 @@ export class User {
   id: string;
   @Column({ type: 'varchar', length: 20, nullable: false })
   apellido_nombre: string;
-  @Column({ type: 'varchar', nullable: false, length: 20 })
+  @Column({ type: 'varchar', nullable: false, length: 60 })
   password: string;
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'bigint', nullable: false })
   telefono: number;
   @Column({ type: 'date', nullable: false })
   fecha_nacimiento: Date;

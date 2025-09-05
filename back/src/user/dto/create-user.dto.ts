@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsDate,
   IsEmail,
@@ -67,6 +68,7 @@ export class CreateUserDto {
   })
   @IsNotEmpty()
   @IsDate()
+  @Type(() => Date)
   @Validate(EsAdulto, { message: 'Debe ser mayor de edad' })
   @MaxDate(new Date(), {
     message: 'La fecha de nacimiento no puede ser en el futuro',
