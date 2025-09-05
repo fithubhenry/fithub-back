@@ -1,7 +1,15 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { TurnoService } from './turno.service';
-import { CreateTurnoDto } from './dto/create-turno.dto';
-import { UpdateTurnoDto } from './dto/update-turno.dto';
+import { CreateTurnoDto } from './dto/createTurno.dto';
+import { UpdateTurnoDto } from './dto/updateTurno.dto';
 
 @Controller('turno')
 export class TurnoController {

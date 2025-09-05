@@ -1,9 +1,11 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Turno } from 'src/turno/entities/turno.entity'; // Ajusta la ruta
 import {
@@ -57,4 +59,11 @@ export class Clase {
 
   @Column()
   imageUrl: string;
+
+  // ✅ Fechas automáticas de creación y actualización
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
+
+  @UpdateDateColumn({ type: 'timestamp' })
+  updatedAt: Date;
 }

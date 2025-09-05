@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateTurnoDto } from './dto/create-turno.dto';
-import { UpdateTurnoDto } from './dto/update-turno.dto';
+import { CreateTurnoDto } from './dto/createTurno.dto';
+import { UpdateTurnoDto } from './dto/updateTurno.dto';
 
 @Injectable()
 export class TurnoService {
