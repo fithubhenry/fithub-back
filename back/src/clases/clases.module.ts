@@ -5,10 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Clase } from './entities/clase.entity';
 import { Turno } from 'src/turno/entities/turno.entity';
 import { ClasesRepository } from './clases.repository';
+import { FiltrosRepository } from './filtros.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Clase, Turno])],
   controllers: [ClasesController],
-  providers: [ClasesService, ClasesRepository],
+  providers: [ClasesService, ClasesRepository, FiltrosRepository],
 })
 export class ClasesModule {}

@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { Clase } from './entities/clase.entity';
 import { CrearClaseDto } from './dto/create-clase.dto';
 import { ClasesRepository } from './clases.repository';
+import { FiltroClasesDto, OpcionesFiltro } from './dto/filtros.dto';
+import { FiltrosRepository } from './filtros.repository';
 
 @Injectable()
 export class ClasesService {
@@ -11,6 +13,7 @@ export class ClasesService {
     @InjectRepository(Clase)
     private readonly claseRepository: Repository<Clase>,
     private readonly clasesRepository: ClasesRepository,
+    private readonly filtrosRepository: FiltrosRepository,
   ) {}
 
   // Método para encontrar todas las clases con sus horarios
@@ -24,5 +27,9 @@ export class ClasesService {
 
   async newClase(clase: CrearClaseDto) {
     return this.clasesRepository.crearClase(clase);
+  }
+
+  async busquedaConFiltros(filtros: FiltroClasesDto) {
+    return this.filtrosRepository.filtrarClases(filtros);
   }
 }
