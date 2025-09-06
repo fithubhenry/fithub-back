@@ -1,0 +1,262 @@
+[
+  {
+    "nombre": "Crossfit de Alta Intensidad",
+    "descripcion": "Un entrenamiento de Crossfit diseñado para llevar tu capacidad al límite.",
+    "intensidad": "Muy Alta",
+    "instructor": "Carlos Ruiz",
+    "duracion": "1 hora",
+    "capacidad": 10,
+    "tipo": "Crossfit",
+    "grupo_musculo": ["Pierna", "Pecho", "Espalda"],
+    "sub_musculo": ["Cuadriceps", "Dorsal"],
+    "sede": "Norte",
+    "imageUrl": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      {
+        "fecha": "2025-09-15",
+        "horaInicio": "18:00:00",
+        "horaFin": "19:00:00"
+      },
+      { "fecha": "2025-09-17", "horaInicio": "18:00:00", "horaFin": "19:00:00" }
+    ]
+  },
+  {
+    "nombre": "Yoga Restaurativo",
+    "descripcion": "Una clase suave de yoga para relajar cuerpo y mente.",
+    "intensidad": "Baja",
+    "instructor": "Elena Gómez",
+    "duracion": "1.5 horas",
+    "capacidad": 20,
+    "tipo": "Yoga",
+    "grupo_musculo": ["Otros"],
+    "sub_musculo": ["Otros"],
+    "sede": "Central",
+    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      {
+        "fecha": "2025-09-16",
+        "horaInicio": "08:00:00",
+        "horaFin": "09:30:00"
+      },
+      { "fecha": "2025-09-18", "horaInicio": "08:00:00", "horaFin": "09:30:00" }
+    ]
+  },
+  {
+    "nombre": "Spinning Rítmico",
+    "descripcion": "Pedalea al ritmo de la música en esta energizante clase de spinning.",
+    "intensidad": "Alta",
+    "instructor": "Marco Diaz",
+    "duracion": "45 minutos",
+    "capacidad": 25,
+    "tipo": "Spinning",
+    "grupo_musculo": ["Pierna", "Gluteo"],
+    "sub_musculo": ["Cuadriceps"],
+    "sede": "Sur",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      {
+        "fecha": "2025-09-15",
+        "horaInicio": "19:00:00",
+        "horaFin": "19:45:00"
+      },
+      { "fecha": "2025-09-19", "horaInicio": "19:00:00", "horaFin": "19:45:00" }
+    ]
+  },
+  {
+    "nombre": "Pilates Mat",
+    "descripcion": "Fortalece tu core y mejora tu postura con ejercicios de Pilates en colchoneta.",
+    "intensidad": "Media",
+    "instructor": "Lucía Fernández",
+    "duracion": "1 hora",
+    "capacidad": 15,
+    "tipo": "Pilates",
+    "grupo_musculo": ["Abdomen"],
+    "sub_musculo": ["Abdominal"],
+    "sede": "Central",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      {
+        "fecha": "2025-09-16",
+        "horaInicio": "10:00:00",
+        "horaFin": "11:00:00"
+      },
+      { "fecha": "2025-09-23", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
+    ]
+  },
+  {
+    "nombre": "Zumba Party",
+    "descripcion": "Baila y diviértete mientras quemas calorías.",
+    "intensidad": "Media",
+    "instructor": "Sofía Reyes",
+    "duracion": "1 hora",
+    "capacidad": 30,
+    "tipo": "Zumba",
+    "grupo_musculo": ["Otros"],
+    "sub_musculo": ["Otros"],
+    "sede": "Sur",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-09-20", "horaInicio": "17:00:00", "horaFin": "18:00:00" }
+    ]
+  },
+  {
+    "nombre": "Entrenamiento de Fuerza",
+    "descripcion": "Enfocado en el desarrollo de la fuerza muscular en pecho y brazos.",
+    "intensidad": "Alta",
+    "instructor": "Javier Moreno",
+    "duracion": "1.25 horas",
+    "capacidad": 12,
+    "tipo": "Otros",
+    "grupo_musculo": ["Pecho", "Brazos"],
+    "sub_musculo": ["Biceps", "Triceps"],
+    "sede": "Norte",
+    "imageUrl": "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-09-22", "horaInicio": "15:00:00", "horaFin": "16:15:00" }
+    ]
+  },
+  {
+    "nombre": "Boxeo Fitness",
+    "descripcion": "Combina técnicas de boxeo con acondicionamiento físico.",
+    "intensidad": "Muy Alta",
+    "instructor": "David Peña",
+    "duracion": "1 hora",
+    "capacidad": 18,
+    "tipo": "Otros",
+    "grupo_musculo": ["Hombros", "Espalda"],
+    "sub_musculo": ["Hombros", "Dorsal"],
+    "sede": "Oeste",
+    "imageUrl": "https://images.pexels.com/photos/4761787/pexels-photo-4761787.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-09-18", "horaInicio": "20:00:00", "horaFin": "21:00:00" }
+    ]
+  },
+  {
+    "nombre": "Glute Boom",
+    "descripcion": "Clase intensiva para fortalecer y tonificar los glúteos.",
+    "intensidad": "Alta",
+    "instructor": "Valeria Luna",
+    "duracion": "45 minutos",
+    "capacidad": 20,
+    "tipo": "Otros",
+    "grupo_musculo": ["Gluteo"],
+    "sub_musculo": ["Otros"],
+    "sede": "Central",
+    "imageUrl": "https://images.pexels.com/photos/383803A/pexels-photo-3838030.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-09-24", "horaInicio": "18:30:00", "horaFin": "19:15:00" }
+    ]
+  },
+  {
+    "nombre": "Functional Training",
+    "descripcion": "Entrenamiento funcional para mejorar la movilidad y la fuerza.",
+    "intensidad": "Media",
+    "instructor": "Andrés Gil",
+    "duracion": "1 hora",
+    "capacidad": 15,
+    "tipo": "Otros",
+    "grupo_musculo": ["Abdomen", "Pierna"],
+    "sub_musculo": ["Abdominal", "Cuadriceps"],
+    "sede": "Este",
+    "imageUrl": "https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-09-25", "horaInicio": "07:00:00", "horaFin": "08:00:00" }
+    ]
+  },
+  {
+    "nombre": "Hatha Yoga",
+    "descripcion": "Yoga tradicional con posturas mantenidas para alinear el cuerpo.",
+    "intensidad": "Baja",
+    "instructor": "Isabel Sol",
+    "duracion": "1.5 horas",
+    "capacidad": 22,
+    "tipo": "Yoga",
+    "grupo_musculo": ["Otros"],
+    "sub_musculo": ["Otros"],
+    "sede": "Sur",
+    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-09-26", "horaInicio": "16:00:00", "horaFin": "17:30:00" }
+    ]
+  },
+  {
+    "nombre": "HIIT",
+    "descripcion": "Entrenamiento interválico de alta intensidad para quemar grasa.",
+    "intensidad": "Muy Alta",
+    "instructor": "Roberto Sanz",
+    "duracion": "30 minutos",
+    "capacidad": 15,
+    "tipo": "Otros",
+    "grupo_musculo": ["Pierna"],
+    "sub_musculo": ["Cuadriceps"],
+    "sede": "Norte",
+    "imageUrl": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-09-29", "horaInicio": "13:00:00", "horaFin": "13:30:00" }
+    ]
+  },
+  {
+    "nombre": "Danza Árabe",
+    "descripcion": "Aprende los movimientos sensuales y técnicos de la danza del vientre.",
+    "intensidad": "Baja",
+    "instructor": "Yasmin Al-Jamil",
+    "duracion": "1 hora",
+    "capacidad": 18,
+    "tipo": "Otros",
+    "grupo_musculo": ["Abdomen"],
+    "sub_musculo": ["Abdominal"],
+    "sede": "Oeste",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-09-30", "horaInicio": "19:30:00", "horaFin": "20:30:00" }
+    ]
+  },
+  {
+    "nombre": "Powerlifting Basics",
+    "descripcion": "Introducción a los levantamientos básicos: sentadilla, peso muerto y press de banca.",
+    "intensidad": "Alta",
+    "instructor": "Iván Petrov",
+    "duracion": "2 horas",
+    "capacidad": 8,
+    "tipo": "Otros",
+    "grupo_musculo": ["Pierna", "Pecho", "Espalda"],
+    "sub_musculo": ["Cuadriceps", "Dorsal"],
+    "sede": "Norte",
+    "imageUrl": "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-10-01", "horaInicio": "17:00:00", "horaFin": "19:00:00" }
+    ]
+  },
+  {
+    "nombre": "Estiramiento Profundo",
+    "descripcion": "Mejora tu flexibilidad y rango de movimiento con esta clase de estiramiento.",
+    "intensidad": "Baja",
+    "instructor": "Laura Paz",
+    "duracion": "45 minutos",
+    "capacidad": 25,
+    "tipo": "Otros",
+    "grupo_musculo": ["Otros"],
+    "sub_musculo": ["Otros"],
+    "sede": "Este",
+    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-10-02", "horaInicio": "11:00:00", "horaFin": "11:45:00" }
+    ]
+  },
+  {
+    "nombre": "Aqua Gym",
+    "descripcion": "Ejercicio de bajo impacto en el agua, ideal para todas las edades.",
+    "intensidad": "Baja",
+    "instructor": "Miguel Acuña",
+    "duracion": "1 hora",
+    "capacidad": 20,
+    "tipo": "Otros",
+    "grupo_musculo": ["Otros"],
+    "sub_musculo": ["Otros"],
+    "sede": "Piscina",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "horarios": [
+      { "fecha": "2025-10-03", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
+    ]
+  }
+]

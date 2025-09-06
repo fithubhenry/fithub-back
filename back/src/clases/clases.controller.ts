@@ -94,4 +94,9 @@ export class ClasesController {
   async filterClases(@Query() filtros: FiltroClasesDto) {
     return this.clasesService.busquedaConFiltros(filtros);
   }
+
+  @Get('seeder')
+  async cargaSeeder() {
+    return this.clasesService.cargaSeeder();
+  }
 }

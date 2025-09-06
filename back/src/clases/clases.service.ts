@@ -32,4 +32,8 @@ export class ClasesService {
   async busquedaConFiltros(filtros: FiltroClasesDto) {
     return this.filtrosRepository.filtrarClases(filtros);
   }
+
+  async cargaSeeder() {
+    return this.clasesRepository.cargaSeeder();
+  }
 }

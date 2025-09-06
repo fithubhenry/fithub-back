@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import ENV from './config/enviroments';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -31,7 +32,7 @@ async function bootstrap() {
       transform: true, // Convierte tipos automáticamente (ej: string a number)
     }),
   );
-  await app.listen(process.env.PORT ?? 3000);
-  console.log('App corriendo en puerto: ' + process.env.APP_PORT);
+  await app.listen(ENV.APP_PORT ?? 3000);
+  console.log('App corriendo en puerto: ' + ENV.APP_PORT);
 }
 bootstrap();
