@@ -102,14 +102,14 @@ export class CrearClaseDto {
     description: 'Grupo muscular de la clase',
   })
   @IsNotEmpty()
-  grupo_musculo: [EGrupoMuscular];
+  grupo_musculo: EGrupoMuscular[];
 
   @ApiProperty({
     example: 'Cuadriceps',
     description: 'Subgrupo muscular de la clase',
   })
   @IsNotEmpty()
-  sub_musculo: [ESubMusculo];
+  sub_musculo: ESubMusculo[];
 
   @ApiProperty({
     example: 'Central',

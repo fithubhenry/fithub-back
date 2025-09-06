@@ -1,4 +1,10 @@
 import {
+  EGrupoMuscular,
+  EIntensidad,
+  ESubMusculo,
+  ETipos,
+} from 'src/common/clasesEnums';
+import {
   Injectable,
   NotFoundException,
   ConflictException,
@@ -8,6 +14,9 @@ import { Repository } from 'typeorm';
 import { Clase } from './entities/clase.entity';
 import { Turno } from '../turno/entities/turno.entity';
 import { CrearClaseDto, HorarioDto } from './dto/createClase.dto';
+import * as fs from 'fs';
+import clasesSeeder from '../helpers/clasesSeeder.json';
+import * as path from 'path';
 
 @Injectable()
 export class ClasesRepository {
@@ -137,5 +146,48 @@ export class ClasesRepository {
     clase.horarios = [...clase.horarios, ...nuevosTurnos];
 
     return await this.claseRepository.save(clase);
+  }
+
+  async cargaSeeder() {
+    // Al importar directamente el JSON, TypeScript y el empaquetador se encargan de incluirlo.
+    // Mapeamos los datos del seeder para convertir las fechas de string a Date.
+    const clases: CrearClaseDto[] = clasesSeeder.map((clase) => {
+      return {
+        ...clase,
+        // Le decimos a TypeScript que trate estos strings como sus tipos enum correspondientes.
+        intensidad: clase.intensidad as EIntensidad,
+        tipo: clase.tipo as ETipos,
+        grupo_musculo: clase.grupo_musculo as EGrupoMuscular[],
+        sub_musculo: clase.sub_musculo as ESubMusculo[],
+        horarios: clase.horarios.map((horario) => {
+          return {
+            ...horario,
+            fecha: new Date(horario.fecha), // Aquí ocurre la conversión
+          };
+        }),
+      };
+    });
+    //Recorrido del array
+    for (const clase of clases) {
+      // Verificar si la clase ya existe antes de intentar crearla
+      const claseExistente = await this.claseRepository.findOne({
+        where: {
+          nombre: clase.nombre,
+          sede: clase.sede,
+        },
+      });
+
+      if (!claseExistente) {
+        try {
+          await this.crearClase(clase);
+          console.log(`Clase '${clase.nombre}' creada exitosamente.`);
+        } catch (error) {
+          // Este catch ahora solo se activará para errores inesperados, no para conflictos
+          console.log(
+            `Error al crear la clase '${clase.nombre}': ${error.message}`,
+          );
+        }
+      }
+    }
   }
 }
