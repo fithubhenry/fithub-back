@@ -4,11 +4,11 @@ import ENV from './enviroments';
 
 const config = {
   type: 'postgres',
-  database: ENV.DB_NAME,
-  host: ENV.DB_HOST,
-  port: ENV.DB_PORT,
-  username: ENV.DB_USERNAME,
-  password: ENV.DB_PASSWORD,
+  database: process.env.DB_NAME,
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
   entities: ['dist/**/*.entity{.ts,.js}'],
   migration: ['dist/migrations/*{.ts,.js}'],
   autoLoadEntities: true,
