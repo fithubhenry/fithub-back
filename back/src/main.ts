@@ -32,7 +32,13 @@ async function bootstrap() {
       transform: true, // Convierte tipos automáticamente (ej: string a number)
     }),
   );
-  await app.listen(ENV.APP_PORT ?? 3000);
-  console.log('App corriendo en puerto: ' + ENV.APP_PORT);
+  //? Para trabajar en local
+  // await app.listen(ENV.APP_PORT ?? 3000);
+  // console.log('App corriendo en puerto: ' + ENV.APP_PORT);
+
+  //?Puerto dinamico para RENDER
+  const port = process.env.PORT || 3000;
+  await app.listen(port);
+  console.log(`✅ App corriendo en puerto: ${port}`);
 }
 bootstrap();
