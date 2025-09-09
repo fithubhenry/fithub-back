@@ -60,7 +60,7 @@ export class Clase {
   @Column()
   imageUrl: string;
 
-  // ✅ Fechas automáticas de creación y actualización
+  // Fechas automáticas de creación y actualización
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
