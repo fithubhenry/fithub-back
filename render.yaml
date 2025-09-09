@@ -2,13 +2,14 @@ services:
   - type: web
     name: fithub-back
     env: node
+    branch: sebadev # Cambiá por tu rama principal
     buildCommand: npm install && npm run build
     startCommand: npm run start
     plan: free
     envVars:
       - key: DATABASE_URL
         fromDatabase:
-          name: fithub-db
+          name: fithub-test # Nombre de tu DB en Render
           property: connectionString
       - key: CLOUDINARY_CLOUD_NAME
         sync: false
@@ -18,6 +19,7 @@ services:
         sync: false
       - key: JWT_SECRET
         sync: false
+
 databases:
   - name: fithub-db
     plan: free
