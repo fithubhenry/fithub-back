@@ -64,7 +64,8 @@ export class AuthService {
     //Crear Usuario
 
     const user = this.userRepository.create({
-      apellido_nombre: dto.apellido_nombre,
+      nombre: dto.nombre,
+      apellido: dto.apellido,
       email: dto.email,
       password: hashedPassword,
       telefono: dto.telefono,
@@ -83,5 +84,27 @@ export class AuthService {
 
     const { password, ...userWithoutPassword } = savedUser;
     return userWithoutPassword;
+  }
+
+  async signInWithGoogle(googleUser: {
+    email: string;
+    firstName: string;
+    lastName: string;
+  }) {
+    let user = await this.userRepository.findOneBy({ email: googleUser.email });
+
+    if (!user) {
+      // Si el usuario no existe, créalo en tu base de datos
+      user = await this.userRepository.save(googleUser);
+    }
+
+    // Genera un JWT para el usuario autenticado
+    const payload = {
+      userId: user.id,
+      email: user.email,
+      esAdmin: user.esAdmin,
+      estado: user.estado,
+    };
+    return this.jwtService.sign(payload);
   }
 }
