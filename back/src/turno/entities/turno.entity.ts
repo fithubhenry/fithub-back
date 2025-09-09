@@ -1,5 +1,12 @@
+import { User } from 'src/user/entities/user.entity';
 import { Clase } from '../../clases/entities/clase.entity';
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Turno {
@@ -26,4 +33,6 @@ export class Turno {
 
   @Column({ default: true })
   activo: boolean;
+  @ManyToOne(() => User, (user) => user.turnos)
+  user: User;
 }

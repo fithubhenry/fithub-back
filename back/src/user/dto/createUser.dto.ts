@@ -6,6 +6,7 @@ import {
   IsEmpty,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   IsString,
   Matches,
   MaxDate,
@@ -19,21 +20,35 @@ import { MatchPassword } from 'src/decorators/matchPassword.decorator';
 
 export class CreateUserDto {
   @ApiProperty({
-    example: 'Pérez, Juan',
-    description: 'Apellido y nombre del usuario',
+    example: 'Juan',
+    description: 'Nombre del usuario',
+  })
+  @IsNotEmpty({ message: 'El nombre es requerido' })
+  @IsString()
+  @MinLength(3, {
+    message: 'El nombre debe tener al menos 3 caracteres',
+  })
+  @MaxLength(20, {
+    message: 'El nombre debe tener máximo 20 caracteres',
+  })
+  nombre: string;
+
+  @ApiProperty({
+    example: 'Pérez',
+    description: 'Apellido del usuario',
   })
   @IsNotEmpty({ message: 'El apellido y nombre es requerido' })
   @IsString()
   @MinLength(3, {
-    message: 'El apellido y nombre debe tener al menos 3 caracteres',
+    message: 'El apellido debe tener al menos 3 caracteres',
   })
-  @MaxLength(20, {
-    message: 'El apellido y nombre debe tener máximo 20 caracteres',
+  @MaxLength(25, {
+    message: 'El apellido debe tener máximo 25 caracteres',
   })
-  apellido_nombre: string;
+  apellido: string;
 
   @ApiProperty({ example: 'Test123!', description: 'Contraseña segura' })
-  @IsNotEmpty({ message: 'El password es requerido' })
+  @IsOptional()
   @IsString()
   @MinLength(8, { message: 'El password debe tener al menos 8 caracteres' })
   @MaxLength(20, { message: 'El password debe tener máximo 20 caracteres' })
@@ -53,12 +68,12 @@ export class CreateUserDto {
     example: 'Test123!',
     description: 'Confirmación de la contraseña',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @Validate(MatchPassword, ['password'])
   confirmPassword: string;
 
   @ApiProperty({ example: 5491112345678, description: 'Número de teléfono' })
-  @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   telefono: number;
 
@@ -66,7 +81,7 @@ export class CreateUserDto {
     example: '1990-01-01',
     description: 'Fecha de nacimiento (YYYY-MM-DD)',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsDate()
   @Type(() => Date)
   @Validate(EsAdulto, { message: 'Debe ser mayor de edad' })
@@ -88,14 +103,14 @@ export class CreateUserDto {
     example: 'Calle Falsa 123',
     description: 'Dirección del usuario',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MinLength(3, { message: 'La dirección debe tener al menos 3 caracteres' })
   @MaxLength(50, { message: 'La dirección debe tener máximo 50 caracteres' })
   direccion: string;
 
   @ApiProperty({ example: 'Buenos Aires', description: 'Ciudad de residencia' })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MinLength(3, { message: 'La ciudad debe tener al menos 3 caracteres' })
   @MaxLength(50, { message: 'La ciudad debe tener máximo 50 caracteres' })
