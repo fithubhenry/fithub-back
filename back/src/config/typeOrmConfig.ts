@@ -12,7 +12,7 @@ const config = isProd
       migrations: ['dist/migrations/*{.ts,.js}'],
       autoLoadEntities: true,
       logging: ['error'],
-      synchronize: false, // ⚠️ mejor usar migraciones en prod
+      synchronize: true, // ⚠️ mejor usar migraciones en prod
       ssl: {
         rejectUnauthorized: false, // necesario en Render
       },
