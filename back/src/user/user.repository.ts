@@ -51,4 +51,17 @@ export class UserRepository {
     await this.userRepository.save(userFound);
     return `Usuario con id ${id} eliminado exitosamente`;
   }
+  async createUserFromGoogle(googleUser: {
+    email: string;
+    firstName: string;
+    lastName: string;
+  }): Promise<User> {
+    const newUser = this.userRepository.create({
+      email: googleUser.email,
+      nombre: googleUser.firstName,
+      apellido: googleUser.lastName,
+      // Puedes añadir más campos por defecto o asignar un rol aquí
+    });
+    return this.userRepository.save(newUser);
+  }
 }

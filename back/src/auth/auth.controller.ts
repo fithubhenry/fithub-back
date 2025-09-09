@@ -1,13 +1,57 @@
-import { Controller, Post, Body, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  HttpCode,
+  HttpStatus,
+  Get,
+  UseGuards,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from '../user/dto/createUser.dto';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { LoginUserDto } from '../user/dto/loginUser.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('auth') // 👈 Agrupa los endpoints bajo 'auth' en Swagger
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
+  @Get('google')
+  @UseGuards(AuthGuard('google'))
+  async googleAuth(@Req() req) {
+    // Redirige a Google para el proceso de autenticación.
+    // Este método no se ejecuta realmente porque Passport se encarga de la redirección.
+  }
+
+  @Get('google/callback')
+  @UseGuards(AuthGuard('google'))
+  async googleAuthRedirect(@Req() req, @Res() res) {
+    // Cuando Google redirige al usuario de vuelta, el objeto 'req.user'
+    // contendrá la información del usuario obtenida en GoogleStrategy.validate.
+
+    const { email, firstName, lastName } = req.user;
+
+    // Aquí, puedes buscar el usuario en tu base de datos o crearlo si no existe.
+    // Luego, generas un JWT para tu aplicación.
+    const jwtToken = await this.authService.signInWithGoogle({
+      email,
+      firstName,
+      lastName,
+    });
+
+    // Redirige al frontend con el token o un mensaje de éxito.
+    // Puedes pasar el token como un parámetro de consulta, en el fragmento (#) o a través de cookies.
+    // Para simplificar, lo pasaremos como parámetro de consulta.
+    return res.redirect(
+      `http://localhost:3000/login/success?token=${jwtToken}`,
+    );
+    // O puedes devolverlo directamente si tu frontend hace una petición AJAX a este endpoint.
+    // return { message: 'User authenticated successfully', token: jwtToken };
+  }
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
