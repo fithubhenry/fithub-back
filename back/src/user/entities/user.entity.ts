@@ -4,8 +4,6 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -35,6 +33,5 @@ export class User {
   @Column({ type: 'enum', enum: EEstado, default: EEstado.Invitado })
   estado: EEstado;
   @OneToMany(() => Turno, (turno) => turno.user)
-  @JoinTable()
   turnos: Turno[];
 }

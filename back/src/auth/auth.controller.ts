@@ -46,11 +46,11 @@ export class AuthController {
     // Redirige al frontend con el token o un mensaje de éxito.
     // Puedes pasar el token como un parámetro de consulta, en el fragmento (#) o a través de cookies.
     // Para simplificar, lo pasaremos como parámetro de consulta.
-    return res.redirect(
-      `http://localhost:3000/login/success?token=${jwtToken}`,
-    );
-    // O puedes devolverlo directamente si tu frontend hace una petición AJAX a este endpoint.
-    // return { message: 'User authenticated successfully', token: jwtToken };
+    // return res.redirect(
+    // `http://localhost:3000/login/success?token=${jwtToken}`,
+    // );
+    // O puedes devolverlo directamente si tu fronstend hace una petición AJAX a este endpoint.
+    return { message: 'User authenticated successfully', token: jwtToken };
   }
 
   @Post('register')
