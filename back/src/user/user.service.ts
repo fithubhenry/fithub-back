@@ -3,6 +3,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserRepository } from './user.repository';
 import { User } from './entities/user.entity';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
+import { Express } from 'express';
 
 @Injectable()
 export class UserService {
@@ -24,11 +25,13 @@ export class UserService {
   }
 
   async updateProfileImage(id: string, file: Express.Multer.File) {
-    const user = await this.findOne(id);
+    const user = await this.userRepository.findOneById(id);
     const uploadResult = await this.cloudinaryService.uploadImage(file);
 
-    user.profileImageUrl = uploadResult.secure_url;
-    return this.userRepository.saveUser(user);
+    // Actualizamos el usuario con la URL de Cloudinary
+    return this.userRepository.updateUser(id, {
+      profileImageUrl: uploadResult.secure_url,
+    });
   }
 
   remove(id: string) {

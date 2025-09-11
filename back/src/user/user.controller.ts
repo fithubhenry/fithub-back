@@ -8,6 +8,8 @@ import {
   ParseUUIDPipe,
   HttpCode,
   HttpStatus,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/updateUser.dto';
@@ -19,6 +21,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserResponseDto } from 'src/helpers/userResponse.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('users')
 @Controller('users')
@@ -66,6 +69,15 @@ export class UserController {
     @Body() updateUser: UpdateUserDto,
   ) {
     return this.userService.update(id, updateUser);
+  }
+
+  @Patch(':id/profile-image')
+  @UseInterceptors(FileInterceptor('file'))
+  async updateProfileImage(
+    @Param('id') id: string,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    return this.userService.updateProfileImage(id, file);
   }
 
   @Delete(':id')

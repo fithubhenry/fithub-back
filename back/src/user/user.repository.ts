@@ -22,10 +22,19 @@ export class UserRepository {
     return user;
   }
 
-  async updateUser(id: string, user: UpdateUserDto): Promise<User> {
-    const userFound = await this.findOneById(id);
-    const userUpdated = Object.assign(userFound, user);
-    return this.userRepository.save(userUpdated);
+  async updateUser(
+    id: string,
+    user: Partial<User>,
+  ): Promise<Omit<User, 'password'>> {
+    const userFound = await this.userRepository.findOneBy({ id });
+    if (!userFound)
+      throw new NotFoundException(`No se encontro el usuario con id ${id}`);
+
+    const updatedUser = Object.assign(userFound, user);
+    await this.userRepository.save(updatedUser);
+
+    const { password, ...userFiltered } = updatedUser;
+    return userFiltered;
   }
 
   async deleteUser(id: string): Promise<User> {
