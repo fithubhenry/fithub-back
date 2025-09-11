@@ -37,4 +37,6 @@ export class User {
   @OneToMany(() => Turno, (turno) => turno.user)
   @JoinTable()
   turnos: Turno[];
+  @Column({ type: 'varchar', nullable: true })
+  profileImageUrl: string | null;
 }
