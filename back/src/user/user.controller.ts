@@ -72,6 +72,11 @@ export class UserController {
   }
 
   @Patch(':id/profile-image')
+  @ApiOperation({ summary: 'Actualizar la imagen de perfil de un usuario' })
+  @ApiParam({ name: 'id', description: 'UUID del usuario' })
+  @ApiBody({ type: UpdateUserDto })
+  @ApiResponse({ status: 200, description: 'Imagen de perfil actualizada' })
+  @ApiResponse({ status: 400, description: 'Datos incorrectos' })
   @UseInterceptors(FileInterceptor('file'))
   async updateProfileImage(
     @Param('id') id: string,
