@@ -46,11 +46,16 @@ export class AuthController {
     // Redirige al frontend con el token o un mensaje de éxito.
     // Puedes pasar el token como un parámetro de consulta, en el fragmento (#) o a través de cookies.
     // Para simplificar, lo pasaremos como parámetro de consulta.
-    return res.redirect(
-      `http://localhost:3000/login/success?token=${jwtToken}`,
-    );
-    // O puedes devolverlo directamente si tu frontend hace una petición AJAX a este endpoint.
+    // return res.redirect(
+    // `http://localhost:3000/login/success?token=${jwtToken}`,
+    // );
+    // O puedes devolverlo directamente si tu fronstend hace una petición AJAX a este endpoint.
     // return { message: 'User authenticated successfully', token: jwtToken };
+    // Lo pasaremos como un parámetro de consulta (query param).
+    // Asegúrate de que la URL del frontend sea la correcta.
+    return res.redirect(
+      `https://fithub-front.onrender.com/auth/callback?token=${jwtToken}`,
+    );
   }
 
   @Post('register')

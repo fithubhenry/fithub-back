@@ -95,7 +95,12 @@ export class AuthService {
 
     if (!user) {
       // Si el usuario no existe, créalo en tu base de datos
-      user = await this.userRepository.save(googleUser);
+      const newUser = this.userRepository.create({
+        email: googleUser.email,
+        nombre: googleUser.firstName,
+        apellido: googleUser.lastName,
+      });
+      user = await this.userRepository.save(newUser);
     }
 
     // Genera un JWT para el usuario autenticado

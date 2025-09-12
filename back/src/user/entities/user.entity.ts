@@ -4,8 +4,6 @@ import {
   Column,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -35,8 +33,12 @@ export class User {
   @Column({ type: 'enum', enum: EEstado, default: EEstado.Invitado })
   estado: EEstado;
   @OneToMany(() => Turno, (turno) => turno.user)
-  @JoinTable()
   turnos: Turno[];
-  @Column({ type: 'varchar', nullable: true })
+  @Column({
+    type: 'varchar',
+    nullable: true,
+    default:
+      'https://res.cloudinary.com/fithub-dev/image/upload/v1757645238/3541871_ctwh8q.png',
+  })
   profileImageUrl: string | null;
 }

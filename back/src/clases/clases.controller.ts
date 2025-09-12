@@ -7,8 +7,6 @@ import {
   Post,
   Query,
   UseGuards,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { ClasesService } from './clases.service';
 import { Clase } from './entities/clase.entity';
@@ -18,7 +16,6 @@ import { FiltroClasesDto } from './dto/filtros.dto';
 import {
   ApiBody,
   ApiOperation,
-  ApiParam,
   ApiQuery,
   ApiResponse,
   ApiTags,
@@ -30,6 +27,10 @@ import {
   ESubMusculo,
   ETipos,
 } from 'src/common/clasesEnums';
+import { Roles } from 'src/decorators/roles.decorator';
+import { ERoles } from 'src/common/rolesEnum';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('Clases')
 @Controller('clases')
@@ -52,6 +53,8 @@ export class ClasesController {
   }
 
   @Post()
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Crear una clase' })
   @ApiResponse({ status: 201, description: 'Clase creada exitosamente' })

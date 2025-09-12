@@ -49,10 +49,10 @@ export class Clase {
   tipo: ETipos;
 
   @Column({ type: 'json', default: [EGrupoMuscular.Otros] })
-  grupo_musculo: [EGrupoMuscular];
+  grupo_musculo: EGrupoMuscular[];
 
   @Column({ type: 'json', default: [ESubMusculo.Otros] })
-  sub_musculo: [ESubMusculo];
+  sub_musculo: ESubMusculo[];
 
   @Column()
   sede: string;
