@@ -20,14 +20,13 @@ export class AuthGuard implements CanActivate {
 
     const token = request.headers?.authorization?.split(' ')[1];
     if (!token) throw new UnauthorizedException('No se ha enviado Token');
-
     try {
       const secret = ENV.JWTSECRET;
       const payload = this.jwtService.verify(token, { secret });
-      payload.roles = payload.isAdmin ? [ERoles.Admin] : [ERoles.User];
+      console.log(payload);
+      payload.roles = payload.esAdmin ? [ERoles.Admin] : [ERoles.User];
       payload.iat = new Date(payload.iat * 1000);
       payload.exp = new Date(payload.exp * 1000);
-
       request.user = payload;
       console.log(request.user);
 

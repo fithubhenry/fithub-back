@@ -10,18 +10,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ClasesModule } from './clases/clases.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
-import { JwtModule } from '@nestjs/jwt';
-import ENV from './config/enviroments';
 
 @Module({
   imports: [
-    JwtModule.register({
-      global: true,
-      secret: ENV.JWTSECRET,
-      signOptions: {
-        expiresIn: '60m',
-      },
-    }),
     UserModule,
     ClasesModule,
     AuthModule,
