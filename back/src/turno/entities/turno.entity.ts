@@ -22,7 +22,7 @@ export class Turno {
   @Column('time')
   horaFin: string;
 
-  @Column()
+  @Column({ nullable: false })
   diaSemana: string;
 
   @ManyToMany(() => Clase, (clase) => clase.horarios)
