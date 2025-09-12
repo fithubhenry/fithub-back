@@ -32,7 +32,6 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('Clases')
 @Controller('clases')
-@UseGuards(AuthGuard)
 export class ClasesController {
   constructor(private readonly clasesService: ClasesService) {}
 
@@ -97,6 +96,8 @@ export class ClasesController {
   }
 
   @Get('seeder')
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   async cargaSeeder() {
     return this.clasesService.cargaSeeder();
   }
