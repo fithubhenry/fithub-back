@@ -34,6 +34,11 @@ export class User {
   estado: EEstado;
   @OneToMany(() => Turno, (turno) => turno.user)
   turnos: Turno[];
-  @Column({ type: 'varchar', nullable: true })
+  @Column({
+    type: 'varchar',
+    nullable: true,
+    default:
+      'https://res.cloudinary.com/fithub-dev/image/upload/v1757645238/3541871_ctwh8q.png',
+  })
   profileImageUrl: string | null;
 }
