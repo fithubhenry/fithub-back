@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserRepository } from './user.repository';
 import { User } from './entities/user.entity';
@@ -12,29 +12,36 @@ export class UserService {
     private readonly cloudinaryService: CloudinaryService,
   ) {}
 
-  findAll() {
-    return this.userRepository.getAllUsers();
+  async findAll() {
+    return await this.userRepository.getAllUsers();
   }
 
-  findOne(id: string) {
-    return this.userRepository.findOneById(id);
+  async findOne(id: string) {
+    return await this.userRepository.findOneById(id);
   }
 
-  update(id: string, updateUser: UpdateUserDto) {
-    return this.userRepository.updateUser(id, updateUser);
+  async update(id: string, updateUser: UpdateUserDto) {
+    return await this.userRepository.updateUser(id, updateUser);
   }
 
   async updateProfileImage(id: string, file: Express.Multer.File) {
     const user = await this.userRepository.findOneById(id);
+    if (!user) {
+      throw new NotFoundException(`User with ID ${id} not found`);
+    }
+
     const uploadResult = await this.cloudinaryService.uploadImage(file);
 
-    // Actualizamos el usuario con la URL de Cloudinary
-    return this.userRepository.updateUser(id, {
-      profileImageUrl: uploadResult.secure_url,
-    });
+    user.profileImageUrl = uploadResult.secure_url;
+    await this.userRepository.saveUser(user);
+
+    return {
+      message: 'Imagen de perfil actualizada correctamente',
+      imageUrl: user.profileImageUrl,
+    };
   }
 
-  remove(id: string) {
-    return this.userRepository.deleteUser(id);
+  async remove(id: string) {
+    return await this.userRepository.deleteUser(id);
   }
 }
