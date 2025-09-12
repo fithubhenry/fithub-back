@@ -80,9 +80,9 @@ export class UserController {
     return this.userService.update(id, updateUser);
   }
 
-  @Patch('profile-image:id')
+  @Patch('profile-image/:id')
   @ApiOperation({ summary: 'Actualizar la imagen de perfil de un usuario' })
-  @ApiParam({ name: 'id', description: 'UUID del usuario' })
+  @ApiParam({ name: 'id', description: 'UUID del usuario', type: String })
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -90,15 +90,16 @@ export class UserController {
       properties: {
         file: {
           type: 'string',
-          format: 'binary', // 👈 Swagger sabe que es un archivo
+          format: 'binary',
         },
       },
+      required: ['file'],
     },
   })
   @ApiResponse({
     status: 200,
     description: 'Imagen de perfil actualizada correctamente',
-    type: UserResponseDto, // 👈 o un DTO con profileImageUrl si querés
+    type: UserResponseDto,
   })
   @ApiResponse({
     status: 400,
