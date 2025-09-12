@@ -9,9 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ClasesService } from './clases.service';
-import { Clase } from './entities/clase.entity';
 import { CrearClaseDto } from './dto/createClase.dto';
-import { JwtStrategy } from 'src/auth/jwt.strategy';
 import { FiltroClasesDto } from './dto/filtros.dto';
 import {
   ApiBody,
@@ -34,7 +32,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('Clases')
 @Controller('clases')
-@UseGuards(JwtStrategy)
+@UseGuards(AuthGuard)
 export class ClasesController {
   constructor(private readonly clasesService: ClasesService) {}
 
