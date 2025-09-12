@@ -79,4 +79,8 @@ export class UpdateUserDto {
   @MinLength(3, { message: 'La ciudad debe tener al menos 3 caracteres' })
   @MaxLength(50, { message: 'La ciudad debe tener máximo 50 caracteres' })
   ciudad: string;
+
+  @IsOptional()
+  @IsString()
+  profileImageUrl?: string;
 }

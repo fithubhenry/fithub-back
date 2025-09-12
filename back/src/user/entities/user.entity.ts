@@ -34,4 +34,6 @@ export class User {
   estado: EEstado;
   @OneToMany(() => Turno, (turno) => turno.user)
   turnos: Turno[];
+  @Column({ type: 'varchar', nullable: true })
+  profileImageUrl: string | null;
 }

@@ -34,5 +34,5 @@ export class Turno {
   @Column({ default: true })
   activo: boolean;
   @ManyToOne(() => User, (user) => user.turnos)
-  user: User;
+  user: User[];
 }
