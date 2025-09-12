@@ -80,7 +80,7 @@ export class UserController {
     return this.userService.update(id, updateUser);
   }
 
-  @Patch('profile-image/:id')
+  @Patch('profile-image:id')
   @ApiOperation({ summary: 'Actualizar la imagen de perfil de un usuario' })
   @ApiParam({ name: 'id', description: 'UUID del usuario' })
   @ApiConsumes('multipart/form-data')

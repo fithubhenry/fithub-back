@@ -12,7 +12,7 @@ export class UserRepository {
   ) {}
 
   async getAllUsers(): Promise<User[]> {
-    return this.userRepository.find();
+    return await this.userRepository.find();
   }
 
   async findOneById(id: string): Promise<User> {
@@ -43,7 +43,7 @@ export class UserRepository {
       throw new NotFoundException(`El usuario con id ${id} ya está inactivo`);
     }
     userFound.estado = EEstado.Inactivo;
-    return this.userRepository.save(userFound);
+    return await this.userRepository.save(userFound);
   }
 
   async createUserFromGoogle(googleUser: {
@@ -56,10 +56,10 @@ export class UserRepository {
       nombre: googleUser.firstName,
       apellido: googleUser.lastName,
     });
-    return this.userRepository.save(newUser);
+    return await this.userRepository.save(newUser);
   }
 
   async saveUser(user: User): Promise<User> {
-    return this.userRepository.save(user);
+    return await this.userRepository.save(user);
   }
 }
