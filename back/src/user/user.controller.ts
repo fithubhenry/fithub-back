@@ -8,6 +8,7 @@ import {
   ParseUUIDPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/updateUser.dto';
@@ -19,6 +20,10 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserResponseDto } from 'src/helpers/userResponse.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { ERoles } from 'src/common/rolesEnum';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -26,6 +31,8 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Obtener todos los usuarios' })
   @ApiResponse({
     status: 200,
@@ -51,6 +58,7 @@ export class UserController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Actualizar un usuario' })
   @ApiParam({ name: 'id', description: 'UUID del usuario' })
   @ApiBody({ type: UpdateUserDto })
@@ -69,6 +77,8 @@ export class UserController {
   }
 
   @Delete(':id')
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Eliminar un usuario' })
   @ApiParam({ name: 'id', description: 'UUID del usuario' })
   @ApiResponse({ status: 204, description: 'Usuario eliminado correctamente' })
