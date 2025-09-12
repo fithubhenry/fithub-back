@@ -8,6 +8,9 @@ import {
   ParseUUIDPipe,
   HttpCode,
   HttpStatus,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/updateUser.dto';
@@ -20,6 +23,11 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserResponseDto } from 'src/helpers/userResponse.dto';
+import { Roles } from 'src/decorators/roles.decorator';
+import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { ERoles } from 'src/common/rolesEnum';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('users')
 @Controller('users')
