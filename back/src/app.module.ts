@@ -9,6 +9,7 @@ import { typeOrmConfig } from './config/typeOrmConfig';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ClasesModule } from './clases/clases.module';
+import { CloudinaryModule } from './cloudinary/cloudinary.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { ClasesModule } from './clases/clases.module';
       useFactory: async (configService: ConfigService) =>
         configService.get('typeorm')!,
     }),
+    CloudinaryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
