@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { MercadoPagoService } from './mercado-pago.service';
-import { MercadoPagoController } from './mercado-pago.controller';
+import { PaymentsController } from './mercado-pago.controller';
+import { PaymentsService } from './mercado-pago.service';
 
 @Module({
-  controllers: [MercadoPagoController],
-  providers: [MercadoPagoService],
+  controllers: [PaymentsController],
+  providers: [PaymentsService],
 })
 export class MercadoPagoModule {}
