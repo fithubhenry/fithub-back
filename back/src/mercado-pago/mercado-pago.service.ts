@@ -42,7 +42,7 @@ export class PaymentsService {
       },
     });
 
-    return { id: result.id };
+    return result;
   }
 
   // ✅ Procesar webhook
