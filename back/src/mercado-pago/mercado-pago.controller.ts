@@ -5,6 +5,7 @@ import {
   Query,
   HttpCode,
   HttpStatus,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { PaymentsService } from './mercado-pago.service';
 
@@ -13,7 +14,7 @@ export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
   @Post('create-preference')
-  async createPreference(userId: string) {
+  async createPreference(@Body('userId', ParseUUIDPipe) userId: string) {
     return this.paymentsService.createPreference(userId);
   }
 
