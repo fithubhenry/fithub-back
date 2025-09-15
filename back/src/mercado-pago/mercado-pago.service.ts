@@ -38,7 +38,8 @@ export class PaymentsService {
           pending: 'https://fithub-front.onrender.com/pending',
         },
         auto_return: 'approved',
-        notification_url: 'http://localhost:3001/payments/webhook',
+        notification_url:
+          'https://fithub-back-pv0m.onrender.com/mercado-pago/webhook',
       },
     });
 
