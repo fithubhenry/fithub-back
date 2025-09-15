@@ -4,6 +4,8 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
+  ParseUUIDPipe,
   Post,
   Query,
   UseGuards,
@@ -29,6 +31,7 @@ import { Roles } from 'src/decorators/roles.decorator';
 import { ERoles } from 'src/common/rolesEnum';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
+import { Clase } from './entities/clase.entity';
 
 @ApiTags('Clases')
 @Controller('clases')
@@ -47,6 +50,19 @@ export class ClasesController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async findAll(): Promise<ClaseResponseDto[]> {
     return this.clasesService.findAll();
+  }
+
+  @Get('/:id')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Obtener una clase por ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Clase obtenida exitosamente',
+    type: ClaseResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Clase no encontrada' })
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Clase> {
+    return this.clasesService.findById(id);
   }
 
   @Post()
