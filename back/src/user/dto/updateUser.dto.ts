@@ -10,20 +10,36 @@ import {
 
 export class UpdateUserDto {
   @ApiPropertyOptional({
-    example: 'Juan Perez',
-    description: 'Apellido y nombre del usuario',
+    example: 'Juan',
+    description: 'Nombre del usuario',
     minLength: 3,
     maxLength: 20,
   })
   @IsOptional()
   @IsString()
   @MinLength(3, {
-    message: 'El apellido y nombre debe tener al menos 3 caracteres',
+    message: 'El nombre debe tener al menos 3 caracteres',
   })
   @MaxLength(20, {
-    message: 'El apellido y nombre debe tener máximo 20 caracteres',
+    message: 'El nombre debe tener máximo 20 caracteres',
   })
-  apellido_nombre: string;
+  nombre: string;
+
+  @ApiPropertyOptional({
+    example: 'Perez',
+    description: 'Apellido del usuario',
+    minLength: 3,
+    maxLength: 20,
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(3, {
+    message: 'El apellido debe tener al menos 3 caracteres',
+  })
+  @MaxLength(20, {
+    message: 'El apellido debe tener máximo 20 caracteres',
+  })
+  apellido: string;
 
   @ApiPropertyOptional({
     example: 'Test123!',
