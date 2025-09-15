@@ -10,7 +10,7 @@ import { GoogleStrategy } from './google.strategy';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthGuard } from './guards/auth.guard';
-import { MailModule } from 'src/mail/mail.module';
+import { MailerModule } from 'src/mail/mail.module';
 
 @Global()
 @Module({
@@ -27,7 +27,7 @@ import { MailModule } from 'src/mail/mail.module';
       }),
       inject: [ConfigService],
     }),
-    MailModule,
+    MailerModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy, GoogleStrategy, AuthGuard],

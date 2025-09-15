@@ -10,7 +10,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { EEstado } from 'src/common/usersEnum';
 import { JwtService } from '@nestjs/jwt';
-import { MailService } from 'src/mail/mail.service';
+import { MailerService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +18,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
-    private readonly mailService: MailService,
+    private readonly mailService: MailerService,
   ) {}
 
   async validateUser(email: string, pass: string): Promise<User> {
@@ -84,7 +84,7 @@ export class AuthService {
 
     //Enviar email de registro existoso
 
-    await this.mailService.sendWelcomeEmail(savedUser.email, savedUser.nombre);
+    await this.mailService.sendWelcomeEmail(savedUser.email);
 
     //Eliminar password del objeto antes de devolverlo
 

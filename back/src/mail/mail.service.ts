@@ -1,31 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 
 @Injectable()
-export class MailService {
+export class MailerService {
   private transporter;
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com', // O tu proveedor
-      port: 587,
-      secure: false,
+      host: process.env.SMTP_HOST, // ej: smtp.gmail.com
+      port: Number(process.env.SMTP_PORT) || 587,
+      secure: false, // true solo si usas 465
       auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
     });
   }
 
-  async sendWelcomeEmail(to: string, name: string) {
-    await this.transporter.sendMail({
-      from: `"Mi Web" <${process.env.MAIL_USER}>`,
-      to,
-      subject: '¡Bienvenido a nuestra web!',
-      html: `
-        <h1>Hola ${name} 👋</h1>
-        <p>Gracias por registrarte en nuestra aplicación 🚀</p>
-      `,
-    });
+  async sendWelcomeEmail(to: string) {
+    try {
+      await this.transporter.sendMail({
+        from: `"Mi App 👋" <${process.env.SMTP_USER}>`,
+        to,
+        subject: 'Bienvenido a la aplicación 🚀',
+        text: 'Gracias por registrarte en nuestra plataforma.',
+        html: `<h1>¡Bienvenido!</h1><p>Ya podés empezar a usar la app 🚀</p>`,
+      });
+    } catch (error) {
+      console.error('Error enviando email:', error);
+      throw new InternalServerErrorException('No se pudo enviar el email');
+    }
   }
 }
