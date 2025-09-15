@@ -42,6 +42,7 @@ export class PaymentsService {
       },
     });
 
+    console.log(result);
     return result;
   }
 
