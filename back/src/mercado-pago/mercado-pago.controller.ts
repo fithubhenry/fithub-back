@@ -13,16 +13,12 @@ export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
   @Post('create-preference')
-  async createPreference() {
-    return this.paymentsService.createPreference();
+  async createPreference(userId: string) {
+    return this.paymentsService.createPreference(userId);
   }
 
-  // @Post('webhook')
-  // @HttpCode(HttpStatus.OK)
-  // webhook(@Query('data.id') paymentId: string, @Query('type') type: string) {
-  //   if (type === 'payment') {
-  //     return this.mercadoPagoService.handleWebhook(paymentId);
-  //   }
-  //   return { message: 'Event type not handled' };
-  // }
+  @Post('webhook')
+  async webhook(@Body() body: any) {
+    return this.paymentsService.handleWebhook(body);
+  }
 }
