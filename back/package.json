@@ -35,6 +35,7 @@
     "cloudinary": "^1.41.3",
     "dotenv": "^17.2.2",
     "jsonwebtoken": "^9.0.2",
+    "mercadopago": "^2.9.0",
     "multer": "^2.0.2",
     "multer-storage-cloudinary": "^4.0.0",
     "passport": "^0.7.0",
