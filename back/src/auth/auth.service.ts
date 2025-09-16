@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { EEstado } from 'src/common/usersEnum';
 import { JwtService } from '@nestjs/jwt';
+import { MailerService } from 'src/mail/mail.service';
 
 @Injectable()
 export class AuthService {
@@ -17,6 +18,7 @@ export class AuthService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
+    private readonly mailService: MailerService,
   ) {}
 
   async validateUser(email: string, pass: string): Promise<User> {
@@ -79,6 +81,10 @@ export class AuthService {
     //Guardar en la db (en espera)
 
     const savedUser = await this.userRepository.save(user);
+
+    //Enviar email de registro existoso
+
+    await this.mailService.sendWelcomeEmail(savedUser.email);
 
     //Eliminar password del objeto antes de devolverlo
 

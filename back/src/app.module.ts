@@ -11,6 +11,7 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ClasesModule } from './clases/clases.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
     }),
     CloudinaryModule,
     MercadoPagoModule,
+    ScheduleModule,
   ],
   controllers: [AppController],
   providers: [AppService],
