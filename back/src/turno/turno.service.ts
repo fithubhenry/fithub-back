@@ -1,26 +1,70 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Turno, EstadoTurno } from './entities/turno.entity';
 import { CreateTurnoDto } from './dto/createTurno.dto';
 import { UpdateTurnoDto } from './dto/updateTurno.dto';
+import { UpdateEstadoTurnoDto } from './dto/updateEstado.dto';
+import { User } from 'src/user/entities/user.entity';
+import { Clase } from 'src/clases/entities/clase.entity';
 
 @Injectable()
-export class TurnoService {
-  create(createTurnoDto: CreateTurnoDto) {
-    return 'This action adds a new turno';
+export class TurnosService {
+  constructor(
+    @InjectRepository(Turno)
+    private readonly turnoRepository: Repository<Turno>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    @InjectRepository(Clase)
+    private readonly claseRepository: Repository<Clase>,
+  ) {}
+
+  async create(dto: CreateTurnoDto): Promise<Turno> {
+    const usuario = await this.userRepository.findOne({
+      where: { id: dto.usuarioId },
+    });
+    const clase = await this.claseRepository.findOne({
+      where: { id: dto.claseId },
+    });
+
+    if (!usuario) throw new NotFoundException('Usuario no encontrado');
+    if (!clase) throw new NotFoundException('Clase no encontrada');
+
+    const turno = this.turnoRepository.create({
+      fecha: dto.fecha,
+      hora: dto.hora,
+      estado: dto.estado || EstadoTurno.PENDIENTE,
+      usuario,
+      clase,
+    });
+
+    return this.turnoRepository.save(turno);
   }
 
-  findAll() {
-    return `This action returns all turno`;
+  findAll(): Promise<Turno[]> {
+    return this.turnoRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} turno`;
+  async findOne(id: string): Promise<Turno> {
+    const turno = await this.turnoRepository.findOne({ where: { id } });
+    if (!turno) throw new NotFoundException('Turno no encontrado');
+    return turno;
   }
 
-  update(id: number, updateTurnoDto: UpdateTurnoDto) {
-    return `This action updates a #${id} turno`;
+  async update(id: string, dto: UpdateTurnoDto): Promise<Turno> {
+    const turno = await this.findOne(id);
+    Object.assign(turno, dto);
+    return this.turnoRepository.save(turno);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} turno`;
+  async updateEstado(id: string, dto: UpdateEstadoTurnoDto): Promise<Turno> {
+    const turno = await this.findOne(id);
+    turno.estado = dto.estado;
+    return this.turnoRepository.save(turno);
+  }
+
+  async remove(id: string): Promise<void> {
+    const turno = await this.findOne(id);
+    await this.turnoRepository.remove(turno);
   }
 }

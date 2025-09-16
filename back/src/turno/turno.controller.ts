@@ -2,48 +2,63 @@ import {
   Controller,
   Get,
   Post,
-  Body,
   Patch,
-  Param,
   Delete,
-  UseGuards,
+  Param,
+  Body,
+  ParseUUIDPipe,
 } from '@nestjs/common';
-import { TurnoService } from './turno.service';
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { TurnosService } from './turno.service';
 import { CreateTurnoDto } from './dto/createTurno.dto';
 import { UpdateTurnoDto } from './dto/updateTurno.dto';
-import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { UpdateEstadoTurnoDto } from './dto/updateEstado.dto';
+import { Turno } from './entities/turno.entity';
 
-@Controller('turno')
-export class TurnoController {
-  constructor(private readonly turnoService: TurnoService) {}
+@ApiTags('turnos')
+@Controller('turnos')
+export class TurnosController {
+  constructor(private readonly turnosService: TurnosService) {}
 
   @Post()
-  @UseGuards(AuthGuard)
-  create(@Body() createTurnoDto: CreateTurnoDto) {
-    return this.turnoService.create(createTurnoDto);
+  @ApiOperation({ summary: 'Crear un nuevo turno' })
+  @ApiResponse({ status: 201, type: Turno })
+  create(@Body() dto: CreateTurnoDto) {
+    return this.turnosService.create(dto);
   }
 
   @Get()
-  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Obtener todos los turnos' })
+  @ApiResponse({ status: 200, type: [Turno] })
   findAll() {
-    return this.turnoService.findAll();
+    return this.turnosService.findAll();
   }
 
   @Get(':id')
-  @UseGuards(AuthGuard)
-  findOne(@Param('id') id: string) {
-    return this.turnoService.findOne(+id);
+  @ApiOperation({ summary: 'Obtener un turno por ID' })
+  @ApiResponse({ status: 200, type: Turno })
+  findOne(@Param('id', ParseUUIDPipe) id: string) {
+    return this.turnosService.findOne(id);
   }
 
   @Patch(':id')
-  @UseGuards(AuthGuard)
-  update(@Param('id') id: string, @Body() updateTurnoDto: UpdateTurnoDto) {
-    return this.turnoService.update(+id, updateTurnoDto);
+  @ApiOperation({ summary: 'Actualizar turno' })
+  update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateTurnoDto) {
+    return this.turnosService.update(id, dto);
+  }
+
+  @Patch(':id/estado')
+  @ApiOperation({ summary: 'Actualizar estado del turno' })
+  updateEstado(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateEstadoTurnoDto,
+  ) {
+    return this.turnosService.updateEstado(id, dto);
   }
 
   @Delete(':id')
-  @UseGuards(AuthGuard)
-  remove(@Param('id') id: string) {
-    return this.turnoService.remove(+id);
+  @ApiOperation({ summary: 'Eliminar turno' })
+  remove(@Param('id', ParseUUIDPipe) id: string) {
+    return this.turnosService.remove(id);
   }
 }

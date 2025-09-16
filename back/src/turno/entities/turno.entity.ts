@@ -1,38 +1,46 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { Clase } from '../../clases/entities/clase.entity';
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Clase } from 'src/clases/entities/clase.entity';
+
+export enum EstadoTurno {
+  PENDIENTE = 'PENDIENTE',
+  CONFIRMADO = 'CONFIRMADO',
+  CANCELADO = 'CANCELADO',
+}
 
 @Entity()
 export class Turno {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('date')
+  @Column({ type: 'date' })
   fecha: Date;
 
-  @Column('time')
+  @Column({ type: 'time' })
+  hora: string;
+
+  @Column({
+    type: 'enum',
+    enum: EstadoTurno,
+    default: EstadoTurno.PENDIENTE,
+  })
+  estado: EstadoTurno;
+
+  @ManyToOne(() => User, (user) => user.turnos, { eager: true })
+  usuario: User;
+
+  @ManyToOne(() => Clase, (clase) => clase.turnos, { eager: true })
+  clase: Clase;
+
+  @Column()
   horaInicio: string;
 
-  @Column('time')
+  @Column()
   horaFin: string;
 
-  @Column({ nullable: false })
+  @Column()
   diaSemana: string;
 
-  @ManyToMany(() => Clase, (clase) => clase.horarios)
-  clases: Clase[];
-
-  @Column({ type: 'int', default: '0' })
-  inscriptos: number;
-
-  @Column({ default: true })
+  @Column()
   activo: boolean;
-  @ManyToOne(() => User, (user) => user.turnos)
-  user: User[];
 }
