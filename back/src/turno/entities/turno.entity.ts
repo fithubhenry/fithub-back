@@ -32,15 +32,15 @@ export class Turno {
   @ManyToOne(() => Clase, (clase) => clase.turnos, { onDelete: 'CASCADE' })
   clase: Clase;
 
-  @Column()
+  @Column({ type: 'time', nullable: true })
   horaInicio: string;
 
-  @Column()
+  @Column({ type: 'time', nullable: true })
   horaFin: string;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: true })
   diaSemana: string;
 
-  @Column()
+  @Column({ type: 'boolean', default: true })
   activo: boolean;
 }
