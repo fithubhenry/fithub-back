@@ -29,7 +29,7 @@ export class Turno {
   @ManyToOne(() => User, (user) => user.turnos, { eager: true })
   user: User;
 
-  @ManyToOne(() => Clase, (clase) => clase.turnos, { eager: true })
+  @ManyToOne(() => Clase, (clase) => clase.turnos, { onDelete: 'CASCADE' })
   clase: Clase;
 
   @Column()

@@ -4,6 +4,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -67,6 +68,6 @@ export class Clase {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-  @Column()
+  @OneToMany(() => Turno, (turno) => turno.clase, { cascade: true })
   turnos: Turno[];
 }
