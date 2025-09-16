@@ -14,7 +14,7 @@ export class PaymentsService {
     private readonly userRepository: Repository<User>,
   ) {
     this.client = new MercadoPagoConfig({
-      accessToken: process.env.MP_ACCESS_TOKEN!,
+      accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
     });
   }
 
