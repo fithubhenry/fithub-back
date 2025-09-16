@@ -8,7 +8,7 @@ import {
   Body,
   ParseUUIDPipe,
 } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { TurnosService } from './turno.service';
 import { CreateTurnoDto } from './dto/createTurno.dto';
 import { UpdateTurnoDto } from './dto/updateTurno.dto';
@@ -22,7 +22,11 @@ export class TurnosController {
 
   @Post()
   @ApiOperation({ summary: 'Crear un nuevo turno' })
-  @ApiResponse({ status: 201, type: Turno })
+  @ApiResponse({
+    status: 201,
+    description: 'El turno ha sido creado correctamente',
+    type: Turno,
+  })
   create(@Body() dto: CreateTurnoDto) {
     return this.turnosService.create(dto);
   }
@@ -36,6 +40,10 @@ export class TurnosController {
 
   @Get(':id')
   @ApiOperation({ summary: 'Obtener un turno por ID' })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del turno',
+  })
   @ApiResponse({ status: 200, type: Turno })
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.turnosService.findOne(id);
@@ -43,6 +51,15 @@ export class TurnosController {
 
   @Patch(':id')
   @ApiOperation({ summary: 'Actualizar turno' })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del turno',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'El turno ha sido actualizado correctamente',
+    type: Turno,
+  })
   update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateTurnoDto) {
     return this.turnosService.update(id, dto);
   }
@@ -58,6 +75,14 @@ export class TurnosController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Eliminar turno' })
+  @ApiParam({
+    name: 'id',
+    description: 'ID del turno',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'El turno ha sido eliminado correctamente',
+  })
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.turnosService.remove(id);
   }
