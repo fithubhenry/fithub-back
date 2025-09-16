@@ -27,7 +27,7 @@ export class Turno {
   estado: EstadoTurno;
 
   @ManyToOne(() => User, (user) => user.turnos, { eager: true })
-  usuario: User;
+  user: User;
 
   @ManyToOne(() => Clase, (clase) => clase.turnos, { eager: true })
   clase: Clase;

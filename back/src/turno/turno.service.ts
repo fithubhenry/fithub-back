@@ -34,7 +34,7 @@ export class TurnosService {
       fecha: dto.fecha,
       hora: dto.hora,
       estado: dto.estado || EstadoTurno.PENDIENTE,
-      usuario,
+      user: usuario,
       clase,
     });
 
