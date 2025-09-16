@@ -16,7 +16,7 @@ export class Turno {
   @Column({ type: 'date' })
   fecha: Date;
 
-  @Column({ type: 'time' })
+  @Column({ type: 'time', length: 10, nullable: true })
   hora: string;
 
   @Column({
