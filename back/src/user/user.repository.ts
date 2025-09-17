@@ -2,7 +2,6 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
-import { UpdateUserDto } from './dto/updateUser.dto';
 import { EEstado } from 'src/common/usersEnum';
 
 @Injectable()
@@ -67,7 +66,7 @@ export class UserRepository {
     const userFound = await this.findOneById(id);
     if (!userFound)
       throw new NotFoundException(`No se encontró el usuario con id ${id}`);
-    if ((userFound.esAdmin = true)) {
+    if (userFound.esAdmin === true) {
       return 'El usuario ya es administrador';
     } else {
       userFound.esAdmin = true;
@@ -80,7 +79,7 @@ export class UserRepository {
     const userFound = await this.findOneById(id);
     if (!userFound)
       throw new NotFoundException(`No se encontró el usuario con id ${id}`);
-    if ((userFound.esAdmin = false)) {
+    if (userFound.esAdmin === false) {
       return 'El usuario no es administrador';
     } else {
       userFound.esAdmin = false;
