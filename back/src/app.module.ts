@@ -11,10 +11,16 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ClasesModule } from './clases/clases.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
 =======
 import { ScheduleModule } from './schedule/schedule.module';
 >>>>>>> 1163bb12587d3d757b9c91bcf799b65d97d3e731
+=======
+import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
+import { ScheduleModule } from './schedule/schedule.module';
+import { TurnosModule } from './turno/turno.module';
+>>>>>>> 4c3f1d3770f7697e17f5fd36e210934ab653dd62
 
 @Module({
   imports: [
@@ -32,10 +38,16 @@ import { ScheduleModule } from './schedule/schedule.module';
     }),
     CloudinaryModule,
 <<<<<<< HEAD
+<<<<<<< HEAD
     MercadoPagoModule,
 =======
     ScheduleModule,
 >>>>>>> 1163bb12587d3d757b9c91bcf799b65d97d3e731
+=======
+    MercadoPagoModule,
+    ScheduleModule,
+    TurnosModule,
+>>>>>>> 4c3f1d3770f7697e17f5fd36e210934ab653dd62
   ],
   controllers: [AppController],
   providers: [AppService],

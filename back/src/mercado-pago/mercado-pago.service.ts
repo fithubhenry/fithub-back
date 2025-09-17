@@ -1,68 +1,72 @@
-import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { MercadoPagoConfig, Preference, Payment } from 'mercadopago';
-import { CreateMercadoPagoDto } from './dto/create-mercado-pago.dto';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MercadoPagoConfig, Payment, Preference } from 'mercadopago';
+import { EEstado } from 'src/common/usersEnum';
+import { User } from 'src/user/entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
-export class MercadoPagoService {
-  private readonly client: MercadoPagoConfig;
-  constructor(private readonly configService: ConfigService) {
-    const accessToken = this.configService.get<string>(
-      'MERCADOPAGO_ACCESS_TOKEN',
-    );
-    if (!accessToken) {
-      throw new InternalServerErrorException(
-        'Mercado Pago Access Token not configured',
-      );
-    }
+export class PaymentsService {
+  private client;
+
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {
     this.client = new MercadoPagoConfig({
-      accessToken,
+      accessToken: process.env.MERCADOPAGO_ACCESS_TOKEN!,
     });
   }
 
-  async createPreference(servicio: CreateMercadoPagoDto) {
+  async createPreference(userId: string) {
     const preference = new Preference(this.client);
 
-    try {
-      const result = await preference.create({
-        body: {
-          items: servicio.items.map((item) => ({
-            id: item.id,
-            title: item.title,
-            quantity: item.quantity,
-            unit_price: item.unit_price,
-            currency_id: 'ARS', // O la moneda que corresponda
-          })),
-          back_urls: {
-            success: 'https://fithub-front.onrender.com/success', // URL de tu frontend
-            failure: 'https://fithub-front.onrender.com/failure',
-            pending: 'https://fithub-front.onrender.com/pending',
+    const result = await preference.create({
+      body: {
+        items: [
+          {
+            id: `user-${userId}`,
+            title: 'Suscripcion Fithub',
+            quantity: 1,
+            currency_id: 'ARS',
+            unit_price: 100,
           },
-          auto_return: 'approved',
-          notification_url: `https://fithub-back-pv0m.onrender.com/mercado-pago/webhook`, // ¡Importante!
+        ],
+        back_urls: {
+          success: 'https://fithub-front.onrender.com/clases',
+          failure: 'https://fithub-front.onrender.com/failure',
+          pending: 'https://fithub-front.onrender.com/pending',
         },
-      });
+        auto_return: 'approved',
+        notification_url:
+          'https://fithub-back-pv0m.onrender.com/mercado-pago/webhook',
+      },
+    });
 
-      return result;
-    } catch (error) {
-      console.error('Error creating preference:', error);
-      throw new InternalServerErrorException(
-        'Failed to create payment preference',
-      );
-    }
+    console.log(result);
+    return result;
   }
 
-  async handleWebhook(paymentId: string) {
-    const payment = new Payment(this.client);
-    try {
-      const paymentInfo = await payment.get({ id: paymentId });
-      console.log('Payment Info:', paymentInfo);
-      // Aquí va tu lógica de negocio:
-      // - Verificar si el pago fue aprobado ('status' === 'approved')
-      // - Actualizar el estado de la orden en tu base de datos
-      // - Enviar un email de confirmación al usuario, etc.
-    } catch (error) {
-      console.error('Error handling webhook:', error);
+  // ✅ Procesar webhook
+  async handleWebhook(body: any) {
+    if (body.type === 'payment') {
+      const payment = new Payment(this.client);
+      const paymentData = await payment.get({ id: body.data.id });
+
+      console.log('💰 Pago confirmado:', paymentData);
+
+      if (paymentData.status === 'approved') {
+        // Recuperamos el userId del item.id
+        const userItemId = paymentData.additional_info?.items?.[0]?.id;
+        const userId = userItemId?.replace('user-', '');
+
+        if (userId) {
+          await this.userRepository.update(userId, { estado: EEstado.Activo });
+          console.log(`✅ Usuario ${userId} activado`);
+        }
+      }
     }
+
+    return { received: true };
   }
 }

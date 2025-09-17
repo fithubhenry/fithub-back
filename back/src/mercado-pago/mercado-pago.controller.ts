@@ -5,25 +5,21 @@ import {
   Query,
   HttpCode,
   HttpStatus,
+  ParseUUIDPipe,
 } from '@nestjs/common';
-import { MercadoPagoService } from './mercado-pago.service';
-import { CreateMercadoPagoDto } from './dto/create-mercado-pago.dto';
+import { PaymentsService } from './mercado-pago.service';
 
 @Controller('mercado-pago')
-export class MercadoPagoController {
-  constructor(private readonly mercadoPagoService: MercadoPagoService) {}
+export class PaymentsController {
+  constructor(private readonly paymentsService: PaymentsService) {}
 
   @Post('create-preference')
-  createPreference(@Body() createMercadoPagoDto: CreateMercadoPagoDto) {
-    return this.mercadoPagoService.createPreference(createMercadoPagoDto);
+  async createPreference(@Body('userId', ParseUUIDPipe) userId: string) {
+    return this.paymentsService.createPreference(userId);
   }
 
   @Post('webhook')
-  @HttpCode(HttpStatus.OK)
-  webhook(@Query('data.id') paymentId: string, @Query('type') type: string) {
-    if (type === 'payment') {
-      return this.mercadoPagoService.handleWebhook(paymentId);
-    }
-    return { message: 'Event type not handled' };
+  async webhook(@Body() body: any) {
+    return this.paymentsService.handleWebhook(body);
   }
 }

@@ -44,11 +44,12 @@ export class UserController {
     type: UserResponseDto,
     isArray: true,
   })
-  findAll() {
+  async findAll() {
     return this.userService.findAll();
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Obtener un usuario por id' })
   @ApiParam({ name: 'id', type: String, required: true })
   @ApiResponse({
@@ -81,6 +82,7 @@ export class UserController {
   }
 
   @Patch('profile-image/:id')
+  @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Actualizar la imagen de perfil de un usuario' })
   @ApiParam({ name: 'id', description: 'UUID del usuario', type: String })
   @ApiConsumes('multipart/form-data')
@@ -123,5 +125,35 @@ export class UserController {
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.remove(id);
+  }
+
+  @ApiOperation({ summary: 'Agregar un usuario como administrador' })
+  @ApiParam({ name: 'id', type: String, required: true })
+  @ApiResponse({
+    status: 200,
+    description: 'El usuario ahora es administrador',
+    type: UserResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
+  @Get('admin/new/:id')
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  async createAdmin(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userService.addAdmin(id);
+  }
+
+  @ApiOperation({ summary: 'Quitar privilegios de administrador' })
+  @ApiParam({ name: 'id', type: String, required: true })
+  @ApiResponse({
+    status: 200,
+    description: 'El usuario perdio los privilegios de administrador',
+    type: UserResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
+  @Get('admin/delete/:id')
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  async deleteAdmin(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userService.deleteAdmin(id);
   }
 }
