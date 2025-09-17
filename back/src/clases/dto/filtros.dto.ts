@@ -14,12 +14,20 @@ export class FiltroClasesDto {
 
   @IsOptional()
   @IsEnum(EGrupoMuscular, { each: true })
-  @Transform(({ value }) => (Array.isArray(value) ? value : [value]))
+  @Transform(({ value }) => {
+    if (value === undefined || value === null || value === '') return [];
+    if (Array.isArray(value)) return value;
+    return [value];
+  })
   grupo_musculo?: EGrupoMuscular[];
 
   @IsOptional()
   @IsEnum(ESubMusculo, { each: true })
-  @Transform(({ value }) => (Array.isArray(value) ? value : [value]))
+  @Transform(({ value }) => {
+    if (value === undefined || value === null || value === '') return [];
+    if (Array.isArray(value)) return value;
+    return [value];
+  })
   sub_musculo?: ESubMusculo[];
 
   @IsOptional()
