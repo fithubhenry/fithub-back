@@ -1,38 +1,69 @@
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { Clase } from '../../clases/entities/clase.entity';
-import {
-  Column,
-  Entity,
-  ManyToMany,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Clase } from 'src/clases/entities/clase.entity';
+import { ApiProperty } from '@nestjs/swagger';
+
+export enum EstadoTurno {
+  PENDIENTE = 'PENDIENTE',
+  CONFIRMADO = 'CONFIRMADO',
+  CANCELADO = 'CANCELADO',
+}
 
 @Entity()
 export class Turno {
+  @ApiProperty({ example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef' })
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('date')
+  @ApiProperty({ example: '2025-09-20' })
+  @Column({ type: 'date' })
   fecha: Date;
 
-  @Column('time')
+  @ApiProperty({ example: '10:00:00' })
+  @Column({ type: 'time', nullable: true })
+  hora: string;
+
+  @Column({
+    type: 'enum',
+    enum: EstadoTurno,
+    default: EstadoTurno.PENDIENTE,
+  })
+  estado: EstadoTurno;
+
+  @ApiProperty({
+    example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef',
+    description: 'ID del usuario',
+    type: 'string',
+  })
+  @ManyToOne(() => User, (user) => user.turnos, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  user: User;
+
+  @ApiProperty({
+    example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef',
+    description: 'ID de la clase',
+  })
+  @ManyToOne(() => Clase, (clase) => clase.turnos, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
+  clase: Clase;
+
+  @ApiProperty({ example: '10:00:00', description: 'Hora de inicio' })
+  @Column({ type: 'time', nullable: true })
   horaInicio: string;
 
-  @Column('time')
+  @ApiProperty({ example: '11:00:00', description: 'Hora de fin' })
+  @Column({ type: 'time', nullable: true })
   horaFin: string;
 
-  @Column({ nullable: false })
+  @ApiProperty({ example: 'Lunes', description: 'Día de la semana' })
+  @Column({ type: 'varchar', nullable: true })
   diaSemana: string;
 
-  @ManyToMany(() => Clase, (clase) => clase.horarios)
-  clases: Clase[];
-
-  @Column({ type: 'int', default: '0' })
-  inscriptos: number;
-
-  @Column({ default: true })
+  @ApiProperty({ example: true, description: 'Estado del turno' })
+  @Column({ type: 'boolean', default: true })
   activo: boolean;
-  @ManyToOne(() => User, (user) => user.turnos)
-  user: User[];
 }

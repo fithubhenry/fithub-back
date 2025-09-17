@@ -4,6 +4,7 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -32,7 +33,7 @@ export class Clase {
   @Column()
   instructor: string;
 
-  @ManyToMany(() => Turno, (turno) => turno.clases, { cascade: true })
+  @ManyToMany(() => Turno, (turno) => turno.clase, { cascade: true })
   @JoinTable()
   horarios: Turno[];
 
@@ -66,4 +67,7 @@ export class Clase {
 
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
+
+  @OneToMany(() => Turno, (turno) => turno.clase)
+  turnos: Turno[];
 }

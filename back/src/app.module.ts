@@ -12,6 +12,7 @@ import { ClasesModule } from './clases/clases.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
 import { ScheduleModule } from './schedule/schedule.module';
+import { TurnosModule } from './turno/turno.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { ScheduleModule } from './schedule/schedule.module';
     CloudinaryModule,
     MercadoPagoModule,
     ScheduleModule,
+    TurnosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
