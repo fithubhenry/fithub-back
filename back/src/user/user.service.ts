@@ -1,9 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { UserRepository } from './user.repository';
-import { User } from './entities/user.entity';
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
-import { Express } from 'express';
 
 @Injectable()
 export class UserService {
