@@ -67,7 +67,7 @@ export class UserRepository {
     const userFound = await this.findOneById(id);
     if (!userFound)
       throw new NotFoundException(`No se encontró el usuario con id ${id}`);
-    if ((userFound.esAdmin = true)) {
+    if (userFound.esAdmin === true) {
       return 'El usuario ya es administrador';
     } else {
       userFound.esAdmin = true;
@@ -80,7 +80,7 @@ export class UserRepository {
     const userFound = await this.findOneById(id);
     if (!userFound)
       throw new NotFoundException(`No se encontró el usuario con id ${id}`);
-    if ((userFound.esAdmin = false)) {
+    if (userFound.esAdmin === false) {
       return 'El usuario no es administrador';
     } else {
       userFound.esAdmin = false;
