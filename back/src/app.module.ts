@@ -11,6 +11,7 @@ import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ClasesModule } from './clases/clases.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { ScheduleModule } from './schedule/schedule.module';
+import { TurnosModule } from './turno/turno.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ScheduleModule } from './schedule/schedule.module';
     }),
     CloudinaryModule,
     ScheduleModule,
+    TurnosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
