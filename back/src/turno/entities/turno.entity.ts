@@ -34,14 +34,20 @@ export class Turno {
     example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef',
     description: 'ID del usuario',
   })
-  @ManyToOne(() => User, (user) => user.turnos, { eager: true })
+  @ManyToOne(() => User, (user) => user.turnos, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   user: User;
 
   @ApiProperty({
     example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef',
     description: 'ID de la clase',
   })
-  @ManyToOne(() => Clase, (clase) => clase.turnos, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Clase, (clase) => clase.turnos, {
+    eager: true,
+    onDelete: 'CASCADE',
+  })
   clase: Clase;
 
   @ApiProperty({ example: '10:00:00', description: 'Hora de inicio' })
@@ -52,7 +58,7 @@ export class Turno {
   @Column({ type: 'time', nullable: true })
   horaFin: string;
 
-  @ApiProperty({ example: 'Lunes', description: 'Dia de la semana' })
+  @ApiProperty({ example: 'Lunes', description: 'Día de la semana' })
   @Column({ type: 'varchar', nullable: true })
   diaSemana: string;
 

@@ -68,6 +68,6 @@ export class Clase {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-  @OneToMany(() => Turno, (turno) => turno.clase, { cascade: true })
+  @OneToMany(() => Turno, (turno) => turno.clase)
   turnos: Turno[];
 }
