@@ -44,4 +44,12 @@ export class UserService {
   async remove(id: string) {
     return await this.userRepository.deleteUser(id);
   }
+
+  async addAdmin(id: string) {
+    return this.userRepository.setAdmin(id);
+  }
+
+  async deleteAdmin(id: string) {
+    return this.userRepository.removeAdmin(id);
+  }
 }
