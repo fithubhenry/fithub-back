@@ -62,4 +62,30 @@ export class UserRepository {
   async saveUser(user: User): Promise<User> {
     return await this.userRepository.save(user);
   }
+
+  async setAdmin(id: string) {
+    const userFound = await this.findOneById(id);
+    if (!userFound)
+      throw new NotFoundException(`No se encontró el usuario con id ${id}`);
+    if ((userFound.esAdmin = true)) {
+      return 'El usuario ya es administrador';
+    } else {
+      userFound.esAdmin = true;
+      await this.userRepository.save(userFound);
+      return 'El usuario ahora es administrador';
+    }
+  }
+
+  async removeAdmin(id: string) {
+    const userFound = await this.findOneById(id);
+    if (!userFound)
+      throw new NotFoundException(`No se encontró el usuario con id ${id}`);
+    if ((userFound.esAdmin = false)) {
+      return 'El usuario no es administrador';
+    } else {
+      userFound.esAdmin = false;
+      await this.userRepository.save(userFound);
+      return 'El usuario ya no es administrador';
+    }
+  }
 }
