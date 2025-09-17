@@ -10,7 +10,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { ClasesModule } from './clases/clases.module';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+<<<<<<< HEAD
 import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
+=======
+import { ScheduleModule } from './schedule/schedule.module';
+>>>>>>> 1163bb12587d3d757b9c91bcf799b65d97d3e731
 
 @Module({
   imports: [
@@ -27,7 +31,11 @@ import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
         configService.get('typeorm')!,
     }),
     CloudinaryModule,
+<<<<<<< HEAD
     MercadoPagoModule,
+=======
+    ScheduleModule,
+>>>>>>> 1163bb12587d3d757b9c91bcf799b65d97d3e731
   ],
   controllers: [AppController],
   providers: [AppService],
