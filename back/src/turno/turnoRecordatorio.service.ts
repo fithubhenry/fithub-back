@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { CronJob } from 'cron';
 import { SchedulerRegistry } from '@nestjs/schedule';
 import { Turno } from './entities/turno.entity';
-import { MailerService } from '../mail/mail.service';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class TurnosReminderService {
@@ -13,9 +13,6 @@ export class TurnosReminderService {
     private mailerService: MailerService,
   ) {}
 
-  /**
-   * Programa un cron job para enviar recordatorio de un turno
-   */
   scheduleReminder(turno: Turno) {
     if (!turno.fecha || !turno.horaInicio || !turno.user) {
       this.logger.warn(
@@ -58,9 +55,6 @@ export class TurnosReminderService {
     );
   }
 
-  /**
-   * Cancelar un recordatorio
-   */
   cancelReminder(turnoId: string) {
     try {
       this.schedulerRegistry.deleteCronJob(`turno-${turnoId}`);
