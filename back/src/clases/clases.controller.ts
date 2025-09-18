@@ -119,6 +119,8 @@ export class ClasesController {
   }
 
   @Delete('/:id')
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @HttpCode(200)
   @ApiOperation({ summary: 'Eliminar una clase por ID' })
   @ApiResponse({
