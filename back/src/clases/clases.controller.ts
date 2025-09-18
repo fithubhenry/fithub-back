@@ -117,6 +117,7 @@ export class ClasesController {
   async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Clase> {
     return this.clasesService.findById(id);
   }
+
   @Delete('/:id')
   @HttpCode(200)
   @ApiOperation({ summary: 'Eliminar una clase por ID' })
@@ -126,5 +127,7 @@ export class ClasesController {
     type: ClaseResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Clase no encontrada' })
-  async eliminarClase(@Param('id', ParseUUIDPipe) id: string) {}
+  async eliminarClase(@Param('id', ParseUUIDPipe) id: string): Promise<string> {
+    return this.clasesService.deleteClase(id);
+  }
 }
