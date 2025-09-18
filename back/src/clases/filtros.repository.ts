@@ -22,7 +22,7 @@ export class FiltrosRepository {
 
     if (filtro.sede) {
       queryBuilder.andWhere('clase.sede = :sede', {
-        intensidad: filtro.sede,
+        sede: filtro.sede,
       });
     }
 
