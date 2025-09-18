@@ -4,14 +4,14 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateTurnoDto {
   @ApiProperty({
-    example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef',
+    example: '9f584139-c410-46dc-91e3-b1b0ed224673',
     description: 'ID del usuario',
   })
   @IsUUID()
   usuarioId: string;
 
   @ApiProperty({
-    example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef',
+    example: '07b87244-af38-43c4-bf67-537acfcd241e',
     description: 'ID de la clase',
   })
   @IsUUID()
@@ -32,7 +32,7 @@ export class CreateTurnoDto {
   horaInicio: string;
 
   @ApiProperty({
-    example: 'Pendiente',
+    example: 'PENDIENTE',
     enum: EstadoTurno,
     description: 'Estado del turno',
   })
