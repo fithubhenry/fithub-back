@@ -52,19 +52,6 @@ export class ClasesController {
     return this.clasesService.findAll();
   }
 
-  @Get('/:id')
-  @HttpCode(200)
-  @ApiOperation({ summary: 'Obtener una clase por ID' })
-  @ApiResponse({
-    status: 200,
-    description: 'Clase obtenida exitosamente',
-    type: ClaseResponseDto,
-  })
-  @ApiResponse({ status: 404, description: 'Clase no encontrada' })
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Clase> {
-    return this.clasesService.findById(id);
-  }
-
   @Post()
   @Roles(ERoles.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -116,5 +103,17 @@ export class ClasesController {
   @UseGuards(AuthGuard, RolesGuard)
   async cargaSeeder() {
     return this.clasesService.cargaSeeder();
+  }
+  @Get('/:id')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Obtener una clase por ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Clase obtenida exitosamente',
+    type: ClaseResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Clase no encontrada' })
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Clase> {
+    return this.clasesService.findById(id);
   }
 }
