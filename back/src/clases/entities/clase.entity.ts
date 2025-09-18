@@ -76,6 +76,6 @@ export class Clase {
   @OneToMany(() => Turno, (turno) => turno.clase)
   turnos: Turno[];
 
-  @Column()
+  @Column({ default: true, nullable: false })
   estado: boolean;
 }
