@@ -35,7 +35,7 @@ export class TurnosService {
       horaInicio: dto.horaInicio,
       estado: dto.estado || EstadoTurno.PENDIENTE,
       user: usuario,
-      clase,
+      clase: [clase],
     });
 
     return this.turnoRepository.save(turno);
