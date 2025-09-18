@@ -14,6 +14,7 @@ export enum EGrupoMuscular {
   Hombros = 'Hombros',
   Abdomen = 'Abdomen',
   Gluteo = 'Gluteo',
+  Cardio = 'Cardio',
   Otros = 'Otros',
 }
 
@@ -24,6 +25,7 @@ export enum ESubMusculo {
   Dorsal = 'Dorsal',
   Cuadriceps = 'Cuadriceps',
   Abdominal = 'Abdominal',
+  Cardio = 'Cardio',
   Otros = 'Otros',
 }
 
