@@ -73,9 +73,6 @@ export class Clase {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 
-  @OneToMany(() => Turno, (turno) => turno.clase)
-  turnos: Turno[];
-
   @Column({ default: true, nullable: false })
   estado: boolean;
 }
