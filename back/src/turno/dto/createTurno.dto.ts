@@ -29,7 +29,7 @@ export class CreateTurnoDto {
     description: 'Hora del turno en formato HH:mm:ss',
   })
   @IsString()
-  hora: string;
+  horaInicio: string;
 
   @ApiProperty({
     example: 'Pendiente',

@@ -1,6 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class MailerService {
@@ -18,7 +17,7 @@ export class MailerService {
     });
   }
 
-  async sendWelcomeEmail(to: string) {
+  async sendWelcomeEmail(to: string, name: string) {
     try {
       await this.transporter.sendMail({
         from: `"FITHUB 👋" <${process.env.SMTP_USER}>`,
@@ -30,7 +29,7 @@ export class MailerService {
           <div style="text-align: center;">
             <img src="https://i.ibb.co/7n7tXG6/logo.png" alt="Mi App Logo" style="width: 150px; margin-bottom: 20px;" />
           </div>
-          <h2 style="color: #333;">¡Hola ${User.name}!</h2>
+          <h2 style="color: #333;">¡Hola ${name}!</h2>
           <p style="color: #555;">Gracias por registrarte en nuestra plataforma. Aquí te contamos qué puedes hacer:</p>
           <ul style="color: #555;">
             <li><strong>Explorar:</strong> Descubre todas las funcionalidades de nuestra app.</li>
@@ -44,6 +43,24 @@ export class MailerService {
           <p style="color: #999; font-size: 12px; margin-top: 20px;">Si no te registraste, ignora este correo.</p>
         </div>
       `,
+      });
+    } catch (error) {
+      console.error('Error enviando email:', error);
+      throw new InternalServerErrorException('No se pudo enviar el email');
+    }
+  }
+
+  // ✅ Ahora acepta un objeto, igual que nodemailer
+  async sendMail(options: {
+    to: string;
+    subject: string;
+    text?: string;
+    html?: string;
+  }) {
+    try {
+      await this.transporter.sendMail({
+        from: `"FITHUB 👋" <${process.env.SMTP_USER}>`,
+        ...options,
       });
     } catch (error) {
       console.error('Error enviando email:', error);

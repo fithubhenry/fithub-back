@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Between, Repository } from 'typeorm';
 import { Turno, EstadoTurno } from './entities/turno.entity';
 import { CreateTurnoDto } from './dto/createTurno.dto';
 import { UpdateTurnoDto } from './dto/updateTurno.dto';
@@ -32,7 +32,7 @@ export class TurnosService {
 
     const turno = this.turnoRepository.create({
       fecha: dto.fecha,
-      hora: dto.hora,
+      horaInicio: dto.horaInicio,
       estado: dto.estado || EstadoTurno.PENDIENTE,
       user: usuario,
       clase,
@@ -66,5 +66,17 @@ export class TurnosService {
   async remove(id: string): Promise<void> {
     const turno = await this.findOne(id);
     await this.turnoRepository.remove(turno);
+  }
+
+  async findTurnosProximos(): Promise<Turno[]> {
+    const ahora = new Date();
+    const enUnaHora = new Date(ahora.getTime() + 60 * 60 * 1000);
+
+    return this.turnoRepository.find({
+      where: {
+        fecha: Between(ahora, enUnaHora),
+      },
+      relations: ['user', 'clase'], // 👈 importante para el mail
+    });
   }
 }
