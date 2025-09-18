@@ -47,4 +47,13 @@ export class ClasesService {
     if (!clase) throw new NotFoundException('Clase no encontrada');
     return clase;
   }
+
+  async deleteClase(id: string) {
+    const clase = await this.claseRepository.findOne({ where: { id } });
+    if (!clase) throw new NotFoundException('Clase no encontrada');
+    if (clase.estado === false) return 'La clase ya se encuentra eliminada';
+    clase.estado = false;
+    await this.claseRepository.save(clase);
+    return 'Clase eliminada exitosamente';
+  }
 }
