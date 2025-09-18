@@ -51,7 +51,7 @@ export class Turno {
     eager: true,
     onDelete: 'CASCADE',
   })
-  clase: Clase;
+  clase: Clase[];
 
   @ApiProperty({ example: '10:00:00', description: 'Hora de inicio' })
   @Column({ type: 'time', nullable: true })
