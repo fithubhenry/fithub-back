@@ -58,7 +58,12 @@ export class Clase {
   @Column()
   sede: string;
 
-  @Column()
+  @Column({
+    default:
+      'https://res.cloudinary.com/dugup6n8j/image/upload/v1758154206/1200x630wa_cgcjme.png',
+    type: 'varchar',
+    nullable: true,
+  })
   imageUrl: string;
 
   // Fechas automáticas de creación y actualización
