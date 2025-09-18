@@ -3,8 +3,13 @@ import { ScheduleService } from './schedule.service';
 import { ScheduleController } from './schedule.controller';
 import { TurnosService } from 'src/turno/turno.service';
 import { TurnosReminderService } from 'src/turno/turnoRecordatorio.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Turno } from 'src/turno/entities/turno.entity';
+import { User } from 'mercadopago';
+import { Clase } from 'src/clases/entities/clase.entity';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Turno, User, Clase])],
   controllers: [ScheduleController],
   providers: [ScheduleService, TurnosService, TurnosReminderService],
 })
