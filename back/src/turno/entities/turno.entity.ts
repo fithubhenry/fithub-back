@@ -47,7 +47,7 @@ export class Turno {
     example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef',
     description: 'ID de la clase',
   })
-  @ManyToMany(() => Clase, (clase) => clase.turnos, {
+  @ManyToMany(() => Clase, (clase) => clase.horarios, {
     eager: true,
     onDelete: 'CASCADE',
   })
