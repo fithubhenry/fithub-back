@@ -1,4 +1,4 @@
-import { IsOptional, IsEnum } from 'class-validator';
+import { IsOptional, IsEnum, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
 import {
   EIntensidad,
@@ -35,7 +35,7 @@ export class FiltroClasesDto {
   tipo?: ETipos;
 
   @IsOptional()
-  @IsEnum(EGrupoMuscular) // opcional: para futuras extensiones
+  @IsString()
   sede?: string;
 }
 
