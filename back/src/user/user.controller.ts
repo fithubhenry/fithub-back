@@ -15,6 +15,7 @@ import {
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiConsumes,
   ApiOperation,
@@ -34,6 +35,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @ApiBearerAuth()
   @Get()
   @Roles(ERoles.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -115,6 +117,7 @@ export class UserController {
     return this.userService.updateProfileImage(id, file);
   }
 
+  @ApiBearerAuth()
   @Delete(':id')
   @Roles(ERoles.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -127,6 +130,10 @@ export class UserController {
     return this.userService.remove(id);
   }
 
+  @ApiBearerAuth()
+  @Get('admin/new/:id')
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Agregar un usuario como administrador' })
   @ApiParam({ name: 'id', type: String, required: true })
   @ApiResponse({
@@ -135,14 +142,14 @@ export class UserController {
     type: UserResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
-  @Get('admin/new/:id')
-  @Roles(ERoles.Admin)
-  @UseGuards(AuthGuard, RolesGuard)
   async createAdmin(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.addAdmin(id);
   }
 
+  @ApiBearerAuth()
   @Get('admin/delete/:id')
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
   @ApiOperation({ summary: 'Quitar privilegios de administrador' })
   @ApiParam({ name: 'id', type: String, required: true })
   @ApiResponse({
@@ -151,8 +158,6 @@ export class UserController {
     type: UserResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
-  @Roles(ERoles.Admin)
-  @UseGuards(AuthGuard, RolesGuard)
   async deleteAdmin(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteAdmin(id);
   }

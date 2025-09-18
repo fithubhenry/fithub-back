@@ -15,6 +15,7 @@ import { ClasesService } from './clases.service';
 import { CrearClaseDto } from './dto/createClase.dto';
 import { FiltroClasesDto } from './dto/filtros.dto';
 import {
+  ApiBearerAuth,
   ApiBody,
   ApiOperation,
   ApiQuery,
@@ -53,6 +54,7 @@ export class ClasesController {
     return this.clasesService.findAll();
   }
 
+  @ApiBearerAuth()
   @Post()
   @Roles(ERoles.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -99,6 +101,7 @@ export class ClasesController {
     return this.clasesService.busquedaConFiltros(filtros);
   }
 
+  @ApiBearerAuth()
   @Get('seeder')
   @Roles(ERoles.Admin)
   @UseGuards(AuthGuard, RolesGuard)
@@ -118,6 +121,7 @@ export class ClasesController {
     return this.clasesService.findById(id);
   }
 
+  @ApiBearerAuth()
   @Delete('/:id')
   @Roles(ERoles.Admin)
   @UseGuards(AuthGuard, RolesGuard)

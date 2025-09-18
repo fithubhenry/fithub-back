@@ -84,7 +84,7 @@ export class AuthService {
 
     //Enviar email de registro existoso
 
-    await this.mailService.sendWelcomeEmail(savedUser.email);
+    await this.mailService.sendWelcomeEmail(savedUser.email, savedUser.nombre);
 
     //Eliminar password del objeto antes de devolverlo
 
