@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -50,19 +51,6 @@ export class ClasesController {
   @ApiResponse({ status: 401, description: 'Unauthorized' })
   async findAll(): Promise<ClaseResponseDto[]> {
     return this.clasesService.findAll();
-  }
-
-  @Get('/:id')
-  @HttpCode(200)
-  @ApiOperation({ summary: 'Obtener una clase por ID' })
-  @ApiResponse({
-    status: 200,
-    description: 'Clase obtenida exitosamente',
-    type: ClaseResponseDto,
-  })
-  @ApiResponse({ status: 404, description: 'Clase no encontrada' })
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Clase> {
-    return this.clasesService.findById(id);
   }
 
   @Post()
@@ -116,5 +104,32 @@ export class ClasesController {
   @UseGuards(AuthGuard, RolesGuard)
   async cargaSeeder() {
     return this.clasesService.cargaSeeder();
+  }
+  @Get('/:id')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Obtener una clase por ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Clase obtenida exitosamente',
+    type: ClaseResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Clase no encontrada' })
+  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Clase> {
+    return this.clasesService.findById(id);
+  }
+
+  @Delete('/:id')
+  @Roles(ERoles.Admin)
+  @UseGuards(AuthGuard, RolesGuard)
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Eliminar una clase por ID' })
+  @ApiResponse({
+    status: 200,
+    description: 'Clase eliminada exitosamente',
+    type: ClaseResponseDto,
+  })
+  @ApiResponse({ status: 404, description: 'Clase no encontrada' })
+  async eliminarClase(@Param('id', ParseUUIDPipe) id: string): Promise<string> {
+    return this.clasesService.deleteClase(id);
   }
 }

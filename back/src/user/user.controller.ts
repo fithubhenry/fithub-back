@@ -142,6 +142,7 @@ export class UserController {
     return this.userService.addAdmin(id);
   }
 
+  @Get('admin/delete/:id')
   @ApiOperation({ summary: 'Quitar privilegios de administrador' })
   @ApiParam({ name: 'id', type: String, required: true })
   @ApiResponse({
@@ -150,7 +151,6 @@ export class UserController {
     type: UserResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
-  @Get('admin/delete/:id')
   @Roles(ERoles.Admin)
   @UseGuards(AuthGuard, RolesGuard)
   async deleteAdmin(@Param('id', ParseUUIDPipe) id: string) {

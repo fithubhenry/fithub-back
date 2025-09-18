@@ -20,6 +20,12 @@ export class FiltrosRepository {
       });
     }
 
+    if (filtro.sede) {
+      queryBuilder.andWhere('clase.sede = :sede', {
+        sede: filtro.sede,
+      });
+    }
+
     if (filtro.tipo) {
       queryBuilder.andWhere('clase.tipo = :tipo', { tipo: filtro.tipo });
     }
