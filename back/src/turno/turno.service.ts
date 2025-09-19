@@ -30,14 +30,24 @@ export class TurnosService {
     if (!usuario) throw new NotFoundException('Usuario no encontrado');
     if (!clase) throw new NotFoundException('Clase no encontrada');
 
+    // validar que el horario exista en la clase
+    const horario = clase.horarios.find(
+      (h) => h.fecha === dto.fecha && h.horaInicio === dto.horaInicio,
+    );
+    if (!horario)
+      throw new NotFoundException('Horario no válido para esta clase');
+
     const turno = this.turnoRepository.create({
       user: usuario,
-      clase: [clase],
+      clase,
+      fecha: horario.fecha,
+      horaInicio: horario.horaInicio,
+      horaFin: horario.horaFin,
+      estado: EstadoTurno.PENDIENTE,
     });
 
     return this.turnoRepository.save(turno);
   }
-
   findAll(): Promise<Turno[]> {
     return this.turnoRepository.find();
   }

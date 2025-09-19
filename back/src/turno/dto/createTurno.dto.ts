@@ -16,4 +16,16 @@ export class CreateTurnoDto {
   })
   @IsUUID()
   claseId: string;
+
+  @ApiProperty({ example: '2025-09-20', description: 'Fecha del turno' })
+  @IsDateString()
+  fecha: Date;
+
+  @ApiProperty({ example: '10:00:00', description: 'Hora de inicio' })
+  @IsString()
+  horaInicio: string;
+
+  @ApiProperty({ example: '11:00:00', description: 'Hora de fin' })
+  @IsString()
+  horaFin: string;
 }
