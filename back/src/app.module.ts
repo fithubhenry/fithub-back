@@ -37,7 +37,7 @@ import { Turno } from './turno/entities/turno.entity';
     TypeOrmModule.forFeature([Turno]),
   ],
   controllers: [AppController],
-  providers: [AppService, TurnosService],
+  providers: [AppService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
