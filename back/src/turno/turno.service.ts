@@ -31,9 +31,6 @@ export class TurnosService {
     if (!clase) throw new NotFoundException('Clase no encontrada');
 
     const turno = this.turnoRepository.create({
-      fecha: dto.fecha,
-      horaInicio: dto.horaInicio,
-      estado: dto.estado || EstadoTurno.PENDIENTE,
       user: usuario,
       clase: [clase],
     });
