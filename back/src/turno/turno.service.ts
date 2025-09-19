@@ -31,19 +31,25 @@ export class TurnosService {
     if (!usuario) throw new NotFoundException('Usuario no encontrado');
     if (!clase) throw new NotFoundException('Clase no encontrada');
 
-    // validar que el horario exista en la clase
-    const horario = clase.horarios.find(
-      (h) => h.fecha === dto.fecha && h.horaInicio === dto.horaInicio,
-    );
-    if (!horario)
+    const claseConHorario = await this.claseRepository
+      .createQueryBuilder('clase')
+      .leftJoinAndSelect('clase.horarios', 'horario')
+      .where('clase.id = :claseId', { claseId: dto.claseId })
+      .andWhere('horario.fecha = :fecha', { fecha: dto.fecha })
+      .andWhere('horario.horaInicio = :horaInicio', {
+        horaInicio: dto.horaInicio,
+      })
+      .getOne();
+
+    if (!claseConHorario)
       throw new NotFoundException('Horario no válido para esta clase');
 
     const turno = this.turnoRepository.create({
       user: usuario,
       clase,
-      fecha: horario.fecha,
-      horaInicio: horario.horaInicio,
-      horaFin: horario.horaFin,
+      fecha: dto.fecha,
+      horaInicio: dto.horaInicio,
+      horaFin: dto.horaFin,
       estado: EstadoTurno.PENDIENTE,
     });
 
