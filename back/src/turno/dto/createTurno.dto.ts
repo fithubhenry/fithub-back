@@ -16,26 +16,4 @@ export class CreateTurnoDto {
   })
   @IsUUID()
   claseId: string;
-
-  @ApiProperty({
-    example: '2022-01-01',
-    description: 'Fecha del turno en formato YYYY-MM-DD',
-  })
-  @IsDateString()
-  fecha: string;
-
-  @ApiProperty({
-    example: '10:00:00',
-    description: 'Hora del turno en formato HH:mm:ss',
-  })
-  @IsString()
-  horaInicio: string;
-
-  @ApiProperty({
-    example: 'PENDIENTE',
-    enum: EstadoTurno,
-    description: 'Estado del turno',
-  })
-  @IsEnum(EstadoTurno)
-  estado?: EstadoTurno;
 }
