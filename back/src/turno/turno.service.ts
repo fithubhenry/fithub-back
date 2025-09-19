@@ -25,6 +25,7 @@ export class TurnosService {
     });
     const clase = await this.claseRepository.findOne({
       where: { id: dto.claseId },
+      relations: ['horarios'],
     });
 
     if (!usuario) throw new NotFoundException('Usuario no encontrado');
