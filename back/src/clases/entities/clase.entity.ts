@@ -33,8 +33,7 @@ export class Clase {
   @Column()
   instructor: string;
 
-  @ManyToMany(() => Turno, (turno) => turno.clase, { cascade: true })
-  @JoinTable()
+  @OneToMany(() => Turno, (turno) => turno.clase, { cascade: true })
   horarios: Turno[];
 
   @Column()
@@ -75,4 +74,13 @@ export class Clase {
 
   @Column({ default: true, nullable: false })
   estado: boolean;
+
+  @Column({ type: 'date', nullable: true })
+  fecha: Date;
+
+  @Column({ type: 'time', nullable: true })
+  horaInicio: string;
+
+  @Column({ type: 'time', nullable: true })
+  horaFin: string;
 }
