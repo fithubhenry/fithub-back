@@ -75,12 +75,12 @@ export class Clase {
   @Column({ default: true, nullable: false })
   estado: boolean;
 
-  @Column({ type: 'date', nullable: false })
+  @Column({ type: 'date', nullable: true })
   fecha: Date;
 
-  @Column({ type: 'time', nullable: false })
+  @Column({ type: 'time', nullable: true })
   horaInicio: string;
 
-  @Column({ type: 'time', nullable: false })
+  @Column({ type: 'time', nullable: true })
   horaFin: string;
 }
