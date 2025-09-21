@@ -7,6 +7,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { EEstado } from 'src/common/usersEnum';
 
 export class UpdateUserDto {
   @ApiPropertyOptional({
@@ -99,4 +100,7 @@ export class UpdateUserDto {
   @IsOptional()
   @IsString()
   profileImageUrl?: string;
+
+  @IsOptional()
+  estado?: EEstado;
 }
