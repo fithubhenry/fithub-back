@@ -14,8 +14,6 @@ import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { TurnosModule } from './turno/turno.module';
 import { Turno } from './turno/entities/turno.entity';
-import { ChatModule } from './chat/chat.module';
-import openaiConfig from './config/openai.config';
 
 @Module({
   imports: [
@@ -24,7 +22,7 @@ import openaiConfig from './config/openai.config';
     AuthModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [typeOrmConfig, openaiConfig],
+      load: [typeOrmConfig],
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
@@ -36,7 +34,6 @@ import openaiConfig from './config/openai.config';
     ScheduleModule,
     TurnosModule,
     TypeOrmModule.forFeature([Turno]),
-    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
