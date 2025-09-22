@@ -44,6 +44,8 @@ export class TurnosService {
     if (!claseConHorario)
       throw new NotFoundException('Horario no válido para esta clase');
 
+    const diaSemana = this.obtenerDiaSemana(dto.fecha);
+
     const turno = this.turnoRepository.create({
       user: usuario,
       clase,
@@ -51,9 +53,23 @@ export class TurnosService {
       horaInicio: dto.horaInicio,
       horaFin: dto.horaFin,
       estado: EstadoTurno.PENDIENTE,
+      diaSemana, // 👈 se setea automáticamente
     });
 
     return this.turnoRepository.save(turno);
+  }
+
+  private obtenerDiaSemana(fecha: Date): string {
+    const dias = [
+      'DOMINGO',
+      'LUNES',
+      'MARTES',
+      'MIERCOLES',
+      'JUEVES',
+      'VIERNES',
+      'SABADO',
+    ];
+    return dias[new Date(fecha).getDay()];
   }
   findAll(): Promise<Turno[]> {
     return this.turnoRepository.find();
