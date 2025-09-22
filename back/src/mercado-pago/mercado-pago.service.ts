@@ -34,7 +34,7 @@ export class PaymentsService {
         ],
         back_urls: {
           success: 'https://fithub-front.onrender.com/clases',
-          failure: 'https://fithub-front.onrender.com/failure',
+          failure: 'https://fithub-front.onrender.com/clases',
           pending: 'https://fithub-front.onrender.com/pending',
         },
         auto_return: 'approved',

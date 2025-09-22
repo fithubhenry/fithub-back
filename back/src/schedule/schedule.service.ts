@@ -12,7 +12,7 @@ export class ScheduleService {
   ) {}
 
   // Se ejecuta cada hora
-  @Cron(CronExpression.EVERY_HOUR)
+  @Cron('/3 * * *')
   async handleReminderJob() {
     // 1. Buscar turnos que tengan un recordatorio pendiente
     const turnos = await this.turnosService.findTurnosProximos(); // 👈 este método lo implementás vos
