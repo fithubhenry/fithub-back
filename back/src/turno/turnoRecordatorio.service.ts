@@ -31,7 +31,7 @@ export class TurnosReminderService {
       return;
     }
 
-    const job = new CronJob(reminderTime, async () => {
+    const job = new CronJob('0 10 * * *', async () => {
       this.logger.log(`Enviando recordatorio para turno ${turno.id}`);
 
       await this.mailerService.sendMail({
