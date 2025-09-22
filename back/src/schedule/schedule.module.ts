@@ -12,6 +12,7 @@ import { TurnosReminderService } from 'src/turno/turnoRecordatorio.service';
 import { Turno } from 'src/turno/entities/turno.entity';
 import { User } from 'src/user/entities/user.entity';
 import { Clase } from 'src/clases/entities/clase.entity';
+import { MailerService } from 'src/mail/mail.service';
 
 @Module({
   imports: [
@@ -44,6 +45,11 @@ import { Clase } from 'src/clases/entities/clase.entity';
     }),
   ],
   controllers: [ScheduleController],
-  providers: [ScheduleService, TurnosService, TurnosReminderService],
+  providers: [
+    ScheduleService,
+    TurnosService,
+    TurnosReminderService,
+    MailerService,
+  ],
 })
 export class ScheduleModule {}
