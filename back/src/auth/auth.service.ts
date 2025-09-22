@@ -107,6 +107,7 @@ export class AuthService {
         apellido: googleUser.lastName,
       });
       user = await this.userRepository.save(newUser);
+      await this.mailService.sendWelcomeEmail(newUser.email, newUser.nombre);
     }
 
     // Genera un JWT para el usuario autenticado
