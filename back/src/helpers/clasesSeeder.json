@@ -7,10 +7,10 @@
     "duracion": "1 hora",
     "capacidad": 10,
     "tipo": "Crossfit",
-    "grupo_musculo": ["Pierna", "Pecho", "Espalda"],
-    "sub_musculo": ["Cuadriceps", "Dorsal"],
+    "grupo_musculo": ["Pierna"],
+    "sub_musculo": ["Cuadriceps"],
     "sede": "Norte",
-    "imageUrl": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg",
     "horarios": [
       {
         "fecha": "2025-09-15",
@@ -31,7 +31,7 @@
     "grupo_musculo": ["Otros"],
     "sub_musculo": ["Otros"],
     "sede": "Central",
-    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg",
     "horarios": [
       {
         "fecha": "2025-09-16",
@@ -49,10 +49,10 @@
     "duracion": "45 minutos",
     "capacidad": 25,
     "tipo": "Spinning",
-    "grupo_musculo": ["Pierna", "Gluteo"],
+    "grupo_musculo": ["Gluteo"],
     "sub_musculo": ["Cuadriceps"],
     "sede": "Sur",
-    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
       {
         "fecha": "2025-09-15",
@@ -73,7 +73,7 @@
     "grupo_musculo": ["Abdomen"],
     "sub_musculo": ["Abdominal"],
     "sede": "Central",
-    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
       {
         "fecha": "2025-09-16",
@@ -91,10 +91,10 @@
     "duracion": "1 hora",
     "capacidad": 30,
     "tipo": "Zumba",
-    "grupo_musculo": ["Otros"],
-    "sub_musculo": ["Otros"],
+    "grupo_musculo": ["Cardio"],
+    "sub_musculo": ["Cardio"],
     "sede": "Sur",
-    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
       { "fecha": "2025-09-20", "horaInicio": "17:00:00", "horaFin": "18:00:00" }
     ]
@@ -107,10 +107,10 @@
     "duracion": "1.25 horas",
     "capacidad": 12,
     "tipo": "Otros",
-    "grupo_musculo": ["Pecho", "Brazos"],
-    "sub_musculo": ["Biceps", "Triceps"],
+    "grupo_musculo": ["Pecho"],
+    "sub_musculo": ["Biceps"],
     "sede": "Norte",
-    "imageUrl": "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg",
     "horarios": [
       { "fecha": "2025-09-22", "horaInicio": "15:00:00", "horaFin": "16:15:00" }
     ]
@@ -123,10 +123,10 @@
     "duracion": "1 hora",
     "capacidad": 18,
     "tipo": "Otros",
-    "grupo_musculo": ["Hombros", "Espalda"],
-    "sub_musculo": ["Hombros", "Dorsal"],
+    "grupo_musculo": ["Hombros"],
+    "sub_musculo": ["Hombros"],
     "sede": "Oeste",
-    "imageUrl": "https://images.pexels.com/photos/4761787/pexels-photo-4761787.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/4761787/pexels-photo-4761787.jpeg",
     "horarios": [
       { "fecha": "2025-09-18", "horaInicio": "20:00:00", "horaFin": "21:00:00" }
     ]
@@ -140,9 +140,9 @@
     "capacidad": 20,
     "tipo": "Otros",
     "grupo_musculo": ["Gluteo"],
-    "sub_musculo": ["Otros"],
+    "sub_musculo": ["Cuadriceps"],
     "sede": "Central",
-    "imageUrl": "https://images.pexels.com/photos/383803A/pexels-photo-3838030.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/383803A/pexels-photo-3838030.jpeg",
     "horarios": [
       { "fecha": "2025-09-24", "horaInicio": "18:30:00", "horaFin": "19:15:00" }
     ]
@@ -155,10 +155,10 @@
     "duracion": "1 hora",
     "capacidad": 15,
     "tipo": "Otros",
-    "grupo_musculo": ["Abdomen", "Pierna"],
-    "sub_musculo": ["Abdominal", "Cuadriceps"],
+    "grupo_musculo": ["Abdomen"],
+    "sub_musculo": ["Abdominal"],
     "sede": "Este",
-    "imageUrl": "https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg",
     "horarios": [
       { "fecha": "2025-09-25", "horaInicio": "07:00:00", "horaFin": "08:00:00" }
     ]
@@ -171,10 +171,10 @@
     "duracion": "1.5 horas",
     "capacidad": 22,
     "tipo": "Yoga",
-    "grupo_musculo": ["Otros"],
-    "sub_musculo": ["Otros"],
+    "grupo_musculo": ["Cardio"],
+    "sub_musculo": ["Cardio"],
     "sede": "Sur",
-    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg",
     "horarios": [
       { "fecha": "2025-09-26", "horaInicio": "16:00:00", "horaFin": "17:30:00" }
     ]
@@ -190,7 +190,7 @@
     "grupo_musculo": ["Pierna"],
     "sub_musculo": ["Cuadriceps"],
     "sede": "Norte",
-    "imageUrl": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg",
     "horarios": [
       { "fecha": "2025-09-29", "horaInicio": "13:00:00", "horaFin": "13:30:00" }
     ]
@@ -206,7 +206,7 @@
     "grupo_musculo": ["Abdomen"],
     "sub_musculo": ["Abdominal"],
     "sede": "Oeste",
-    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
       { "fecha": "2025-09-30", "horaInicio": "19:30:00", "horaFin": "20:30:00" }
     ]
@@ -219,10 +219,10 @@
     "duracion": "2 horas",
     "capacidad": 8,
     "tipo": "Otros",
-    "grupo_musculo": ["Pierna", "Pecho", "Espalda"],
-    "sub_musculo": ["Cuadriceps", "Dorsal"],
+    "grupo_musculo": ["Espalda"],
+    "sub_musculo": ["Dorsal"],
     "sede": "Norte",
-    "imageUrl": "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg",
     "horarios": [
       { "fecha": "2025-10-01", "horaInicio": "17:00:00", "horaFin": "19:00:00" }
     ]
@@ -238,7 +238,7 @@
     "grupo_musculo": ["Otros"],
     "sub_musculo": ["Otros"],
     "sede": "Este",
-    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg",
     "horarios": [
       { "fecha": "2025-10-02", "horaInicio": "11:00:00", "horaFin": "11:45:00" }
     ]
@@ -251,10 +251,10 @@
     "duracion": "1 hora",
     "capacidad": 20,
     "tipo": "Otros",
-    "grupo_musculo": ["Otros"],
-    "sub_musculo": ["Otros"],
+    "grupo_musculo": ["Cardio"],
+    "sub_musculo": ["Cardio"],
     "sede": "Piscina",
-    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+    "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
       { "fecha": "2025-10-03", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
     ]

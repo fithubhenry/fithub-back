@@ -25,22 +25,36 @@ export class TurnosService {
     });
     const clase = await this.claseRepository.findOne({
       where: { id: dto.claseId },
+      relations: ['horarios'],
     });
 
     if (!usuario) throw new NotFoundException('Usuario no encontrado');
     if (!clase) throw new NotFoundException('Clase no encontrada');
 
+    const claseConHorario = await this.claseRepository
+      .createQueryBuilder('clase')
+      .leftJoinAndSelect('clase.horarios', 'horario')
+      .where('clase.id = :claseId', { claseId: dto.claseId })
+      .andWhere('horario.fecha = :fecha', { fecha: dto.fecha })
+      .andWhere('horario.horaInicio = :horaInicio', {
+        horaInicio: dto.horaInicio,
+      })
+      .getOne();
+
+    if (!claseConHorario)
+      throw new NotFoundException('Horario no válido para esta clase');
+
     const turno = this.turnoRepository.create({
-      fecha: dto.fecha,
-      horaInicio: dto.horaInicio,
-      estado: dto.estado || EstadoTurno.PENDIENTE,
       user: usuario,
       clase,
+      fecha: dto.fecha,
+      horaInicio: dto.horaInicio,
+      horaFin: dto.horaFin,
+      estado: EstadoTurno.PENDIENTE,
     });
 
     return this.turnoRepository.save(turno);
   }
-
   findAll(): Promise<Turno[]> {
     return this.turnoRepository.find();
   }

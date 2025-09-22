@@ -14,9 +14,7 @@ import { Repository } from 'typeorm';
 import { Clase } from './entities/clase.entity';
 import { Turno } from '../turno/entities/turno.entity';
 import { CrearClaseDto, HorarioDto } from './dto/createClase.dto';
-import * as fs from 'fs';
 import clasesSeeder from '../helpers/clasesSeeder.json';
-import * as path from 'path';
 
 @Injectable()
 export class ClasesRepository {

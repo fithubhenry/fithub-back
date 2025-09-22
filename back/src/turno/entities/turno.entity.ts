@@ -1,10 +1,4 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  ManyToMany,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from 'src/user/entities/user.entity';
 import { Clase } from 'src/clases/entities/clase.entity';
 import { ApiProperty } from '@nestjs/swagger';
@@ -22,7 +16,7 @@ export class Turno {
   id: string;
 
   @ApiProperty({ example: '2025-09-20' })
-  @Column({ type: 'date' })
+  @Column({ type: 'date', nullable: true })
   fecha: Date;
 
   @Column({
@@ -47,7 +41,7 @@ export class Turno {
     example: 'a1b2c3d4-e5f6-7890-abcd-1234567890ef',
     description: 'ID de la clase',
   })
-  @ManyToMany(() => Clase, (clase) => clase.turnos, {
+  @ManyToOne(() => Clase, (clase) => clase.horarios, {
     eager: true,
     onDelete: 'CASCADE',
   })

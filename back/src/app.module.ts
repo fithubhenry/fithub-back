@@ -20,7 +20,12 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { TurnosModule } from './turno/turno.module';
+<<<<<<< HEAD
 >>>>>>> 4c3f1d3770f7697e17f5fd36e210934ab653dd62
+=======
+import { TurnosService } from './turno/turno.service';
+import { Turno } from './turno/entities/turno.entity';
+>>>>>>> 7c9d6311b3141ddcdcfe26c50c44744efa772091
 
 @Module({
   imports: [
@@ -47,7 +52,11 @@ import { TurnosModule } from './turno/turno.module';
     MercadoPagoModule,
     ScheduleModule,
     TurnosModule,
+<<<<<<< HEAD
 >>>>>>> 4c3f1d3770f7697e17f5fd36e210934ab653dd62
+=======
+    TypeOrmModule.forFeature([Turno]),
+>>>>>>> 7c9d6311b3141ddcdcfe26c50c44744efa772091
   ],
   controllers: [AppController],
   providers: [AppService],
