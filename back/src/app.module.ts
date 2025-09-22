@@ -13,7 +13,6 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { TurnosModule } from './turno/turno.module';
-import { TurnosService } from './turno/turno.service';
 import { Turno } from './turno/entities/turno.entity';
 
 @Module({
