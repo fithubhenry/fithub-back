@@ -61,7 +61,17 @@ export class PaymentsService {
         const userId = userItemId?.replace('user-', '');
 
         if (userId) {
-          await this.userRepository.update(userId, { estado: EEstado.Activo });
+          await this.userRepository.update(userId, {
+            estado: EEstado.Activo,
+            historialPagos: [
+              {
+                amount: paymentData.transaction_amount,
+                dateApproved: paymentData.date_approved,
+                status: paymentData.status,
+              },
+            ],
+          });
+
           console.log(`✅ Usuario ${userId} activado`);
         }
       }

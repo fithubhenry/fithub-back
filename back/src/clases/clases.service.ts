@@ -6,7 +6,6 @@ import { CrearClaseDto } from './dto/createClase.dto';
 import { ClasesRepository } from './clases.repository';
 import { FiltroClasesDto, OpcionesFiltro } from './dto/filtros.dto';
 import { FiltrosRepository } from './filtros.repository';
-import { NotFoundError } from 'rxjs';
 
 @Injectable()
 export class ClasesService {
