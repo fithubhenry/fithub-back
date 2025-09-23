@@ -33,7 +33,6 @@ export class Turno {
   })
   @ManyToOne(() => User, (user) => user.turnos, {
     eager: true,
-    cascade: true,
     onDelete: 'CASCADE',
   })
   user: User;
@@ -44,7 +43,6 @@ export class Turno {
   })
   @ManyToOne(() => Clase, (clase) => clase.horarios, {
     eager: true,
-    cascade: true,
     onDelete: 'CASCADE',
   })
   clase: Clase;

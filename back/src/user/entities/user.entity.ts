@@ -34,7 +34,7 @@ export class User {
   estado: EEstado;
   @OneToMany(() => Turno, (turno) => turno.user, {
     cascade: true,
-    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
   })
   turnos: Turno[];
   @Column({
