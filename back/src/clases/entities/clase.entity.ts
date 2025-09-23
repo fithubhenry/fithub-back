@@ -35,7 +35,7 @@ export class Clase {
 
   @OneToMany(() => Turno, (turno) => turno.clase, {
     cascade: true,
-    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
   })
   horarios: Turno[];
 
