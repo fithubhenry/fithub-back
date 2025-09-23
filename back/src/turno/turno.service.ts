@@ -46,6 +46,12 @@ export class TurnosService {
     if (!claseConHorario)
       throw new NotFoundException('Horario no válido para esta clase');
 
+    if (clase.participantes >= clase.capacidad) {
+      throw new NotFoundException(
+        'La clase está llena, no se pueden crear más turnos',
+      );
+    }
+
     const diaSemana = this.obtenerDiaSemana(dto.fecha);
 
     const turno = this.turnoRepository.create({
@@ -59,6 +65,9 @@ export class TurnosService {
     });
 
     const turnoGuardado = await this.turnoRepository.save(turno);
+
+    clase.participantes += 1;
+    await this.claseRepository.save(clase);
 
     // ✅ Enviar email de prueba cuando se crea un turno
     try {

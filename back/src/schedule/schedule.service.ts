@@ -14,6 +14,68 @@ export class ScheduleService {
     private readonly mailerService: MailerService,
   ) {}
 
+  // -------------------------
+  // Helpers para fechas/horas
+  // -------------------------
+  private parseTimeString(
+    time?: string,
+  ): { h: number; m: number; s: number } | null {
+    if (!time) return null;
+    // Formatos esperados: "HH:mm", "HH:mm:ss", "YYYY-MM-DDTHH:mm:ss..." (ISO)
+    const simple = time.match(/^(\d{1,2}):(\d{2})(?::(\d{2}))?$/);
+    if (simple) {
+      return {
+        h: Number(simple[1]),
+        m: Number(simple[2]),
+        s: simple[3] ? Number(simple[3]) : 0,
+      };
+    }
+    const iso = time.match(/T(\d{2}):(\d{2}):(\d{2})/);
+    if (iso) {
+      return { h: Number(iso[1]), m: Number(iso[2]), s: Number(iso[3]) };
+    }
+    return null;
+  }
+
+  private buildDateWithTime(
+    dateInput: Date | string,
+    time?: string,
+  ): Date | null {
+    const date =
+      typeof dateInput === 'string' ? new Date(dateInput) : new Date(dateInput);
+    if (isNaN(date.getTime())) return null;
+    const t = this.parseTimeString(time);
+    if (t) {
+      date.setHours(t.h, t.m, t.s, 0);
+      return date;
+    }
+    // Si no se pudo parsear time pero la fecha es válida, devolver fecha a medianoche
+    return date;
+  }
+
+  private hasTurnoEnded(turno: Turno): boolean {
+    // Calcula fin de la clase a partir de fecha + horaFin (o si no hay horaFin, usa horaInicio + 1h)
+    const ahora = new Date();
+    const fechaClase = this.buildDateWithTime(
+      turno.fecha,
+      turno.horaFin ?? turno.horaInicio,
+    );
+    if (!fechaClase) {
+      // si no podemos construir fecha, no asumimos que terminó -> devolvemos false
+      return false;
+    }
+
+    // Si sólo tenemos horaInicio y no horaFin -> sumar 1 hora como fallback
+    if (!turno.horaFin && turno.horaInicio) {
+      const fallbackFin = this.buildDateWithTime(turno.fecha, turno.horaInicio);
+      if (!fallbackFin) return false;
+      fallbackFin.setHours(fallbackFin.getHours() + 1);
+      return ahora > fallbackFin;
+    }
+
+    return ahora > fechaClase;
+  }
+
   // Se ejecuta cada hora
   @Cron(CronExpression.EVERY_HOUR)
   async handleReminderJob() {
@@ -22,6 +84,12 @@ export class ScheduleService {
 
     // 2. Programar recordatorios para cada turno
     for (const turno of turnos) {
+      if (this.hasTurnoEnded(turno)) {
+        console.log(
+          `⏭️ Omitido scheduleReminder para turno ${turno.id}: clase ya finalizada`,
+        );
+        continue;
+      }
       await this.reminderService.scheduleReminder(turno);
     }
   }
@@ -40,6 +108,12 @@ export class ScheduleService {
       );
 
       for (const turno of turnosActivos) {
+        if (this.hasTurnoEnded(turno)) {
+          console.log(
+            `⏭️ Omitido envío para turno ${turno.id}: clase ya finalizada`,
+          );
+          continue;
+        }
         await this.sendTurnoReminderEmail(turno);
       }
 
@@ -69,6 +143,12 @@ export class ScheduleService {
       );
 
       for (const turno of turnosProximos) {
+        if (this.hasTurnoEnded(turno)) {
+          console.log(
+            `⏭️ Omitido envío para turno ${turno.id}: clase ya finalizada`,
+          );
+          continue;
+        }
         await this.sendFiveMinuteWarningEmail(turno);
       }
 
