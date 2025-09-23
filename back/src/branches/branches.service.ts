@@ -1,4 +1,3 @@
-// src/branches/branches.service.ts
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Branch } from './entities/branch.entity';
@@ -12,8 +11,8 @@ export class BranchesService {
     private branchRepository: Repository<Branch>,
   ) {}
 
-  findAll(): Promise<Branch[]> {
-    return this.branchRepository.find();
+  async findAll(): Promise<Branch[]> {
+    return await this.branchRepository.find();
   }
 
   async addBranch(sucursal: CreateBranchDto): Promise<Branch> {

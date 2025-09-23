@@ -1,4 +1,3 @@
-// src/branches/dto/create-branch.dto.ts
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateBranchDto {
