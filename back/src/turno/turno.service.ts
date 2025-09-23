@@ -53,6 +53,7 @@ export class TurnosService {
     }
 
     const diaSemana = this.obtenerDiaSemana(dto.fecha);
+    clase.participantes += 1;
 
     const turno = this.turnoRepository.create({
       user: usuario,
@@ -66,7 +67,6 @@ export class TurnosService {
 
     const turnoGuardado = await this.turnoRepository.save(turno);
 
-    clase.participantes += 1;
     await this.claseRepository.save(clase);
 
     // ✅ Enviar email de prueba cuando se crea un turno
