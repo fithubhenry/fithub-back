@@ -1,12 +1,26 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import fetch from 'node-fetch';
+import fetch from 'node-fetch'; // si tu Node ya es 18+, podés borrar este import y usar fetch nativo
 
 @Injectable()
 export class ChatService {
-  async sendMessage(message: string) {
+  async sendMessage(message: string, context?: string) {
     if (!message) throw new InternalServerErrorException('Mensaje vacío');
 
     try {
+      const systemMessage = {
+        role: 'system',
+        content:
+          'Sos un asistente especializado en gimnasios. Solo respondé preguntas relacionadas al gimnasio (clases, rutinas, horarios, pagos, etc).',
+      };
+
+      const contextMessage = context
+        ? { role: 'system', content: `Información del gimnasio:\n${context}` }
+        : null;
+
+      const messages = [systemMessage];
+      if (contextMessage) messages.push(contextMessage);
+      messages.push({ role: 'user', content: message });
+
       const response = await fetch(
         'https://api.openai.com/v1/chat/completions',
         {
@@ -17,14 +31,7 @@ export class ChatService {
           },
           body: JSON.stringify({
             model: 'gpt-4o-mini',
-            messages: [
-              {
-                role: 'system',
-                content:
-                  'Sos un asistente especializado en gimnasios. Solo respondé preguntas relacionadas al gimnasio (clases, rutinas, horarios, pagos, etc).',
-              },
-              { role: 'user', content: message },
-            ],
+            messages,
             max_tokens: 300,
           }),
         },
