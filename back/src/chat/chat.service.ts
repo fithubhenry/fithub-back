@@ -1,5 +1,5 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import fetch from 'node-fetch'; // si tu Node ya es 18+, podés borrar este import y usar fetch nativo
+import fetch from 'node-fetch'; // si Node >= 18, podés usar fetch nativo
 import { FITHUB_CONTEXT } from 'src/helpers/fithub-context';
 
 @Injectable()
@@ -8,16 +8,10 @@ export class ChatService {
     if (!message) throw new InternalServerErrorException('Mensaje vacío');
 
     try {
-      // Unificamos todo el contexto en un solo systemMessage
+      // ⚡ Usamos solo FITHUB_CONTEXT importado
       const systemMessage = {
         role: 'system',
-        content: `
-Sos un asistente oficial de FitHub, una cadena de gimnasios moderna. 
-Siempre respondé preguntas relacionadas a FitHub (clases, rutinas, horarios, pagos, membresías, reservas, instructores, horarios, contacto, políticas y beneficios).
-No contestes preguntas fuera de este contexto y, si el usuario pregunta algo irrelevante, redirígelo educadamente a temas relacionados con FitHub.
-
-${FITHUB_CONTEXT}
-        `,
+        content: FITHUB_CONTEXT,
       };
 
       const messages = [systemMessage, { role: 'user', content: message }];
