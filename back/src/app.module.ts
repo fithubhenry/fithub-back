@@ -15,6 +15,7 @@ import { ScheduleModule } from './schedule/schedule.module';
 import { TurnosModule } from './turno/turno.module';
 import { Turno } from './turno/entities/turno.entity';
 import { ChatModule } from './chat/chat.module';
+import { BranchesModule } from './branches/branches.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { ChatModule } from './chat/chat.module';
     TurnosModule,
     TypeOrmModule.forFeature([Turno]),
     ChatModule,
+    BranchesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

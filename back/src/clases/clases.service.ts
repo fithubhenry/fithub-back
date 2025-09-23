@@ -26,8 +26,8 @@ export class ClasesService {
     });
   }
 
-  async newClase(clase: CrearClaseDto) {
-    return this.clasesRepository.crearClase(clase);
+  async newClase(clase: CrearClaseDto, file?: Express.Multer.File) {
+    return this.clasesRepository.crearClase(clase, file);
   }
 
   async busquedaConFiltros(filtros: FiltroClasesDto) {
