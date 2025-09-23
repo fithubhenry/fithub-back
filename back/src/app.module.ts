@@ -14,6 +14,7 @@ import { MercadoPagoModule } from './mercado-pago/mercado-pago.module';
 import { ScheduleModule } from './schedule/schedule.module';
 import { TurnosModule } from './turno/turno.module';
 import { Turno } from './turno/entities/turno.entity';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { Turno } from './turno/entities/turno.entity';
     ScheduleModule,
     TurnosModule,
     TypeOrmModule.forFeature([Turno]),
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
