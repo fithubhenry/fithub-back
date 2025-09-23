@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Post,
   Query,
+  UploadedFile,
   UseGuards,
 } from '@nestjs/common';
 import { ClasesService } from './clases.service';
@@ -66,8 +67,11 @@ export class ClasesController {
     description: 'Datos inválidos o clase ya existente',
   })
   @ApiBody({ type: CrearClaseDto })
-  async createClase(@Body() clase: CrearClaseDto) {
-    return this.clasesService.newClase(clase);
+  async createClase(
+    @Body() clase: CrearClaseDto,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
+    return this.clasesService.newClase(clase, file);
   }
 
   @Get('filtros')
