@@ -15,6 +15,7 @@ import { Clase } from './entities/clase.entity';
 import { Turno } from '../turno/entities/turno.entity';
 import { CrearClaseDto, HorarioDto } from './dto/createClase.dto';
 import clasesSeeder from '../helpers/clasesSeeder.json';
+import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 @Injectable()
 export class ClasesRepository {
@@ -23,9 +24,13 @@ export class ClasesRepository {
     private readonly claseRepository: Repository<Clase>,
     @InjectRepository(Turno)
     private readonly turnoRepository: Repository<Turno>,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
-  async crearClase(crearClaseDto: CrearClaseDto): Promise<Clase> {
+  async crearClase(
+    crearClaseDto: CrearClaseDto,
+    file?: Express.Multer.File,
+  ): Promise<Clase> {
     // 1. Verificar si la clase ya existe
     const claseExistente = await this.claseRepository.findOne({
       where: {
@@ -38,6 +43,12 @@ export class ClasesRepository {
       throw new ConflictException('Clase ya existe en esta sede');
     }
 
+    // Sube imagen clase a Cloudinary solo si se pasó un archivo
+    let imageUrl: string | undefined = undefined;
+    if (file) {
+      const uploadResult = await this.cloudinaryService.uploadImage(file);
+      imageUrl = uploadResult?.secure_url ?? null;
+    }
     // 2. Crear la clase sin horarios primero
     const clase = this.claseRepository.create({
       nombre: crearClaseDto.nombre,
@@ -51,7 +62,7 @@ export class ClasesRepository {
       grupo_musculo: crearClaseDto.grupo_musculo,
       sub_musculo: crearClaseDto.sub_musculo,
       sede: crearClaseDto.sede,
-      imageUrl: crearClaseDto.imageUrl,
+      imageUrl: imageUrl,
     });
 
     // 3. Guardar la clase primero para obtener el ID
