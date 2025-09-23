@@ -4,23 +4,23 @@ import { FITHUB_CONTEXT } from 'src/helpers/fithub-context';
 
 @Injectable()
 export class ChatService {
-  async sendMessage(message: string, context?: string) {
+  async sendMessage(message: string) {
     if (!message) throw new InternalServerErrorException('Mensaje vacío');
 
     try {
+      // Unificamos todo el contexto en un solo systemMessage
       const systemMessage = {
         role: 'system',
-        content:
-          'Sos un asistente especializado en gimnasios. Solo respondé preguntas relacionadas al gimnasio (clases, rutinas, horarios, pagos, etc).',
+        content: `
+Sos un asistente oficial de FitHub, una cadena de gimnasios moderna. 
+Siempre respondé preguntas relacionadas a FitHub (clases, rutinas, horarios, pagos, membresías, reservas, instructores, horarios, contacto, políticas y beneficios).
+No contestes preguntas fuera de este contexto y, si el usuario pregunta algo irrelevante, redirígelo educadamente a temas relacionados con FitHub.
+
+${FITHUB_CONTEXT}
+        `,
       };
 
-      const contextMessage = context
-        ? { role: 'system', content: FITHUB_CONTEXT }
-        : null;
-
-      const messages = [systemMessage];
-      if (contextMessage) messages.push(contextMessage);
-      messages.push({ role: 'user', content: message });
+      const messages = [systemMessage, { role: 'user', content: message }];
 
       const response = await fetch(
         'https://api.openai.com/v1/chat/completions',
@@ -48,7 +48,6 @@ export class ChatService {
       const reply =
         data.choices?.[0]?.message?.content ?? 'No pude generar respuesta.';
 
-      // 👇 devolvemos un objeto explícito
       return { reply };
     } catch (error) {
       console.error('Error en chat service:', error);
