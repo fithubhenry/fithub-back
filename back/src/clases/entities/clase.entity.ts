@@ -33,7 +33,10 @@ export class Clase {
   @Column()
   instructor: string;
 
-  @OneToMany(() => Turno, (turno) => turno.clase, { cascade: true })
+  @OneToMany(() => Turno, (turno) => turno.clase, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   horarios: Turno[];
 
   @Column()

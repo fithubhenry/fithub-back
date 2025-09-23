@@ -32,7 +32,10 @@ export class User {
   esAdmin: boolean;
   @Column({ type: 'enum', enum: EEstado, default: EEstado.Invitado })
   estado: EEstado;
-  @OneToMany(() => Turno, (turno) => turno.user)
+  @OneToMany(() => Turno, (turno) => turno.user, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   turnos: Turno[];
   @Column({
     type: 'varchar',
