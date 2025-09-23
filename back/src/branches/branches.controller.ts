@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { BranchesService } from './branches.service';
 import { CreateBranchDto } from './dto/create-branch.dto';
 
@@ -12,7 +12,7 @@ export class BranchesController {
   }
 
   @Post()
-  async create(sucursal: CreateBranchDto) {
+  async create(@Body() sucursal: CreateBranchDto) {
     return await this.branchesService.addBranch(sucursal);
   }
 }
