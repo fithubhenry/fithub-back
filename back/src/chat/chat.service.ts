@@ -43,7 +43,12 @@ export class ChatService {
         console.error('Error OpenAI:', data.error);
         throw new InternalServerErrorException(data.error.message);
       }
-      console.log('Respuesta OpenAI:', JSON.stringify(data, null, 2));
+
+      const reply =
+        data.choices?.[0]?.message?.content ?? 'No pude generar respuesta.';
+
+      // 👇 devolvemos un objeto explícito
+      return { reply };
     } catch (error) {
       console.error('Error en chat service:', error);
       throw new InternalServerErrorException(
