@@ -21,6 +21,6 @@ export class ChatController {
     },
   })
   async sendMessage(@Body() body: ChatDto) {
-    return await this.chatService.sendMessage(body.message, body.context);
+    return await this.chatService.sendMessage(body.message);
   }
 }
