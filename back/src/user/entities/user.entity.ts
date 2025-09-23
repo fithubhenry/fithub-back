@@ -32,7 +32,10 @@ export class User {
   esAdmin: boolean;
   @Column({ type: 'enum', enum: EEstado, default: EEstado.Invitado })
   estado: EEstado;
-  @OneToMany(() => Turno, (turno) => turno.user)
+  @OneToMany(() => Turno, (turno) => turno.user, {
+    cascade: true,
+    orphanedRowAction: 'delete',
+  })
   turnos: Turno[];
   @Column({
     type: 'varchar',
@@ -41,4 +44,10 @@ export class User {
       'https://res.cloudinary.com/fithub-dev/image/upload/v1757645238/3541871_ctwh8q.png',
   })
   profileImageUrl: string | null;
+  @Column({ type: 'jsonb', default: [] })
+  historialPagos: {
+    amount: number;
+    dateApproved: Date;
+    status: string;
+  }[];
 }
