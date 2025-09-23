@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import fetch from 'node-fetch'; // si tu Node ya es 18+, podés borrar este import y usar fetch nativo
+import { FITHUB_CONTEXT } from 'src/helpers/fithub-context';
 
 @Injectable()
 export class ChatService {
@@ -14,7 +15,7 @@ export class ChatService {
       };
 
       const contextMessage = context
-        ? { role: 'system', content: `Información del gimnasio:\n${context}` }
+        ? { role: 'system', content: FITHUB_CONTEXT }
         : null;
 
       const messages = [systemMessage];
