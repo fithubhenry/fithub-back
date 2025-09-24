@@ -69,17 +69,15 @@ export class TurnosService {
 
     await this.claseRepository.save(clase);
 
-    // ✅ Enviar email de prueba cuando se crea un turno
-    try {
-      await this.sendTestEmailOnBooking(
-        usuario.email,
-        usuario.nombre,
-        clase.nombre,
-      );
-    } catch (error) {
+    // ✅ Enviar email de prueba cuando se crea un turno (asíncrono - no bloquear respuesta)
+    this.sendTestEmailOnBooking(
+      usuario.email,
+      usuario.nombre,
+      clase.nombre,
+    ).catch((error) => {
       console.error('❌ Error enviando email de prueba al crear turno:', error);
       // No fallar la creación del turno si falla el email
-    }
+    });
 
     return turnoGuardado;
   }
