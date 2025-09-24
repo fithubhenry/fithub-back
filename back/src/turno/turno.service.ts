@@ -54,6 +54,20 @@ export class TurnosService {
       activo: turno.activo,
     };
   }
+  // Lógica para actualizar automáticamente el estado a FINALIZADO si el turno expiró
+  async actualizarTurnosFinalizados(): Promise<void> {
+    const ahora = new Date();
+    const turnosPendientes = await this.turnoRepository.find({
+      where: { estado: EstadoTurno.PENDIENTE },
+    });
+    for (const turno of turnosPendientes) {
+      const fechaHoraFin = new Date(`${turno.fecha}T${turno.horaFin}`);
+      if (fechaHoraFin < ahora) {
+        turno.estado = EstadoTurno.FINALIZADO ?? 'FINALIZADO';
+        await this.turnoRepository.save(turno);
+      }
+    }
+  }
   constructor(
     @InjectRepository(Turno)
     private readonly turnoRepository: Repository<Turno>,
@@ -140,12 +154,16 @@ export class TurnosService {
     return dias[new Date(fecha).getDay()];
   }
   findAll(): Promise<TurnoResponseDto[]> {
-    return this.turnoRepository
-      .find({ relations: ['user', 'clase'] })
-      .then((turnos) => turnos.map(this.mapTurnoToResponse));
+    return this.actualizarTurnosFinalizados().then(async () => {
+      const turnos = await this.turnoRepository.find({
+        relations: ['user', 'clase'],
+      });
+      return turnos.map(this.mapTurnoToResponse);
+    });
   }
 
   async findOne(id: string): Promise<TurnoResponseDto> {
+    await this.actualizarTurnosFinalizados();
     const turno = await this.turnoRepository.findOne({
       where: { id },
       relations: ['user', 'clase'],
