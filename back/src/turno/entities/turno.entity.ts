@@ -41,6 +41,7 @@ export class Turno {
     description: 'ID de la clase',
   })
   @ManyToOne(() => Clase, (clase) => clase.horarios, {
+    eager: true,
     onDelete: 'CASCADE',
   })
   clase: Clase;

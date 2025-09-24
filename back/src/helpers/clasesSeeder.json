@@ -13,11 +13,11 @@
     "imageUrl": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg",
     "horarios": [
       {
-        "fecha": "2025-09-15",
+        "fecha": "2025-09-24",
         "horaInicio": "18:00:00",
         "horaFin": "19:00:00"
       },
-      { "fecha": "2025-09-17", "horaInicio": "18:00:00", "horaFin": "19:00:00" }
+      { "fecha": "2025-09-25", "horaInicio": "18:00:00", "horaFin": "19:00:00" }
     ]
   },
   {
@@ -34,11 +34,11 @@
     "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg",
     "horarios": [
       {
-        "fecha": "2025-09-16",
+        "fecha": "2025-09-26",
         "horaInicio": "08:00:00",
         "horaFin": "09:30:00"
       },
-      { "fecha": "2025-09-18", "horaInicio": "08:00:00", "horaFin": "09:30:00" }
+      { "fecha": "2025-09-27", "horaInicio": "08:00:00", "horaFin": "09:30:00" }
     ]
   },
   {
@@ -55,11 +55,11 @@
     "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
       {
-        "fecha": "2025-09-15",
+        "fecha": "2025-09-28",
         "horaInicio": "19:00:00",
         "horaFin": "19:45:00"
       },
-      { "fecha": "2025-09-19", "horaInicio": "19:00:00", "horaFin": "19:45:00" }
+      { "fecha": "2025-09-29", "horaInicio": "19:00:00", "horaFin": "19:45:00" }
     ]
   },
   {
@@ -76,11 +76,11 @@
     "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
       {
-        "fecha": "2025-09-16",
+        "fecha": "2025-09-30",
         "horaInicio": "10:00:00",
         "horaFin": "11:00:00"
       },
-      { "fecha": "2025-09-23", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
+      { "fecha": "2025-10-01", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
     ]
   },
   {
@@ -96,7 +96,7 @@
     "sede": "Sur",
     "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
-      { "fecha": "2025-09-20", "horaInicio": "17:00:00", "horaFin": "18:00:00" }
+      { "fecha": "2025-10-02", "horaInicio": "17:00:00", "horaFin": "18:00:00" }
     ]
   },
   {
@@ -112,7 +112,7 @@
     "sede": "Norte",
     "imageUrl": "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg",
     "horarios": [
-      { "fecha": "2025-09-22", "horaInicio": "15:00:00", "horaFin": "16:15:00" }
+      { "fecha": "2025-10-03", "horaInicio": "15:00:00", "horaFin": "16:15:00" }
     ]
   },
   {
@@ -128,7 +128,7 @@
     "sede": "Oeste",
     "imageUrl": "https://images.pexels.com/photos/4761787/pexels-photo-4761787.jpeg",
     "horarios": [
-      { "fecha": "2025-09-18", "horaInicio": "20:00:00", "horaFin": "21:00:00" }
+      { "fecha": "2025-10-04", "horaInicio": "20:00:00", "horaFin": "21:00:00" }
     ]
   },
   {
@@ -144,7 +144,7 @@
     "sede": "Central",
     "imageUrl": "https://images.pexels.com/photos/383803A/pexels-photo-3838030.jpeg",
     "horarios": [
-      { "fecha": "2025-09-24", "horaInicio": "18:30:00", "horaFin": "19:15:00" }
+      { "fecha": "2025-10-05", "horaInicio": "18:30:00", "horaFin": "19:15:00" }
     ]
   },
   {
@@ -160,7 +160,7 @@
     "sede": "Este",
     "imageUrl": "https://images.pexels.com/photos/2294361/pexels-photo-2294361.jpeg",
     "horarios": [
-      { "fecha": "2025-09-25", "horaInicio": "07:00:00", "horaFin": "08:00:00" }
+      { "fecha": "2025-10-06", "horaInicio": "07:00:00", "horaFin": "08:00:00" }
     ]
   },
   {
@@ -176,7 +176,7 @@
     "sede": "Sur",
     "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg",
     "horarios": [
-      { "fecha": "2025-09-26", "horaInicio": "16:00:00", "horaFin": "17:30:00" }
+      { "fecha": "2025-10-07", "horaInicio": "16:00:00", "horaFin": "17:30:00" }
     ]
   },
   {
@@ -192,7 +192,7 @@
     "sede": "Norte",
     "imageUrl": "https://images.pexels.com/photos/1552242/pexels-photo-1552242.jpeg",
     "horarios": [
-      { "fecha": "2025-09-29", "horaInicio": "13:00:00", "horaFin": "13:30:00" }
+      { "fecha": "2025-10-08", "horaInicio": "13:00:00", "horaFin": "13:30:00" }
     ]
   },
   {
@@ -208,7 +208,7 @@
     "sede": "Oeste",
     "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
-      { "fecha": "2025-09-30", "horaInicio": "19:30:00", "horaFin": "20:30:00" }
+      { "fecha": "2025-10-09", "horaInicio": "19:30:00", "horaFin": "20:30:00" }
     ]
   },
   {
@@ -224,7 +224,7 @@
     "sede": "Norte",
     "imageUrl": "https://images.pexels.com/photos/1552249/pexels-photo-1552249.jpeg",
     "horarios": [
-      { "fecha": "2025-10-01", "horaInicio": "17:00:00", "horaFin": "19:00:00" }
+      { "fecha": "2025-10-10", "horaInicio": "17:00:00", "horaFin": "19:00:00" }
     ]
   },
   {
@@ -240,7 +240,7 @@
     "sede": "Este",
     "imageUrl": "https://images.pexels.com/photos/4056535/pexels-photo-4056535.jpeg",
     "horarios": [
-      { "fecha": "2025-10-02", "horaInicio": "11:00:00", "horaFin": "11:45:00" }
+      { "fecha": "2025-10-11", "horaInicio": "11:00:00", "horaFin": "11:45:00" }
     ]
   },
   {
@@ -256,7 +256,7 @@
     "sede": "Piscina",
     "imageUrl": "https://images.pexels.com/photos/863977/pexels-photo-863977.jpeg",
     "horarios": [
-      { "fecha": "2025-10-03", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
+      { "fecha": "2025-10-12", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
     ]
   }
 ]
