@@ -223,6 +223,12 @@ export class ScheduleService {
 
   // ✅ Método para enviar email de advertencia 5 minutos antes de la clase
   private async sendFiveMinuteWarningEmail(turno: Turno) {
+    if (turno.estado === 'CANCELADO' || turno.estado === 'FINALIZADO') {
+      console.log(
+        `⏭️ No se envía advertencia: turno ${turno.id} está ${turno.estado}`,
+      );
+      return;
+    }
     console.log('🚨 Enviando advertencia 5 minutos antes de la clase...');
 
     if (!turno.user || !turno.user.email) {
@@ -277,6 +283,12 @@ export class ScheduleService {
 
   // ✅ Método para enviar recordatorio periódico de turnos cada 5 minutos
   private async sendTurnoReminderEmail(turno: Turno) {
+    if (turno.estado === 'CANCELADO' || turno.estado === 'FINALIZADO') {
+      console.log(
+        `⏭️ No se envía recordatorio: turno ${turno.id} está ${turno.estado}`,
+      );
+      return;
+    }
     console.log('🔔 Enviando recordatorio periódico de turno...');
 
     if (!turno.user || !turno.user.email) {

@@ -57,13 +57,16 @@ export class TurnosService {
   // Lógica para actualizar automáticamente el estado a FINALIZADO si el turno expiró
   async actualizarTurnosFinalizados(): Promise<void> {
     const ahora = new Date();
-    const turnosPendientes = await this.turnoRepository.find({
-      where: { estado: EstadoTurno.PENDIENTE },
+    const turnosARevisar = await this.turnoRepository.find({
+      where: [
+        { estado: EstadoTurno.PENDIENTE },
+        { estado: EstadoTurno.CONFIRMADO },
+      ],
     });
-    for (const turno of turnosPendientes) {
+    for (const turno of turnosARevisar) {
       const fechaHoraFin = new Date(`${turno.fecha}T${turno.horaFin}`);
       if (fechaHoraFin < ahora) {
-        turno.estado = EstadoTurno.FINALIZADO ?? 'FINALIZADO';
+        turno.estado = EstadoTurno.FINALIZADO;
         await this.turnoRepository.save(turno);
       }
     }
