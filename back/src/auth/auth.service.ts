@@ -82,9 +82,12 @@ export class AuthService {
 
     const savedUser = await this.userRepository.save(user);
 
-    //Enviar email de registro existoso
-
-    await this.mailService.sendWelcomeEmail(savedUser.email, savedUser.nombre);
+    // Enviar email de registro exitoso (asíncrono - no bloquear respuesta)
+    this.mailService
+      .sendWelcomeEmail(savedUser.email, savedUser.nombre)
+      .catch((error) => {
+        console.error('❌ Error enviando email de bienvenida:', error);
+      });
 
     //Eliminar password del objeto antes de devolverlo
 
@@ -107,7 +110,14 @@ export class AuthService {
         apellido: googleUser.lastName,
       });
       user = await this.userRepository.save(newUser);
-      await this.mailService.sendWelcomeEmail(newUser.email, newUser.nombre);
+      this.mailService
+        .sendWelcomeEmail(newUser.email, newUser.nombre)
+        .catch((error) => {
+          console.error(
+            '❌ Error enviando email de bienvenida (Google):',
+            error,
+          );
+        });
     }
 
     // Genera un JWT para el usuario autenticado

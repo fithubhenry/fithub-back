@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
 import { Turno, EstadoTurno } from './entities/turno.entity';
@@ -8,9 +8,23 @@ import { UpdateEstadoTurnoDto } from './dto/updateEstado.dto';
 import { User } from 'src/user/entities/user.entity';
 import { Clase } from 'src/clases/entities/clase.entity';
 import { MailerService } from '../mail/mail.service';
+import { TurnoResponseDto } from './dto/turnoResponse.dto';
 
-@Injectable()
 export class TurnosService {
+  // Mapea la entidad Turno a TurnoResponseDto
+  mapTurnoToResponse(turno: Turno) {
+    return {
+      id: turno.id,
+      fecha: turno.fecha,
+      estado: turno.estado,
+      userId: turno.user?.id,
+      claseId: turno.clase?.id ?? null,
+      horaInicio: turno.horaInicio,
+      horaFin: turno.horaFin,
+      diaSemana: turno.diaSemana,
+      activo: turno.activo,
+    };
+  }
   constructor(
     @InjectRepository(Turno)
     private readonly turnoRepository: Repository<Turno>,
@@ -21,16 +35,16 @@ export class TurnosService {
     private readonly mailerService: MailerService,
   ) {}
 
-  async create(dto: CreateTurnoDto): Promise<Turno> {
+  async create(dto: CreateTurnoDto): Promise<TurnoResponseDto> {
     const usuario = await this.userRepository.findOne({
       where: { id: dto.usuarioId },
     });
+    if (!usuario) throw new NotFoundException('Usuario no encontrado');
+
     const clase = await this.claseRepository.findOne({
       where: { id: dto.claseId },
       relations: ['horarios'],
     });
-
-    if (!usuario) throw new NotFoundException('Usuario no encontrado');
     if (!clase) throw new NotFoundException('Clase no encontrada');
 
     const claseConHorario = await this.claseRepository
@@ -42,7 +56,6 @@ export class TurnosService {
         horaInicio: dto.horaInicio,
       })
       .getOne();
-
     if (!claseConHorario)
       throw new NotFoundException('Horario no válido para esta clase');
 
@@ -57,31 +70,28 @@ export class TurnosService {
 
     const turno = this.turnoRepository.create({
       user: usuario,
-      clase,
+      clase: clase, // Asegura que la clase se asigna correctamente
       fecha: dto.fecha,
       horaInicio: dto.horaInicio,
       horaFin: dto.horaFin,
       estado: EstadoTurno.PENDIENTE,
-      diaSemana, // 👈 se setea automáticamente
+      diaSemana,
     });
 
     const turnoGuardado = await this.turnoRepository.save(turno);
-
     await this.claseRepository.save(clase);
 
-    // ✅ Enviar email de prueba cuando se crea un turno
-    try {
-      await this.sendTestEmailOnBooking(
-        usuario.email,
-        usuario.nombre,
-        clase.nombre,
-      );
-    } catch (error) {
+    // Enviar email de prueba cuando se crea un turno (asíncrono - no bloquear respuesta)
+    this.sendTestEmailOnBooking(
+      usuario.email,
+      usuario.nombre,
+      clase.nombre,
+    ).catch((error) => {
       console.error('❌ Error enviando email de prueba al crear turno:', error);
       // No fallar la creación del turno si falla el email
-    }
+    });
 
-    return turnoGuardado;
+    return this.mapTurnoToResponse(turnoGuardado);
   }
 
   private obtenerDiaSemana(fecha: Date): string {
@@ -96,64 +106,85 @@ export class TurnosService {
     ];
     return dias[new Date(fecha).getDay()];
   }
-  findAll(): Promise<Turno[]> {
-    return this.turnoRepository.find();
+  findAll(): Promise<TurnoResponseDto[]> {
+    return this.turnoRepository
+      .find({ relations: ['user', 'clase'] })
+      .then((turnos) => turnos.map(this.mapTurnoToResponse));
   }
 
-  async findOne(id: string): Promise<Turno> {
-    const turno = await this.turnoRepository.findOne({ where: { id } });
+  async findOne(id: string): Promise<TurnoResponseDto> {
+    const turno = await this.turnoRepository.findOne({
+      where: { id },
+      relations: ['user', 'clase'],
+    });
     if (!turno) throw new NotFoundException('Turno no encontrado');
-    return turno;
+    return this.mapTurnoToResponse(turno);
   }
 
-  async update(id: string, dto: UpdateTurnoDto): Promise<Turno> {
-    const turno = await this.findOne(id);
+  async update(id: string, dto: UpdateTurnoDto): Promise<TurnoResponseDto> {
+    const turno = await this.turnoRepository.findOne({
+      where: { id },
+      relations: ['user', 'clase'],
+    });
+    if (!turno) throw new NotFoundException('Turno no encontrado');
     Object.assign(turno, dto);
-    return this.turnoRepository.save(turno);
+    const actualizado = await this.turnoRepository.save(turno);
+    return this.mapTurnoToResponse(actualizado);
   }
 
-  async updateEstado(id: string, dto: UpdateEstadoTurnoDto): Promise<Turno> {
-    const turno = await this.findOne(id);
+  async updateEstado(
+    id: string,
+    dto: UpdateEstadoTurnoDto,
+  ): Promise<TurnoResponseDto> {
+    const turno = await this.turnoRepository.findOne({
+      where: { id },
+      relations: ['user', 'clase'],
+    });
+    if (!turno) throw new NotFoundException('Turno no encontrado');
     turno.estado = dto.estado;
-    return this.turnoRepository.save(turno);
+    const actualizado = await this.turnoRepository.save(turno);
+    return this.mapTurnoToResponse(actualizado);
   }
 
   async remove(id: string): Promise<void> {
-    const turno = await this.findOne(id);
+    const turno = await this.turnoRepository.findOne({ where: { id } });
+    if (!turno) throw new NotFoundException('Turno no encontrado');
     await this.turnoRepository.remove(turno);
   }
 
-  async findTurnosProximos(): Promise<Turno[]> {
+  async findTurnosProximos(): Promise<TurnoResponseDto[]> {
     const ahora = new Date();
     const enUnaHora = new Date(ahora.getTime() + 60 * 60 * 1000);
 
-    return this.turnoRepository.find({
-      where: {
-        fecha: Between(ahora, enUnaHora),
-      },
-      relations: ['user', 'clase'], // 👈 importante para el mail
+    const turnos = await this.turnoRepository.find({
+      where: { fecha: Between(ahora, enUnaHora) },
+      relations: ['user', 'clase'],
     });
+    return turnos.map(this.mapTurnoToResponse);
   }
 
   // ✅ Nuevo método para buscar turnos en un rango específico
-  async findTurnosEnRango(fechaInicio: Date, fechaFin: Date): Promise<Turno[]> {
-    return this.turnoRepository.find({
-      where: {
-        fecha: Between(fechaInicio, fechaFin),
-      },
-      relations: ['user', 'clase'], // importante para el mail
+  async findTurnosEnRango(
+    fechaInicio: Date,
+    fechaFin: Date,
+  ): Promise<TurnoResponseDto[]> {
+    const turnos = await this.turnoRepository.find({
+      where: { fecha: Between(fechaInicio, fechaFin) },
+      relations: ['user', 'clase'],
     });
+    return turnos.map(this.mapTurnoToResponse);
   }
 
   // ✅ Nuevo método para buscar TODOS los turnos activos (para recordatorios cada 5 minutos)
-  async findTurnosActivos(): Promise<Turno[]> {
-    return this.turnoRepository.find({
+  async findTurnosActivos(): Promise<TurnoResponseDto[]> {
+    const turnos = await this.turnoRepository.find({
       where: [
         { estado: EstadoTurno.PENDIENTE },
         { estado: EstadoTurno.CONFIRMADO },
       ],
-      relations: ['user', 'clase'], // importante para el mail
+      relations: ['user', 'clase'],
     });
+    return turnos.map(this.mapTurnoToResponse);
   }
 
   // ✅ Método para enviar email de prueba cuando se crea un turno
