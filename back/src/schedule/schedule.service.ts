@@ -80,7 +80,7 @@ export class ScheduleService {
   @Cron(CronExpression.EVERY_HOUR)
   async handleReminderJob() {
     // 1. Buscar turnos que tengan un recordatorio pendiente
-    const turnos = await this.turnosService.findTurnosProximos(); // 👈 este método lo implementás vos
+    const turnos = await this.turnosService.findTurnosProximosEntity();
 
     // 2. Programar recordatorios para cada turno
     for (const turno of turnos) {
@@ -101,7 +101,7 @@ export class ScheduleService {
 
     try {
       // Buscar TODOS los turnos activos (pendientes y confirmados)
-      const turnosActivos = await this.turnosService.findTurnosActivos();
+      const turnosActivos = await this.turnosService.findTurnosActivosEntity();
 
       console.log(
         `📋 Encontrados ${turnosActivos.length} turnos activos para recordar`,
@@ -137,7 +137,7 @@ export class ScheduleService {
       const enCincoMinutos = new Date(ahora.getTime() + 5 * 60 * 1000); // 5 minutos en el futuro
 
       // Buscar turnos que comienzan exactamente en 5 minutos (con margen de 1 minuto)
-      const turnosProximos = await this.turnosService.findTurnosEnRango(
+      const turnosProximos = await this.turnosService.findTurnosEnRangoEntity(
         new Date(enCincoMinutos.getTime() - 30 * 1000), // 30 segundos antes
         new Date(enCincoMinutos.getTime() + 30 * 1000), // 30 segundos después
       );

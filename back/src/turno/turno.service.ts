@@ -11,6 +11,35 @@ import { MailerService } from '../mail/mail.service';
 import { TurnoResponseDto } from './dto/turnoResponse.dto';
 
 export class TurnosService {
+  // Métodos para uso interno (schedule) que retornan la entidad completa
+  async findTurnosProximosEntity(): Promise<Turno[]> {
+    const ahora = new Date();
+    const enUnaHora = new Date(ahora.getTime() + 60 * 60 * 1000);
+    return this.turnoRepository.find({
+      where: { fecha: Between(ahora, enUnaHora) },
+      relations: ['user', 'clase'],
+    });
+  }
+
+  async findTurnosEnRangoEntity(
+    fechaInicio: Date,
+    fechaFin: Date,
+  ): Promise<Turno[]> {
+    return this.turnoRepository.find({
+      where: { fecha: Between(fechaInicio, fechaFin) },
+      relations: ['user', 'clase'],
+    });
+  }
+
+  async findTurnosActivosEntity(): Promise<Turno[]> {
+    return this.turnoRepository.find({
+      where: [
+        { estado: EstadoTurno.PENDIENTE },
+        { estado: EstadoTurno.CONFIRMADO },
+      ],
+      relations: ['user', 'clase'],
+    });
+  }
   // Mapea la entidad Turno a TurnoResponseDto
   mapTurnoToResponse(turno: Turno) {
     return {
