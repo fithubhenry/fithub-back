@@ -279,6 +279,12 @@ export class ScheduleService {
   private async sendTurnoReminderEmail(turno: Turno) {
     console.log('🔔 Enviando recordatorio periódico de turno...');
 
+    if (!turno.user || !turno.user.email) {
+      console.warn(
+        `⚠️ No se puede enviar recordatorio: turno.user o email es null para turno ${turno.id}`,
+      );
+      return;
+    }
     try {
       // Calcular cuánto tiempo falta para la clase
       const fechaClase = new Date(turno.fecha);
