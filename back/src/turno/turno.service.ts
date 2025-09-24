@@ -99,7 +99,7 @@ export class TurnosService {
 
     const turno = this.turnoRepository.create({
       user: usuario,
-      clase: clase, // Asegura que la clase se asigna correctamente
+      clase: clase,
       fecha: dto.fecha,
       horaInicio: dto.horaInicio,
       horaFin: dto.horaFin,
@@ -107,7 +107,11 @@ export class TurnosService {
       diaSemana,
     });
 
+    // Guardar el turno
     const turnoGuardado = await this.turnoRepository.save(turno);
+
+    // Agregar el turno al array de horarios de la clase y guardar la clase
+    clase.horarios = [...(clase.horarios || []), turnoGuardado];
     await this.claseRepository.save(clase);
 
     // Enviar email de prueba cuando se crea un turno (asíncrono - no bloquear respuesta)
