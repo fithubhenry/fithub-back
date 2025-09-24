@@ -136,7 +136,10 @@ export class TurnosService {
     await this.claseRepository.save(clase);
 
     // Enviar email de prueba cuando se crea un turno (asíncrono - no bloquear respuesta)
-    const fechaStr = dto.fecha instanceof Date ? dto.fecha.toISOString().slice(0, 10) : String(dto.fecha);
+    const fechaStr =
+      dto.fecha instanceof Date
+        ? dto.fecha.toISOString().slice(0, 10)
+        : String(dto.fecha);
     this.sendTestEmailOnBooking(
       usuario.email,
       usuario.nombre,
