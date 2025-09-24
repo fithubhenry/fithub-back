@@ -8,6 +8,12 @@ import { Turno } from '../turno/entities/turno.entity';
 
 @Injectable()
 export class ScheduleService {
+  // Cron que actualiza el estado de los turnos vencidos cada minuto
+  @Cron(CronExpression.EVERY_MINUTE)
+  async actualizarTurnosFinalizadosCron() {
+    console.log('[CRON] Ejecutando actualización de turnos finalizados...');
+    await this.turnosService.actualizarTurnosFinalizados();
+  }
   constructor(
     private readonly reminderService: TurnosReminderService,
     private readonly turnosService: TurnosService,
