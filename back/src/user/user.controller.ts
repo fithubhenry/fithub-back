@@ -24,6 +24,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UserResponseDto } from 'src/helpers/userResponse.dto';
+import { UserTurnosResponseDto } from './dto/userTurnos.dto';
 import { Roles } from 'src/decorators/roles.decorator';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
@@ -169,6 +170,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Turnos del usuario obtenidos correctamente',
+    type: UserTurnosResponseDto,
   })
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   async getUserTurnos(@Param('id', ParseUUIDPipe) id: string) {
