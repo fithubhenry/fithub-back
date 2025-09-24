@@ -57,13 +57,25 @@ export class TurnosService {
     const turnosPendientes = await this.turnoRepository.find({
       where: { estado: EstadoTurno.PENDIENTE },
     });
+    let actualizados = 0;
     for (const turno of turnosPendientes) {
       const fechaHoraFin = new Date(`${turno.fecha}T${turno.horaFin}`);
+      console.log(
+        `[Turno] ${turno.id} - Estado: ${turno.estado} - Fecha fin: ${fechaHoraFin} - Ahora: ${ahora}`,
+      );
       if (fechaHoraFin < ahora) {
         turno.estado = EstadoTurno.FINALIZADO;
         await this.turnoRepository.save(turno);
+        actualizados++;
+        console.log(`[Turno] Actualizado a FINALIZADO: ${turno.id}`);
       }
     }
+    console.log(
+      `[Turno] Total turnos actualizados a FINALIZADO: ${actualizados}`,
+    );
+
+    // Ejemplo de cron job (debes mover esto a un servicio con @Cron si usas schedule)
+    // setInterval(() => this.actualizarTurnosFinalizados(), 60000); // cada minuto
   }
   constructor(
     @InjectRepository(Turno)
