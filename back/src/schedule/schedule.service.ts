@@ -225,45 +225,48 @@ export class ScheduleService {
   private async sendFiveMinuteWarningEmail(turno: Turno) {
     console.log('🚨 Enviando advertencia 5 minutos antes de la clase...');
 
+    if (!turno.user || !turno.user.email) {
+      console.warn(
+        `⚠️ No se puede enviar advertencia: turno.user o email es null para turno ${turno.id}`,
+      );
+      return;
+    }
+
     try {
       await this.mailerService.sendMail({
         to: turno.user.email,
         subject: `🚨 ¡Tu clase comienza en 5 minutos! - ${turno.clase.nombre}`,
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #fff3cd; border-radius: 8px; border-left: 5px solid #ffc107;">
-            <h2 style="color: #856404;">🚨 ¡Atención ${turno.user.nombre}!</h2>
-            <p style="color: #856404; font-size: 18px; font-weight: bold;">
-              Tu clase comienza en 5 minutos
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #fff3cd; border-radius: 8px; border-left: 5px solid #ffc107;">
+          <h2 style="color: #856404;">🚨 ¡Atención ${turno.user.nombre}!</h2>
+          <p style="color: #856404; font-size: 18px; font-weight: bold;">
+            Tu clase comienza en 5 minutos
+          </p>
+          <div style="background-color: #fff; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #28a745;">
+            <h3 style="color: #28a745; margin: 0 0 15px 0;">📋 Detalles de tu clase</h3>
+            <p style="color: #333; margin: 5px 0; font-size: 16px;">
+              <strong>🏋️‍♂️ Clase:</strong> ${turno.clase.nombre}<br>
+              <strong>⏰ Hora:</strong> ${turno.horaInicio}<br>
+              <strong>📅 Fecha:</strong> ${new Date(turno.fecha).toLocaleDateString()}<br>
+              <strong>👤 Instructor:</strong> ${turno.clase.instructor || 'Por confirmar'}
             </p>
-            
-            <div style="background-color: #fff; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #28a745;">
-              <h3 style="color: #28a745; margin: 0 0 15px 0;">📋 Detalles de tu clase</h3>
-              <p style="color: #333; margin: 5px 0; font-size: 16px;">
-                <strong>🏋️‍♂️ Clase:</strong> ${turno.clase.nombre}<br>
-                <strong>⏰ Hora:</strong> ${turno.horaInicio}<br>
-                <strong>📅 Fecha:</strong> ${new Date(turno.fecha).toLocaleDateString()}<br>
-                <strong>👤 Instructor:</strong> ${turno.clase.instructor || 'Por confirmar'}
-              </p>
-            </div>
-
-            <div style="background-color: #d4edda; padding: 15px; border-radius: 5px; margin: 20px 0;">
-              <p style="color: #155724; margin: 0; font-size: 14px;">
-                💡 <strong>Recordatorio:</strong> Llega unos minutos antes para prepararte adecuadamente.
-              </p>
-            </div>
-
-            <p style="color: #777; font-size: 14px;">
-              <strong>Hora del aviso:</strong> ${new Date().toLocaleString()}<br>
-              <strong>Estado:</strong> ✅ Sistema de notificaciones funcionando
-            </p>
-            
-            <div style="text-align: center; margin-top: 30px;">
-              <p style="color: #856404; font-size: 16px; font-weight: bold;">
-                ¡Nos vemos en la clase! 💪
-              </p>
-            </div>
           </div>
-        `,
+          <div style="background-color: #d4edda; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <p style="color: #155724; margin: 0; font-size: 14px;">
+              💡 <strong>Recordatorio:</strong> Llega unos minutos antes para prepararte adecuadamente.
+            </p>
+          </div>
+          <p style="color: #777; font-size: 14px;">
+            <strong>Hora del aviso:</strong> ${new Date().toLocaleString()}<br>
+            <strong>Estado:</strong> ✅ Sistema de notificaciones funcionando
+          </p>
+          <div style="text-align: center; margin-top: 30px;">
+            <p style="color: #856404; font-size: 16px; font-weight: bold;">
+              ¡Nos vemos en la clase! 💪
+            </p>
+          </div>
+        </div>
+      `,
       });
 
       console.log('✅ Advertencia de 5 minutos enviada a:', turno.user.email);
