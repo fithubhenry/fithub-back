@@ -60,7 +60,7 @@ export class TurnosService {
       .createQueryBuilder('turno')
       .where('turno.estado = :estado', { estado: EstadoTurno.PENDIENTE })
       .andWhere(
-        'CONCAT(turno.fecha, "T", turno.horaFin) BETWEEN :ahora AND :dosHorasDespues',
+        "(turno.fecha || 'T' || turno.horaFin) BETWEEN :ahora AND :dosHorasDespues",
         {
           ahora: ahora.toISOString().slice(0, 19),
           dosHorasDespues: dosHorasDespues.toISOString().slice(0, 19),
