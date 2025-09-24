@@ -5,7 +5,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export enum EstadoTurno {
   PENDIENTE = 'PENDIENTE',
-  CONFIRMADO = 'CONFIRMADO',
   CANCELADO = 'CANCELADO',
   FINALIZADO = 'FINALIZADO',
 }

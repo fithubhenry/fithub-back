@@ -33,10 +33,7 @@ export class TurnosService {
 
   async findTurnosActivosEntity(): Promise<Turno[]> {
     return this.turnoRepository.find({
-      where: [
-        { estado: EstadoTurno.PENDIENTE },
-        { estado: EstadoTurno.CONFIRMADO },
-      ],
+      where: [{ estado: EstadoTurno.PENDIENTE }],
       relations: ['user', 'clase'],
     });
   }
@@ -57,13 +54,10 @@ export class TurnosService {
   // Lógica para actualizar automáticamente el estado a FINALIZADO si el turno expiró
   async actualizarTurnosFinalizados(): Promise<void> {
     const ahora = new Date();
-    const turnosARevisar = await this.turnoRepository.find({
-      where: [
-        { estado: EstadoTurno.PENDIENTE },
-        { estado: EstadoTurno.CONFIRMADO },
-      ],
+    const turnosPendientes = await this.turnoRepository.find({
+      where: { estado: EstadoTurno.PENDIENTE },
     });
-    for (const turno of turnosARevisar) {
+    for (const turno of turnosPendientes) {
       const fechaHoraFin = new Date(`${turno.fecha}T${turno.horaFin}`);
       if (fechaHoraFin < ahora) {
         turno.estado = EstadoTurno.FINALIZADO;
@@ -232,10 +226,7 @@ export class TurnosService {
   // ✅ Nuevo método para buscar TODOS los turnos activos (para recordatorios cada 5 minutos)
   async findTurnosActivos(): Promise<TurnoResponseDto[]> {
     const turnos = await this.turnoRepository.find({
-      where: [
-        { estado: EstadoTurno.PENDIENTE },
-        { estado: EstadoTurno.CONFIRMADO },
-      ],
+      where: [{ estado: EstadoTurno.PENDIENTE }],
       relations: ['user', 'clase'],
     });
     return turnos.map(this.mapTurnoToResponse);
