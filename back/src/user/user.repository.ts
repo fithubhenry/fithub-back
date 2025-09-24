@@ -11,13 +11,20 @@ export class UserRepository {
   ) {}
 
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.find();
+    const users = await this.userRepository.find();
+    
+    // 🔍 DEBUG: Ver qué datos está retornando
+    console.log('🔍 DEBUG - Total usuarios encontrados:', users.length);
+    console.log('🔍 DEBUG - Primer usuario completo:', JSON.stringify(users[0], null, 2));
+    console.log('🔍 DEBUG - HistorialPagos del primer usuario:', users[0]?.historialPagos);
+    
+    return users;
   }
 
   async findOneById(id: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['turnos'],
+      relations: ['turnos', 'turnos.clase'], // 👈 Cargar clase de cada turno
     });
     if (!user)
       throw new NotFoundException(`No se encontró el usuario con id ${id}`);

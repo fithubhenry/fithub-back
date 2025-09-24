@@ -18,6 +18,30 @@ export class UserService {
     return await this.userRepository.findOneById(id);
   }
 
+  // 🚀 Método optimizado para obtener solo turnos con información mínima
+  async findUserTurnos(id: string) {
+    const user = await this.userRepository.findOneById(id);
+    
+    // Transformar turnos para devolver solo la info necesaria
+    const turnosOptimizados = user.turnos.map(turno => ({
+      id: turno.id,
+      fecha: turno.fecha,
+      horaInicio: turno.horaInicio,
+      horaFin: turno.horaFin,
+      estado: turno.estado,
+      diaSemana: turno.diaSemana,
+      activo: turno.activo,
+      clase: turno.clase ? {
+        id: turno.clase.id,
+        nombre: turno.clase.nombre,
+        imageUrl: turno.clase.imageUrl,
+        instructor: turno.clase.instructor,
+      } : null
+    }));
+
+    return turnosOptimizados;
+  }
+
   async update(id: string, updateUser: UpdateUserDto) {
     return await this.userRepository.updateUser(id, updateUser);
   }

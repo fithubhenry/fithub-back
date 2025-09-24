@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MercadoPagoConfig, Payment, Preference } from 'mercadopago';
 import { EEstado } from 'src/common/usersEnum';
 import { User } from 'src/user/entities/user.entity';
+import { PaymentHistory } from './dto/payment-history.interface';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -61,8 +62,34 @@ export class PaymentsService {
         const userId = userItemId?.replace('user-', '');
 
         if (userId) {
-          await this.userRepository.update(userId, { estado: EEstado.Activo });
-          console.log(`✅ Usuario ${userId} activado`);
+          // Obtener el usuario actual para acceder a su historial
+          const user = await this.userRepository.findOne({
+            where: { id: userId },
+          });
+
+          if (user) {
+            // Crear el nuevo registro de pago
+            const newPayment: PaymentHistory = {
+              paymentId: paymentData.id?.toString() || '',
+              amount: paymentData.transaction_amount || 0,
+              currency: paymentData.currency_id || 'ARS',
+              paymentMethod: paymentData.payment_method_id || '',
+              dateApproved: new Date(paymentData.date_approved || new Date()),
+              status: paymentData.status || '',
+              transactionId: paymentData.id?.toString(),
+            };
+
+            // Agregar el nuevo pago al historial existente
+            const updatedHistorialPagos = [...(user.historialPagos || []), newPayment];
+
+            // Actualizar el usuario con el nuevo estado y historial
+            await this.userRepository.update(userId, {
+              estado: EEstado.Activo,
+              historialPagos: updatedHistorialPagos,
+            });
+
+            console.log(`✅ Usuario ${userId} activado y pago registrado en historial`);
+          }
         }
       }
     }

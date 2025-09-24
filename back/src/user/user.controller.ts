@@ -64,6 +64,19 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
+  @Get(':id/turnos')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Obtener turnos optimizados de un usuario' })
+  @ApiParam({ name: 'id', description: 'UUID del usuario' })
+  @ApiResponse({
+    status: 200,
+    description: 'Turnos del usuario con información optimizada',
+  })
+  @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
+  async getUserTurnos(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userService.findUserTurnos(id);
+  }
+
   @Patch(':id')
   @UseGuards(AuthGuard)
   @ApiOperation({ summary: 'Actualizar un usuario' })

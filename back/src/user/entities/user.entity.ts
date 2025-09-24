@@ -1,5 +1,6 @@
 import { EEstado } from 'src/common/usersEnum';
 import { Turno } from 'src/turno/entities/turno.entity';
+import { PaymentHistory } from 'src/mercado-pago/dto/payment-history.interface';
 import {
   Column,
   Entity,
@@ -41,4 +42,7 @@ export class User {
       'https://res.cloudinary.com/fithub-dev/image/upload/v1757645238/3541871_ctwh8q.png',
   })
   profileImageUrl: string | null;
+  
+  @Column({ type: 'jsonb', default: [] })
+  historialPagos: PaymentHistory[];
 }
