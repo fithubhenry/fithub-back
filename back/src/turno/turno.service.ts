@@ -136,10 +136,14 @@ export class TurnosService {
     await this.claseRepository.save(clase);
 
     // Enviar email de prueba cuando se crea un turno (asíncrono - no bloquear respuesta)
+    const fechaStr = dto.fecha instanceof Date ? dto.fecha.toISOString().slice(0, 10) : String(dto.fecha);
     this.sendTestEmailOnBooking(
       usuario.email,
       usuario.nombre,
       clase.nombre,
+      fechaStr,
+      dto.horaInicio,
+      dto.horaFin,
     ).catch((error) => {
       console.error('❌ Error enviando email de prueba al crear turno:', error);
       // No fallar la creación del turno si falla el email
@@ -247,6 +251,9 @@ export class TurnosService {
     userEmail: string,
     userName: string,
     claseNombre: string,
+    fecha: string,
+    horaInicio: string,
+    horaFin: string,
   ) {
     console.log('🚀 Enviando email de prueba por nueva reserva de turno...');
 
@@ -263,34 +270,39 @@ export class TurnosService {
       const fraseAleatoria =
         frasesPrueba[Math.floor(Math.random() * frasesPrueba.length)];
 
+      // Variables para el correo
+      const turnoFecha = fecha;
+      const turnoHoraInicio = horaInicio;
+      const turnoHoraFin = horaFin;
+
       await this.mailerService.sendMail({
         to: userEmail,
-        subject: `🧪 Test FitHub - Turno Reservado - ${new Date().toLocaleString()}`,
+        subject: `¡Turno reservado en FITHUB! - ${claseNombre}`,
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #f0f8ff; border-radius: 8px;">
-            <h2 style="color: #333;">🧪 Email de Prueba - FitHub</h2>
-            <p style="color: #555; font-size: 16px;">¡Hola ${userName}!</p>
-            <p style="color: #555; font-size: 16px;">${fraseAleatoria}</p>
-            
-            <div style="background-color: #e8f5e8; padding: 15px; border-radius: 5px; margin: 20px 0;">
-              <h3 style="color: #2d5a2d; margin: 0 0 10px 0;">✅ Turno Reservado</h3>
-              <p style="color: #2d5a2d; margin: 0; font-size: 14px;">
+          <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; background: linear-gradient(135deg, #f0f8ff 60%, #ff3b3f 100%); border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+            <div style="text-align: center;">
+              <img src="https://i.ibb.co/7n7tXG6/logo.png" alt="FITHUB Logo" style="width: 110px; margin-bottom: 18px;" />
+            </div>
+            <h2 style="color: #ff3b3f; margin-bottom: 8px;">¡Tu turno ha sido reservado!</h2>
+            <p style="color: #333; font-size: 17px;">Hola ${userName}, te confirmamos que tu reserva para la clase <strong>${claseNombre}</strong> está registrada.</p>
+            <div style="background-color: #e8f5e8; padding: 16px; border-radius: 8px; margin: 22px 0;">
+              <p style="color: #2d5a2d; font-size: 15px; margin: 0;">
                 <strong>Clase:</strong> ${claseNombre}<br>
+                <strong>Fecha:</strong> ${turnoFecha}<br>
+                <strong>Horario:</strong> ${turnoHoraInicio} - ${turnoHoraFin}<br>
                 <strong>Usuario:</strong> ${userName}<br>
                 <strong>Email:</strong> ${userEmail}
               </p>
             </div>
-
-            <p style="color: #777; font-size: 14px;">
-              <strong>Hora:</strong> ${new Date().toLocaleString()}<br>
-              <strong>Estado:</strong> ✅ Sistema funcionando correctamente
-            </p>
-            
-            <div style="background-color: #fff3cd; padding: 15px; border-radius: 5px; margin-top: 20px;">
-              <p style="color: #856404; margin: 0; font-size: 14px;">
-                📧 Este email se envía automáticamente cuando reservas un turno para probar el sistema de notificaciones.
-              </p>
+            <div style="text-align: center; margin: 28px 0;">
+              <a href="${process.env.FRONTEND_URL}" style="background: #ff3b3f; color: #fff; padding: 13px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">Ver mi reserva</a>
             </div>
+            <div style="text-align: center; margin-bottom: 18px;">
+              <a href="https://instagram.com/fithub" style="margin: 0 8px; text-decoration: none;"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="26" /></a>
+              <a href="https://facebook.com/fithub" style="margin: 0 8px; text-decoration: none;"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="26" /></a>
+            </div>
+            <p style="color: #999; font-size: 13px; margin-top: 18px;">¿Consultas? Escribinos a <a href="mailto:soporte@fithub.com" style="color: #ff3b3f;">soporte@fithub.com</a></p>
+            <p style="color: #999; font-size: 12px; margin-top: 10px;">Si no realizaste esta reserva, ignora este correo.</p>
           </div>
         `,
       });
