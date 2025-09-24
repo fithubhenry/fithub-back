@@ -32,7 +32,6 @@ export class Turno {
     type: 'string',
   })
   @ManyToOne(() => User, (user) => user.turnos, {
-    eager: true,
     onDelete: 'CASCADE',
   })
   user: User;
@@ -42,7 +41,6 @@ export class Turno {
     description: 'ID de la clase',
   })
   @ManyToOne(() => Clase, (clase) => clase.horarios, {
-    eager: true,
     onDelete: 'CASCADE',
   })
   clase: Clase;

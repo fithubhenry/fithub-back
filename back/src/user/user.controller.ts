@@ -161,4 +161,17 @@ export class UserController {
   async deleteAdmin(@Param('id', ParseUUIDPipe) id: string) {
     return this.userService.deleteAdmin(id);
   }
+
+  @Get(':id/turnos')
+  @UseGuards(AuthGuard)
+  @ApiOperation({ summary: 'Obtener turnos de un usuario específico' })
+  @ApiParam({ name: 'id', type: String, required: true })
+  @ApiResponse({
+    status: 200,
+    description: 'Turnos del usuario obtenidos correctamente',
+  })
+  @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
+  async getUserTurnos(@Param('id', ParseUUIDPipe) id: string) {
+    return this.userService.getUserTurnos(id);
+  }
 }

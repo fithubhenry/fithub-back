@@ -17,7 +17,7 @@ export class UserRepository {
   async findOneById(id: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { id },
-      relations: ['turnos'],
+      relations: ['turnos', 'turnos.clase'],
     });
     if (!user)
       throw new NotFoundException(`No se encontró el usuario con id ${id}`);
@@ -89,5 +89,36 @@ export class UserRepository {
       await this.userRepository.save(userFound);
       return 'El usuario ya no es administrador';
     }
+  }
+
+  async getUserWithTurnos(id: string) {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['turnos', 'turnos.clase'],
+    });
+    
+    if (!user) {
+      throw new NotFoundException(`No se encontró el usuario con id ${id}`);
+    }
+
+    // Crear una respuesta optimizada sin información redundante del usuario en cada turno
+    const turnosOptimizados = user.turnos.map(turno => ({
+      id: turno.id,
+      fecha: turno.fecha,
+      estado: turno.estado,
+      horaInicio: turno.horaInicio,
+      horaFin: turno.horaFin,
+      diaSemana: turno.diaSemana,
+      activo: turno.activo,
+      clase: turno.clase,
+    }));
+
+    // Excluir password y otros datos sensibles del usuario
+    const { password, ...userData } = user;
+    
+    return {
+      ...userData,
+      turnos: turnosOptimizados,
+    };
   }
 }

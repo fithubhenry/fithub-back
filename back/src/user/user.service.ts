@@ -50,4 +50,8 @@ export class UserService {
   async deleteAdmin(id: string) {
     return this.userRepository.removeAdmin(id);
   }
+
+  async getUserTurnos(id: string) {
+    return this.userRepository.getUserWithTurnos(id);
+  }
 }

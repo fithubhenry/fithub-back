@@ -97,11 +97,16 @@ export class TurnosService {
     return dias[new Date(fecha).getDay()];
   }
   findAll(): Promise<Turno[]> {
-    return this.turnoRepository.find();
+    return this.turnoRepository.find({
+      relations: ['user', 'clase'],
+    });
   }
 
   async findOne(id: string): Promise<Turno> {
-    const turno = await this.turnoRepository.findOne({ where: { id } });
+    const turno = await this.turnoRepository.findOne({ 
+      where: { id },
+      relations: ['user', 'clase'],
+    });
     if (!turno) throw new NotFoundException('Turno no encontrado');
     return turno;
   }
