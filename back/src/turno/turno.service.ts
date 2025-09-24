@@ -282,13 +282,13 @@ export class TurnosService {
         to: userEmail,
         subject: `¡Turno reservado en FITHUB! - ${claseNombre}`,
         html: `
-          <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; background: linear-gradient(135deg, #f0f8ff 60%, #ff3b3f 100%); border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
+          <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; background: linear-gradient(135deg, #000000ff 60%, #fffc3bff 100%); border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
             <div style="text-align: center;">
               <img src="https://i.ibb.co/7n7tXG6/logo.png" alt="FITHUB Logo" style="width: 110px; margin-bottom: 18px;" />
             </div>
-            <h2 style="color: #ff3b3f; margin-bottom: 8px;">¡Tu turno ha sido reservado!</h2>
+            <h2 style="color: #fffc3bff; margin-bottom: 8px;">¡Tu turno ha sido reservado!</h2>
             <p style="color: #333; font-size: 17px;">Hola ${userName}, te confirmamos que tu reserva para la clase <strong>${claseNombre}</strong> está registrada.</p>
-            <div style="background-color: #e8f5e8; padding: 16px; border-radius: 8px; margin: 22px 0;">
+            <div style="background-color: #000000ff; padding: 16px; border-radius: 8px; margin: 22px 0;">
               <p style="color: #2d5a2d; font-size: 15px; margin: 0;">
                 <strong>Clase:</strong> ${claseNombre}<br>
                 <strong>Fecha:</strong> ${turnoFecha}<br>
@@ -298,14 +298,14 @@ export class TurnosService {
               </p>
             </div>
             <div style="text-align: center; margin: 28px 0;">
-              <a href="${process.env.FRONTEND_URL}" style="background: #ff3b3f; color: #fff; padding: 13px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">Ver mi reserva</a>
+              <a href="${process.env.FRONTEND_URL}" style="background: #ffdb3bff; color: #000000ff; padding: 13px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; font-size: 15px; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">Ver mi reserva</a>
             </div>
             <div style="text-align: center; margin-bottom: 18px;">
               <a href="https://instagram.com/fithub" style="margin: 0 8px; text-decoration: none;"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" width="26" /></a>
               <a href="https://facebook.com/fithub" style="margin: 0 8px; text-decoration: none;"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" width="26" /></a>
             </div>
-            <p style="color: #999; font-size: 13px; margin-top: 18px;">¿Consultas? Escribinos a <a href="mailto:soporte@fithub.com" style="color: #ff3b3f;">soporte@fithub.com</a></p>
-            <p style="color: #999; font-size: 12px; margin-top: 10px;">Si no realizaste esta reserva, ignora este correo.</p>
+            <p style="color: #ffdb3bff; font-size: 13px; margin-top: 18px;">¿Consultas? Escribinos a <a href="mailto:soporte@fithub.com" style="color: #fffb00ff;">soporte@fithub.com</a></p>
+            <p style="color: #ffdb3bff; font-size: 12px; margin-top: 10px;">Si no realizaste esta reserva, ignora este correo.</p>
           </div>
         `,
       });
