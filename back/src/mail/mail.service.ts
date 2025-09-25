@@ -14,7 +14,7 @@ export class MailerService {
   async sendWelcomeEmail(to: string, name: string) {
     const msg = {
       to,
-      from: 'soporte@fithub.com', // Debe estar verificado en SendGrid
+      from: 'fithub.soporte@gmail.com', // Debe estar verificado en SendGrid
       subject: 'Bienvenido a FITHUB 🚀',
       text: 'Tu plataforma fitness para alcanzar tus metas.',
       html: `
