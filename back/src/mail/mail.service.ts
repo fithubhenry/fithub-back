@@ -58,7 +58,7 @@ export class MailerService {
   }) {
     const msg = {
       to: options.to,
-      from: 'soporte@fithub.com', // Debe estar verificado en SendGrid
+      from: 'fithub.soporte@gmail.com', // Debe estar verificado en SendGrid
       subject: options.subject,
       text: options.text,
       html: options.html,
