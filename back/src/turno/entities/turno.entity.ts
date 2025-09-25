@@ -5,8 +5,8 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export enum EstadoTurno {
   PENDIENTE = 'PENDIENTE',
-  CONFIRMADO = 'CONFIRMADO',
   CANCELADO = 'CANCELADO',
+  FINALIZADO = 'FINALIZADO',
 }
 
 @Entity()
@@ -32,7 +32,6 @@ export class Turno {
     type: 'string',
   })
   @ManyToOne(() => User, (user) => user.turnos, {
-    eager: true,
     onDelete: 'CASCADE',
   })
   user: User;

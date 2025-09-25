@@ -33,13 +33,13 @@ export class PaymentsService {
           },
         ],
         back_urls: {
-          success: 'https://fithub-front.onrender.com/clases',
-          failure: 'https://fithub-front.onrender.com/clases',
-          pending: 'https://fithub-front.onrender.com/pending',
+          success: 'https://fithub-front-dev.onrender.com/clases',
+          failure: 'https://fithub-front-dev.onrender.com/clases',
+          pending: 'https://fithub-front-dev.onrender.com/pending',
         },
         auto_return: 'approved',
         notification_url:
-          'https://fithub-back-pv0m.onrender.com/mercado-pago/webhook',
+          'https://fithub-back-dev.onrender.com/mercado-pago/webhook',
       },
     });
 

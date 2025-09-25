@@ -8,6 +8,12 @@ import { Turno } from '../turno/entities/turno.entity';
 
 @Injectable()
 export class ScheduleService {
+  // Cron que actualiza el estado de los turnos vencidos cada minuto
+  @Cron(CronExpression.EVERY_MINUTE)
+  async actualizarTurnosFinalizadosCron() {
+    console.log('[CRON] Ejecutando actualización de turnos finalizados...');
+    await this.turnosService.actualizarTurnosFinalizados();
+  }
   constructor(
     private readonly reminderService: TurnosReminderService,
     private readonly turnosService: TurnosService,
@@ -80,7 +86,7 @@ export class ScheduleService {
   @Cron(CronExpression.EVERY_HOUR)
   async handleReminderJob() {
     // 1. Buscar turnos que tengan un recordatorio pendiente
-    const turnos = await this.turnosService.findTurnosProximos(); // 👈 este método lo implementás vos
+    const turnos = await this.turnosService.findTurnosProximosEntity();
 
     // 2. Programar recordatorios para cada turno
     for (const turno of turnos) {
@@ -101,7 +107,7 @@ export class ScheduleService {
 
     try {
       // Buscar TODOS los turnos activos (pendientes y confirmados)
-      const turnosActivos = await this.turnosService.findTurnosActivos();
+      const turnosActivos = await this.turnosService.findTurnosActivosEntity();
 
       console.log(
         `📋 Encontrados ${turnosActivos.length} turnos activos para recordar`,
@@ -137,7 +143,7 @@ export class ScheduleService {
       const enCincoMinutos = new Date(ahora.getTime() + 5 * 60 * 1000); // 5 minutos en el futuro
 
       // Buscar turnos que comienzan exactamente en 5 minutos (con margen de 1 minuto)
-      const turnosProximos = await this.turnosService.findTurnosEnRango(
+      const turnosProximos = await this.turnosService.findTurnosEnRangoEntity(
         new Date(enCincoMinutos.getTime() - 30 * 1000), // 30 segundos antes
         new Date(enCincoMinutos.getTime() + 30 * 1000), // 30 segundos después
       );
@@ -223,47 +229,56 @@ export class ScheduleService {
 
   // ✅ Método para enviar email de advertencia 5 minutos antes de la clase
   private async sendFiveMinuteWarningEmail(turno: Turno) {
+    if (turno.estado === 'CANCELADO' || turno.estado === 'FINALIZADO') {
+      console.log(
+        `⏭️ No se envía advertencia: turno ${turno.id} está ${turno.estado}`,
+      );
+      return;
+    }
     console.log('🚨 Enviando advertencia 5 minutos antes de la clase...');
+
+    if (!turno.user || !turno.user.email) {
+      console.warn(
+        `⚠️ No se puede enviar advertencia: turno.user o email es null para turno ${turno.id}`,
+      );
+      return;
+    }
 
     try {
       await this.mailerService.sendMail({
         to: turno.user.email,
         subject: `🚨 ¡Tu clase comienza en 5 minutos! - ${turno.clase.nombre}`,
         html: `
-          <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #fff3cd; border-radius: 8px; border-left: 5px solid #ffc107;">
-            <h2 style="color: #856404;">🚨 ¡Atención ${turno.user.nombre}!</h2>
-            <p style="color: #856404; font-size: 18px; font-weight: bold;">
-              Tu clase comienza en 5 minutos
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; background-color: #fff3cd; border-radius: 8px; border-left: 5px solid #ffc107;">
+          <h2 style="color: #856404;">🚨 ¡Atención ${turno.user.nombre}!</h2>
+          <p style="color: #856404; font-size: 18px; font-weight: bold;">
+            Tu clase comienza en 5 minutos
+          </p>
+          <div style="background-color: #fff; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #28a745;">
+            <h3 style="color: #28a745; margin: 0 0 15px 0;">📋 Detalles de tu clase</h3>
+            <p style="color: #333; margin: 5px 0; font-size: 16px;">
+              <strong>🏋️‍♂️ Clase:</strong> ${turno.clase.nombre}<br>
+              <strong>⏰ Hora:</strong> ${turno.horaInicio}<br>
+              <strong>📅 Fecha:</strong> ${new Date(turno.fecha).toLocaleDateString()}<br>
+              <strong>👤 Instructor:</strong> ${turno.clase.instructor || 'Por confirmar'}
             </p>
-            
-            <div style="background-color: #fff; padding: 20px; border-radius: 5px; margin: 20px 0; border-left: 4px solid #28a745;">
-              <h3 style="color: #28a745; margin: 0 0 15px 0;">📋 Detalles de tu clase</h3>
-              <p style="color: #333; margin: 5px 0; font-size: 16px;">
-                <strong>🏋️‍♂️ Clase:</strong> ${turno.clase.nombre}<br>
-                <strong>⏰ Hora:</strong> ${turno.horaInicio}<br>
-                <strong>📅 Fecha:</strong> ${new Date(turno.fecha).toLocaleDateString()}<br>
-                <strong>👤 Instructor:</strong> ${turno.clase.instructor || 'Por confirmar'}
-              </p>
-            </div>
-
-            <div style="background-color: #d4edda; padding: 15px; border-radius: 5px; margin: 20px 0;">
-              <p style="color: #155724; margin: 0; font-size: 14px;">
-                💡 <strong>Recordatorio:</strong> Llega unos minutos antes para prepararte adecuadamente.
-              </p>
-            </div>
-
-            <p style="color: #777; font-size: 14px;">
-              <strong>Hora del aviso:</strong> ${new Date().toLocaleString()}<br>
-              <strong>Estado:</strong> ✅ Sistema de notificaciones funcionando
-            </p>
-            
-            <div style="text-align: center; margin-top: 30px;">
-              <p style="color: #856404; font-size: 16px; font-weight: bold;">
-                ¡Nos vemos en la clase! 💪
-              </p>
-            </div>
           </div>
-        `,
+          <div style="background-color: #d4edda; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <p style="color: #155724; margin: 0; font-size: 14px;">
+              💡 <strong>Recordatorio:</strong> Llega unos minutos antes para prepararte adecuadamente.
+            </p>
+          </div>
+          <p style="color: #777; font-size: 14px;">
+            <strong>Hora del aviso:</strong> ${new Date().toLocaleString()}<br>
+            <strong>Estado:</strong> ✅ Sistema de notificaciones funcionando
+          </p>
+          <div style="text-align: center; margin-top: 30px;">
+            <p style="color: #856404; font-size: 16px; font-weight: bold;">
+              ¡Nos vemos en la clase! 💪
+            </p>
+          </div>
+        </div>
+      `,
       });
 
       console.log('✅ Advertencia de 5 minutos enviada a:', turno.user.email);
@@ -274,8 +289,20 @@ export class ScheduleService {
 
   // ✅ Método para enviar recordatorio periódico de turnos cada 5 minutos
   private async sendTurnoReminderEmail(turno: Turno) {
+    if (turno.estado === 'CANCELADO' || turno.estado === 'FINALIZADO') {
+      console.log(
+        `⏭️ No se envía recordatorio: turno ${turno.id} está ${turno.estado}`,
+      );
+      return;
+    }
     console.log('🔔 Enviando recordatorio periódico de turno...');
 
+    if (!turno.user || !turno.user.email) {
+      console.warn(
+        `⚠️ No se puede enviar recordatorio: turno.user o email es null para turno ${turno.id}`,
+      );
+      return;
+    }
     try {
       // Calcular cuánto tiempo falta para la clase
       const fechaClase = new Date(turno.fecha);

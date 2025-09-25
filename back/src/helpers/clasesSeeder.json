@@ -13,11 +13,11 @@
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323587/4.alta-intensidad_v14o7e.jpg",
     "horarios": [
       {
-        "fecha": "2025-09-15",
+        "fecha": "2025-09-24",
         "horaInicio": "18:00:00",
         "horaFin": "19:00:00"
       },
-      { "fecha": "2025-09-17", "horaInicio": "18:00:00", "horaFin": "19:00:00" }
+      { "fecha": "2025-09-25", "horaInicio": "18:00:00", "horaFin": "19:00:00" }
     ]
   },
   {
@@ -34,11 +34,11 @@
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323185/Med__AdobeStock_299639876-1024x683_mxvnf1.jpg",
     "horarios": [
       {
-        "fecha": "2025-09-16",
+        "fecha": "2025-09-26",
         "horaInicio": "08:00:00",
         "horaFin": "09:30:00"
       },
-      { "fecha": "2025-09-18", "horaInicio": "08:00:00", "horaFin": "09:30:00" }
+      { "fecha": "2025-09-27", "horaInicio": "08:00:00", "horaFin": "09:30:00" }
     ]
   },
   {
@@ -55,11 +55,11 @@
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323362/beneficios-spinning_pbbyny.jpg",
     "horarios": [
       {
-        "fecha": "2025-09-15",
+        "fecha": "2025-09-28",
         "horaInicio": "19:00:00",
         "horaFin": "19:45:00"
       },
-      { "fecha": "2025-09-19", "horaInicio": "19:00:00", "horaFin": "19:45:00" }
+      { "fecha": "2025-09-29", "horaInicio": "19:00:00", "horaFin": "19:45:00" }
     ]
   },
   {
@@ -76,11 +76,11 @@
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323150/pilates-mat-barcelona-720x481-1_elxh7w.jpg",
     "horarios": [
       {
-        "fecha": "2025-09-16",
+        "fecha": "2025-09-30",
         "horaInicio": "10:00:00",
         "horaFin": "11:00:00"
       },
-      { "fecha": "2025-09-23", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
+      { "fecha": "2025-10-01", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
     ]
   },
   {
@@ -96,7 +96,7 @@
     "sede": "Sur",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323627/45907-dictaran-clases-de-zumba-gratis-en-el-hospital-del-milagro_oehqyh.webp",
     "horarios": [
-      { "fecha": "2025-09-20", "horaInicio": "17:00:00", "horaFin": "18:00:00" }
+      { "fecha": "2025-10-02", "horaInicio": "17:00:00", "horaFin": "18:00:00" }
     ]
   },
   {
@@ -112,7 +112,7 @@
     "sede": "Norte",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323667/article-diseno-programa-entrenamiento-fuerza-recuperacion-ejercicios-58be81e6c4763_jkgk2y.jpg",
     "horarios": [
-      { "fecha": "2025-09-22", "horaInicio": "15:00:00", "horaFin": "16:15:00" }
+      { "fecha": "2025-10-03", "horaInicio": "15:00:00", "horaFin": "16:15:00" }
     ]
   },
   {
@@ -128,7 +128,7 @@
     "sede": "Oeste",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323450/club-cover-1_vu75an.webp",
     "horarios": [
-      { "fecha": "2025-09-18", "horaInicio": "20:00:00", "horaFin": "21:00:00" }
+      { "fecha": "2025-10-04", "horaInicio": "20:00:00", "horaFin": "21:00:00" }
     ]
   },
   {
@@ -144,7 +144,7 @@
     "sede": "Central",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323514/Gluteboom-en-Sevilla-1-scaled-1_zypncd.jpg",
     "horarios": [
-      { "fecha": "2025-09-24", "horaInicio": "18:30:00", "horaFin": "19:15:00" }
+      { "fecha": "2025-10-05", "horaInicio": "18:30:00", "horaFin": "19:15:00" }
     ]
   },
   {
@@ -160,7 +160,7 @@
     "sede": "Este",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323731/7a9ca1304c77d7524c56444f43ef92ced9c4cfa5-6000x4000_d2wlv1.jpg",
     "horarios": [
-      { "fecha": "2025-09-25", "horaInicio": "07:00:00", "horaFin": "08:00:00" }
+      { "fecha": "2025-10-06", "horaInicio": "07:00:00", "horaFin": "08:00:00" }
     ]
   },
   {
@@ -176,7 +176,7 @@
     "sede": "Sur",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323412/Hatha-Yoga__ogcwge.webp",
     "horarios": [
-      { "fecha": "2025-09-26", "horaInicio": "16:00:00", "horaFin": "17:30:00" }
+      { "fecha": "2025-10-07", "horaInicio": "16:00:00", "horaFin": "17:30:00" }
     ]
   },
   {
@@ -192,7 +192,7 @@
     "sede": "Norte",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323702/que-es-el-entrenamiento-hiit_vlf6vb.jpg",
     "horarios": [
-      { "fecha": "2025-09-29", "horaInicio": "13:00:00", "horaFin": "13:30:00" }
+      { "fecha": "2025-10-08", "horaInicio": "13:00:00", "horaFin": "13:30:00" }
     ]
   },
   {
@@ -208,7 +208,7 @@
     "sede": "Oeste",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323235/Clases-de-danza-arabe-Bi-Hui-Dance-en-Bogota_CC_81-1024x576_m0uxcj.jpg",
     "horarios": [
-      { "fecha": "2025-09-30", "horaInicio": "19:30:00", "horaFin": "20:30:00" }
+      { "fecha": "2025-10-09", "horaInicio": "19:30:00", "horaFin": "20:30:00" }
     ]
   },
   {
@@ -224,7 +224,7 @@
     "sede": "Norte",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323093/powerlifting-essentials-blog_lbayyt.png",
     "horarios": [
-      { "fecha": "2025-10-01", "horaInicio": "17:00:00", "horaFin": "19:00:00" }
+      { "fecha": "2025-10-10", "horaInicio": "17:00:00", "horaFin": "19:00:00" }
     ]
   },
   {
@@ -240,7 +240,7 @@
     "sede": "Este",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323045/inclinandose-estiramiento-profundo-instructor-yoga-dirigiendo-clase-estiramiento_590464-12672_ijcvrq.jpg",
     "horarios": [
-      { "fecha": "2025-10-02", "horaInicio": "11:00:00", "horaFin": "11:45:00" }
+      { "fecha": "2025-10-11", "horaInicio": "11:00:00", "horaFin": "11:45:00" }
     ]
   },
   {
@@ -256,7 +256,7 @@
     "sede": "Piscina",
     "imageUrl": "https://res.cloudinary.com/dugup6n8j/image/upload/v1758323759/aquagym-0_opqvha.jpg",
     "horarios": [
-      { "fecha": "2025-10-03", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
+      { "fecha": "2025-10-12", "horaInicio": "10:00:00", "horaFin": "11:00:00" }
     ]
   }
 ]

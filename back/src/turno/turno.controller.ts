@@ -13,7 +13,7 @@ import { TurnosService } from './turno.service';
 import { CreateTurnoDto } from './dto/createTurno.dto';
 import { UpdateTurnoDto } from './dto/updateTurno.dto';
 import { UpdateEstadoTurnoDto } from './dto/updateEstado.dto';
-import { Turno } from './entities/turno.entity';
+import { TurnoResponseDto } from './dto/turnoResponse.dto';
 
 @ApiTags('turnos')
 @Controller('turnos')
@@ -25,7 +25,7 @@ export class TurnosController {
   @ApiResponse({
     status: 201,
     description: 'El turno ha sido creado correctamente',
-    type: Turno,
+    type: TurnoResponseDto,
   })
   create(@Body() dto: CreateTurnoDto) {
     return this.turnosService.create(dto);
@@ -33,7 +33,7 @@ export class TurnosController {
 
   @Get()
   @ApiOperation({ summary: 'Obtener todos los turnos' })
-  @ApiResponse({ status: 200, type: [Turno] })
+  @ApiResponse({ status: 200, type: [TurnoResponseDto] })
   findAll() {
     return this.turnosService.findAll();
   }
@@ -44,7 +44,7 @@ export class TurnosController {
     name: 'id',
     description: 'ID del turno',
   })
-  @ApiResponse({ status: 200, type: Turno })
+  @ApiResponse({ status: 200, type: TurnoResponseDto })
   findOne(@Param('id', ParseUUIDPipe) id: string) {
     return this.turnosService.findOne(id);
   }
@@ -58,7 +58,7 @@ export class TurnosController {
   @ApiResponse({
     status: 200,
     description: 'El turno ha sido actualizado correctamente',
-    type: Turno,
+    type: TurnoResponseDto,
   })
   update(@Param('id', ParseUUIDPipe) id: string, @Body() dto: UpdateTurnoDto) {
     return this.turnosService.update(id, dto);

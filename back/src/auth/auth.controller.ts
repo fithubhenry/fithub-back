@@ -54,7 +54,7 @@ export class AuthController {
     // Lo pasaremos como un parámetro de consulta (query param).
     // Asegúrate de que la URL del frontend sea la correcta.
     return res.redirect(
-      `https://fithub-front.onrender.com/auth/callback?token=${jwtToken}`,
+      `https://fithub-front-dev.onrender.com/auth/callback?token=${jwtToken}`,
     );
   }
 
