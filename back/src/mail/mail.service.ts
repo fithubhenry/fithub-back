@@ -1,30 +1,23 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
-import * as nodemailer from 'nodemailer';
+import * as sgMail from '@sendgrid/mail';
 
 @Injectable()
 export class MailerService {
-  private transporter;
-
   constructor() {
-    this.transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST, // ej: smtp.gmail.com
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: false, // true solo si usas 465
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-    });
+    const apiKey = process.env.SENDGRID_API_KEY;
+    if (!apiKey) {
+      throw new InternalServerErrorException('SENDGRID_API_KEY is not defined');
+    }
+    sgMail.setApiKey(apiKey);
   }
 
   async sendWelcomeEmail(to: string, name: string) {
-    try {
-      await this.transporter.sendMail({
-        from: `"FITHUB 👋" <${process.env.SMTP_USER}>`,
-        to,
-        subject: 'Bienvenido a FITHUB 🚀',
-        text: 'Tu plataforma fitness para alcanzar tus metas.',
-        html: `
+    const msg = {
+      to,
+      from: 'soporte@fithub.com', // Debe estar verificado en SendGrid
+      subject: 'Bienvenido a FITHUB 🚀',
+      text: 'Tu plataforma fitness para alcanzar tus metas.',
+      html: `
         <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: auto; padding: 24px; background: linear-gradient(135deg, #f9f9f9 60%, #ff3b3f 100%); border-radius: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.07);">
           <div style="text-align: center;">
             <img src="https://i.ibb.co/7n7tXG6/logo.png" alt="FITHUB Logo" style="width: 120px; margin-bottom: 18px;" />
@@ -47,7 +40,9 @@ export class MailerService {
           <p style="color: #999; font-size: 12px; margin-top: 10px;">Si no te registraste, ignora este correo.</p>
         </div>
       `,
-      });
+    };
+    try {
+      await sgMail.send(msg);
     } catch (error) {
       console.error('Error enviando email:', error);
       throw new InternalServerErrorException('No se pudo enviar el email');
@@ -61,11 +56,15 @@ export class MailerService {
     text?: string;
     html?: string;
   }) {
+    const msg = {
+      to: options.to,
+      from: 'soporte@fithub.com', // Debe estar verificado en SendGrid
+      subject: options.subject,
+      text: options.text,
+      html: options.html,
+    };
     try {
-      await this.transporter.sendMail({
-        from: `"FITHUB 👋" <${process.env.SMTP_USER}>`,
-        ...options,
-      });
+      await sgMail.send(msg as any);
     } catch (error) {
       console.error('Error enviando email:', error);
       throw new InternalServerErrorException('No se pudo enviar el email');
